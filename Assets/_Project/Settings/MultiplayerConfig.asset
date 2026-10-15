@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666e7d73819967648ac1b53fbaf9cea9, type: 3}
+  m_Name: MultiplayerConfig
+  m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.MultiplayerConfig
+  minimumPlayersToStart: 2
+  operationTimeoutSeconds: 30
+  connectionTimeoutSeconds: 20
+  movementSpeed: 5
+  sprintSpeed: 8
+  jumpHeight: 1.4
+  gravityMultiplier: 2
+  terminalFallSpeed: 30
+  jumpCooldownSeconds: 0.15
+  rotationSpeed: 540
+  cameraSensitivity: 0.15
+  cameraDistance: 5
+  playerMaxHealth: 100
+  weaponDamage: 25
+  weaponRange: 50
+  weaponShotsPerSecond: 4
+  friendlyFire: 0
+  targetMaxHealth: 100
+  targetResetSeconds: 3
+  servicesEnvironment: production

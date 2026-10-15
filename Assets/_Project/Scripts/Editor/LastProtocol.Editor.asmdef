@@ -1,0 +1,7 @@
+{
+  "name": "LastProtocol.Editor",
+  "rootNamespace": "LastProtocol.Editor",
+  "references": ["LastProtocol.Runtime", "Unity.Netcode.Runtime", "Unity.Networking.Transport", "Unity.InputSystem", "Unity.Cinemachine", "Unity.TextMeshPro", "UnityEngine.UI"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true
+}
