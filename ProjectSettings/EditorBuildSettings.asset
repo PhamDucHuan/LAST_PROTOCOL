@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scenes/ContainmentYard/ContainmentYard.unity
     guid: ffc9be09d7457b34a9712bb18ab3ce27
+  - enabled: 1
+    path: Assets/_Project/Scenes/CanThoCampus/CanThoCampus.unity
+    guid: 4ec34b38a2420fb46ae151b0c312b083
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

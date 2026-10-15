@@ -38,7 +38,7 @@ namespace LastProtocol.Editor
             }
             if (prefab.GetComponent<MenuFrontEnd>() == null) throw new InvalidOperationException("Existing Menu prefab is incompatible; preserved.");
             var config = AssetDatabase.LoadAssetAtPath<MultiplayerConfig>(MultiplayerSetupTool.ConfigPath);
-            if (config.menuPrefab != prefab.GetComponent<MenuFrontEnd>())
+            if (config.menuPrefab == null)
             {
                 Backup(MultiplayerSetupTool.ConfigPath);
                 config.menuPrefab = prefab.GetComponent<MenuFrontEnd>(); EditorUtility.SetDirty(config);
@@ -168,7 +168,15 @@ namespace LastProtocol.Editor
             Surface("West boundary", rect, 14, 14, 2, h - 28, accent);
             Surface("East boundary", rect, w - 16, 14, 2, h - 28, accent);
             Surface("South boundary", rect, 14, h - 16, w - 28, 2, accent);
-            for (int i = 0; i < 4; i++)
+            if (level == LevelCatalog.CanTho)
+            {
+                Surface("Campus spine", rect, w * 0.48f, 20, 4, h - 40, accent);
+                Surface("3 thang 2 road", rect, 20, h * 0.83f, w - 40, 4, Orange);
+                for (int row = 0; row < 3; row++) for (int col = 0; col < 3; col++)
+                    Surface("Campus block", rect, w * (0.15f + col * 0.25f), h * (0.16f + row * 0.2f), w * 0.16f, h * 0.12f, accent);
+                return;
+            }
+            for (int i = 0; i < MultiplayerConfig.MaxPlayers; i++)
             {
                 Surface("Target", rect, w * (0.22f + i * 0.18f) - 5, h * 0.33f, 10, 15, accent);
                 Surface("Player spawn", rect, w * (0.35f + (i % 2) * 0.25f) - 5, h * (0.67f + (i / 2) * 0.12f), 10, 10, Cyan);
@@ -184,7 +192,12 @@ namespace LastProtocol.Editor
                 Surface("Low cover", rect, w * 0.45f, h * 0.43f, w * 0.1f, 8, Orange);
             }
         }
-        private static GameObject CreateMenu()
+        public static GameObject CreateMenuAtPath(string destination)
+        {
+            if (File.Exists(destination)) throw new InvalidOperationException("Menu destination already exists; preserved: " + destination);
+            return CreateMenu(destination);
+        }
+        private static GameObject CreateMenu(string destination = MenuPrefabPath)
         {
             font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(MultiplayerSetupTool.Root + "/Settings/TextMeshPro/Resources/Fonts & Materials/LiberationSans SDF.asset");
             if (font == null) throw new InvalidOperationException("Existing TMP font missing.");
@@ -207,7 +220,7 @@ namespace LastProtocol.Editor
                 ui.breadcrumb = Text(frame, "LAST PROTOCOL / HOME", 1000, 26, 640, 40, 18, Muted); ui.breadcrumb.alignment = TextAlignmentOptions.MidlineRight;
                 Surface("Header rule", frame, 40, 98, 1600, 1, Raised);
                 Surface("Footer rule", frame, 40, 884, 1600, 1, Raised);
-                Text(frame, "HOST-AUTHORITATIVE CO-OP   /   UP TO 4 AGENTS", 40, 900, 1000, 28, 16, Muted);
+                Text(frame, "SQUAD CO-OP   /   UP TO 4 AGENTS", 40, 900, 1000, 28, 16, Muted);
                 var version = Text(frame, "PROTOTYPE  /  BUILD " + MultiplayerConfig.ProtocolVersion.ToString("00"), 1200, 900, 440, 28, 16, Cyan); version.alignment = TextAlignmentOptions.TopRight;
                 BuildHome(ui, frame); BuildLevels(ui, frame); BuildJoin(ui, frame); BuildLobby(ui, frame); BuildControls(ui, frame); BuildError(ui, frame);
                 var busy = Surface("Connection overlay", root.transform, 0, 0, 1920, 1080, new Color(0.01f, 0.025f, 0.04f, 0.97f), true);
@@ -217,7 +230,7 @@ namespace LastProtocol.Editor
                 ui.busyLabel = Text(busyCard, "CONNECTING...", 0, 60, 900, 120, 38, Color.white, true); ui.busyLabel.alignment = TextAlignmentOptions.Center;
                 ui.busyOverlay = busy.gameObject;
                 foreach (var page in new[] { ui.levelsPage, ui.joinPage, ui.lobbyPage, ui.controlsPage, ui.errorPage, ui.busyOverlay }) page.SetActive(false);
-                return PrefabUtility.SaveAsPrefabAsset(root, MenuPrefabPath);
+                return PrefabUtility.SaveAsPrefabAsset(root, destination);
             }
             finally { EditorSceneManager.CloseScene(scratch, true); if (previous.IsValid() && previous.isLoaded) SceneManager.SetActiveScene(previous); }
         }
@@ -233,26 +246,26 @@ namespace LastProtocol.Editor
             ui.quitButton = Action(p, "QUIT GAME", 344, 600, 296, 60, out _);
             var card = Surface("Operations preview", p, 870, 35, 770, 640, Panel);
             Text(card, "FIELD OPERATIONS", 34, 28, 700, 42, 25, Color.white, true);
-            Text(card, "02 PLAYABLE TRAINING SITES", 34, 78, 700, 30, 17, Cyan);
+            Text(card, LevelCatalog.Count.ToString("00") + " PLAYABLE OPERATIONS / CAN THO + TRAINING", 34, 78, 700, 30, 17, Cyan);
             Diagram(card, 34, 135, 702, 290, LevelCatalog.Containment);
             Text(card, "ONE SQUAD. ONE WORLD.", 34, 462, 700, 48, 29, Color.white, true);
-            Text(card, "Create a Relay room or join with a code.\nMovement / combat / enemy / teammate revival.", 34, 525, 700, 90, 22, Muted);
+            Text(card, "Create a room or join with a code.\nMovement / combat / enemy / teammate revival.", 34, 525, 700, 90, 22, Muted);
         }
         private static void BuildLevels(MenuFrontEnd ui, Transform frame)
         {
             ui.levelsPage = Page(frame, "Select Operation"); var p = ui.levelsPage.transform;
-            Heading(p, "01", "SELECT OPERATION", "Choose a test site. The Host's selection applies to the whole squad.");
+            Heading(p, "01", "SELECT OPERATION", "Choose a destination. The Host's selection applies to the whole squad.");
             ui.levelButtons = new Button[LevelCatalog.Count]; ui.selectionStrips = new Image[LevelCatalog.Count]; ui.selectionBadges = new TMP_Text[LevelCatalog.Count];
             for (int i = 0; i < LevelCatalog.Count; i++)
             {
-                var level = LevelCatalog.Get(i); var card = Surface(level.Title, p, 40 + i * 535, 170, 510, 450, Panel, true);
+                var level = LevelCatalog.Get(i); var card = Surface(level.Title, p, 40, 170 + i * 155, 1010, 143, Panel, true);
                 var button = card.gameObject.AddComponent<Button>(); button.targetGraphic = card.GetComponent<Image>(); ui.levelButtons[i] = button;
-                ui.selectionStrips[i] = Surface("Selection accent", card, 0, 0, 510, 4, Raised).GetComponent<Image>();
-                Text(card, "0" + (i + 1) + " / SIMULATION", 26, 28, 280, 30, 17, Muted);
-                ui.selectionBadges[i] = Text(card, "AVAILABLE", 290, 28, 194, 30, 17, Cyan, true); ui.selectionBadges[i].alignment = TextAlignmentOptions.TopRight;
-                Diagram(card, 26, 85, 458, 220, i);
-                Text(card, level.Title, 26, 335, 458, 42, 27, Color.white, true);
-                Text(card, level.Summary, 26, 389, 458, 50, 20, Muted);
+                ui.selectionStrips[i] = Surface("Selection accent", card, 0, 0, 5, 143, Raised).GetComponent<Image>();
+                Diagram(card, 20, 15, 205, 113, i);
+                Text(card, "0" + (i + 1) + (i == LevelCatalog.CanTho ? " / CITY SECTOR" : " / SIMULATION"), 245, 15, 480, 25, 16, Muted);
+                ui.selectionBadges[i] = Text(card, "AVAILABLE", 785, 18, 200, 26, 17, Cyan, true); ui.selectionBadges[i].alignment = TextAlignmentOptions.TopRight;
+                Text(card, level.Title, 245, 51, 730, 36, 27, Color.white, true);
+                Text(card, level.Summary, 245, 97, 730, 36, 19, Muted);
             }
             var detail = Surface("Operation briefing", p, 1120, 170, 520, 450, Panel);
             Text(detail, "OPERATION BRIEF", 28, 26, 460, 30, 17, Cyan, true);
@@ -293,8 +306,8 @@ namespace LastProtocol.Editor
             var roster = Surface("Squad roster", p, 735, 170, 905, 450, Panel);
             Text(roster, "SQUAD", 25, 22, 300, 36, 23, Color.white, true);
             ui.playerCount = Text(roster, "", 580, 25, 300, 30, 19, Cyan, true); ui.playerCount.alignment = TextAlignmentOptions.TopRight;
-            ui.rosterNames = new TMP_Text[4]; ui.rosterStates = new TMP_Text[4];
-            for (int i = 0; i < 4; i++)
+            ui.rosterNames = new TMP_Text[MultiplayerConfig.MaxPlayers]; ui.rosterStates = new TMP_Text[MultiplayerConfig.MaxPlayers];
+            for (int i = 0; i < MultiplayerConfig.MaxPlayers; i++)
             {
                 var row = Surface("Agent " + (i + 1), roster, 25, 83 + i * 82, 855, 67, Raised);
                 Text(row, "0" + (i + 1), 18, 18, 50, 36, 23, Cyan, true);
@@ -333,9 +346,9 @@ namespace LastProtocol.Editor
         }
         public static void Validate()
         {
-            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(MenuPrefabPath)?.GetComponent<MenuFrontEnd>();
             var config = AssetDatabase.LoadAssetAtPath<MultiplayerConfig>(MultiplayerSetupTool.ConfigPath);
-            if (prefab == null || config.menuPrefab != prefab || prefab.levelButtons.Length != LevelCatalog.Count
+            var prefab = config != null ? config.menuPrefab : null;
+            if (prefab == null || prefab.levelButtons.Length != LevelCatalog.Count
                 || prefab.rosterNames.Length != MultiplayerConfig.MaxPlayers || prefab.joinInput == null)
                 throw new InvalidOperationException("Menu prefab configuration invalid.");
             foreach (var component in prefab.GetComponentsInChildren<Transform>(true))

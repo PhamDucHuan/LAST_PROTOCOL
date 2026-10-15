@@ -7,6 +7,7 @@ namespace LastProtocol
     public sealed class LevelEnvironment : MonoBehaviour
     {
         public int levelId;
+        public int artRevision = 1;
         public NavMeshData enemyNavigation;
     }
 }

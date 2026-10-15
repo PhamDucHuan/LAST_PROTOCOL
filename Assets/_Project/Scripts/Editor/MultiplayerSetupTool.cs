@@ -514,12 +514,20 @@ namespace LastProtocol.Editor
             BuildWindows("Builds/MenuPlayer");
         }
 
+        [MenuItem("LastProtocol/Maps/Build Windows Can Tho Demo")]
+        public static void BatchBuildCanTho()
+        {
+            CanThoMapSetupTool.Install();
+            BuildWindows("Builds/CanThoPlayer");
+        }
+
         private static void BuildWindows(string outputDirectory)
         {
             BatchSetup();
             Directory.CreateDirectory(outputDirectory);
             var buildScenes = new List<string> { MenuPath, GamePath };
             if (File.Exists(MenuSetupTool.YardPath)) buildScenes.Add(MenuSetupTool.YardPath);
+            if (File.Exists(CanThoMapSetupTool.ScenePath)) buildScenes.Add(CanThoMapSetupTool.ScenePath);
             var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions { scenes = buildScenes.ToArray(),
                 locationPathName = outputDirectory + "/LAST_PROTOCOL.exe", target = BuildTarget.StandaloneWindows64,
                 options = BuildOptions.Development });

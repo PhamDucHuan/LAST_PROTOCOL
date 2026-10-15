@@ -16,6 +16,8 @@ namespace LastProtocol
     public static class MenuPreviewHarness
     {
         private static bool started;
+        private static string captureFilter;
+        private static int previewLevel = LevelCatalog.Containment;
         [Serializable] private sealed class Report
         { public List<string> passed = new List<string>(), failures = new List<string>(); public bool complete; }
         public static void TryStart(MenuFrontEnd ui)
@@ -23,6 +25,10 @@ namespace LastProtocol
             var args = Environment.GetCommandLineArgs(); int index = Array.IndexOf(args, "--lp-menu-preview");
             if (started || index < 0 || index + 1 >= args.Length) return;
             started = true;
+            int filter = Array.IndexOf(args, "--lp-preview-page");
+            if (filter >= 0 && filter + 1 < args.Length) captureFilter = args[filter + 1];
+            int levelFlag = Array.IndexOf(args, "--lp-preview-level");
+            if (levelFlag >= 0 && levelFlag + 1 < args.Length && int.TryParse(args[levelFlag + 1], out int level) && LevelCatalog.IsValid(level)) previewLevel = level;
             MultiplayerSession.Instance.StartCoroutine(Run(ui, Path.GetFullPath(args[index + 1])));
         }
         private static IEnumerator Run(MenuFrontEnd ui, string directory)
@@ -38,14 +44,14 @@ namespace LastProtocol
             ui.playButton.onClick.Invoke();
             Check(report, ui.Page == MenuPage.Levels && ui.DraftLevel == LevelCatalog.Training, "Play opens operation selector");
             yield return Capture(ui, directory, "02-training-selection", report);
-            ui.levelButtons[LevelCatalog.Containment].onClick.Invoke();
-            Check(report, ui.DraftLevel == LevelCatalog.Containment && ui.detailTitle.text == LevelCatalog.Get(1).Title, "Second operation can be selected");
-            yield return Capture(ui, directory, "03-yard-selection", report);
+            ui.levelButtons[previewLevel].onClick.Invoke();
+            Check(report, ui.DraftLevel == previewLevel && ui.detailTitle.text == LevelCatalog.Get(previewLevel).Title, "Requested operation can be selected");
+            yield return Capture(ui, directory, previewLevel == LevelCatalog.CanTho ? "03-cantho-selection" : "03-yard-selection", report);
             var session = MultiplayerSession.Instance;
             session.TrySelectLevel(ui.DraftLevel);
             var host = session.StartLocalTestAsync(true);
             while (!host.IsCompleted) yield return null;
-            Check(report, !host.IsFaulted && session.IsHost && session.SelectedLevelId == 1, "Offline preference initializes Host room");
+            Check(report, !host.IsFaulted && session.IsHost && session.SelectedLevelId == previewLevel, "Offline preference initializes Host room");
             ui.levelsBackButton.onClick.Invoke();
             yield return Capture(ui, directory, "04-lobby", report);
             ui.readyButton.onClick.Invoke();
@@ -54,24 +60,24 @@ namespace LastProtocol
             Check(report, session.SelectedLevelId == 0 && !session.Room.IsReady(NetworkManager.Singleton.LocalClientId), "Confirm operation resets Ready");
             Check(report, !ui.startButton.interactable, "Deploy disabled until squad requirements met");
             yield return Capture(ui, directory, "05-lobby-ready-reset", report);
-            // Runtime-only solo fixture to render the actual second scene, no Cloud account.
+            // Runtime-only solo fixture to render the selected scene, no Cloud account.
             session.config.minimumPlayersToStart = 1;
-            ui.changeLevelButton.onClick.Invoke(); ui.levelButtons[1].onClick.Invoke(); ui.confirmLevelButton.onClick.Invoke();
+            ui.changeLevelButton.onClick.Invoke(); ui.levelButtons[previewLevel].onClick.Invoke(); ui.confirmLevelButton.onClick.Invoke();
             ui.readyButton.onClick.Invoke(); ui.startButton.onClick.Invoke();
             float deadline = Time.realtimeSinceStartup + 20;
             while (session.State != SessionState.InGame && Time.realtimeSinceStartup < deadline) yield return null;
-            Check(report, session.State == SessionState.InGame && SceneManager.GetActiveScene().name == LevelCatalog.Get(1).SceneName, "Host deploys into Containment Yard");
+            Check(report, session.State == SessionState.InGame && SceneManager.GetActiveScene().name == LevelCatalog.Get(previewLevel).SceneName, "Host deploys into selected level");
             for (int i = 0; i < 15; i++) yield return null;
             var enemy = UnityEngine.Object.FindAnyObjectByType<RobotEnemy>();
-            Check(report, enemy != null && enemy.Agent.enabled && enemy.Agent.isOnNavMesh, "Yard Enemy uses baked navigation");
-            SaveCameraImage(Camera.main, Path.Combine(directory, "06-yard-gameplay.png"), report);
+            Check(report, enemy != null && enemy.Agent.enabled && enemy.Agent.isOnNavMesh, "Selected level Enemy uses baked navigation");
+            SaveCameraImage(Camera.main, Path.Combine(directory, previewLevel == LevelCatalog.CanTho ? "06-cantho-gameplay.png" : "06-yard-gameplay.png"), report);
             for (int i = 0; i < 8; i++) yield return null;
             var leave = session.LeaveRoomAsync(); while (!leave.IsCompleted) yield return null;
             while (session.State != SessionState.Offline) yield return null;
             for (int i = 0; i < 10; i++) yield return null;
             session.config.minimumPlayersToStart = 2;
             ui = UnityEngine.Object.FindAnyObjectByType<MenuFrontEnd>();
-            Check(report, ui != null && UnityEngine.Object.FindObjectsByType<NetworkManager>().Length == 1, "Return from Yard to Menu without duplicate manager");
+            Check(report, ui != null && UnityEngine.Object.FindObjectsByType<NetworkManager>().Length == 1, "Return from level to Menu without duplicate manager");
             ui.openJoinButton.onClick.Invoke(); ui.joinInput.text = "ab";
             Check(report, !ui.joinButton.interactable && ui.joinInput.text == "AB", "Short code blocked and normalized");
             ui.joinInput.text = "abc123";
@@ -92,6 +98,7 @@ namespace LastProtocol
         }
         private static IEnumerator Capture(MenuFrontEnd ui, string directory, string name, Report report)
         {
+            if (!string.IsNullOrEmpty(captureFilter) && captureFilter != name) yield break;
             // A hidden Windows player may have a black swapchain. Render the real Canvas
             // into a texture instead of treating a black screenshot as visual evidence.
             // A fresh render copy also avoids stale TMP batches across Canvas mode changes.
@@ -101,12 +108,19 @@ namespace LastProtocol
             source.gameObject.SetActive(false);
             var canvas = ui.GetComponent<Canvas>();
             var cameraObject = new GameObject("Menu capture camera", typeof(Camera));
-            var camera = cameraObject.GetComponent<Camera>(); camera.enabled = true;
-            camera.transform.position = new Vector3(0, 0, -100); camera.orthographic = true;
+            var camera = cameraObject.GetComponent<Camera>(); camera.enabled = false;
+            Vector2 canvasSize = ((RectTransform)source.transform).rect.size;
+            camera.transform.position = new Vector3(0, 0, -1000); camera.orthographic = true;
+            camera.orthographicSize = canvasSize.y * 0.5f; camera.farClipPlane = 2000;
             camera.clearFlags = CameraClearFlags.SolidColor; camera.backgroundColor = new Color(0.025f, 0.043f, 0.065f);
             camera.cullingMask = 1 << 30;
             foreach (var transform in ui.GetComponentsInChildren<Transform>(true)) transform.gameObject.layer = 30;
-            canvas.renderMode = RenderMode.ScreenSpaceCamera; canvas.worldCamera = camera; canvas.planeDistance = 1;
+            // World-space rendering uses the normal geometry path, independent of the
+            // hidden window's screen-space Canvas/swapchain optimizations.
+            canvas.renderMode = RenderMode.WorldSpace; canvas.worldCamera = camera;
+            var canvasRect = (RectTransform)canvas.transform;
+            canvasRect.position = Vector3.zero; canvasRect.rotation = Quaternion.identity;
+            canvasRect.localScale = Vector3.one; canvasRect.sizeDelta = canvasSize;
             var destination = new RenderTexture(Screen.width, Screen.height, 24); destination.Create(); camera.targetTexture = destination;
             for (int i = 0; i < 8; i++) yield return null;
             Canvas.ForceUpdateCanvases();
@@ -126,11 +140,24 @@ namespace LastProtocol
             string path = Path.Combine(directory, name + ".png");
             foreach (var graphic in ui.GetComponentsInChildren<UnityEngine.UI.Graphic>()) graphic.SetAllDirty();
             Canvas.ForceUpdateCanvases();
-            yield return new WaitForEndOfFrame();
-            SaveCameraImage(camera, path, report, destination, false);
+            // Warm up native uGUI buffers before reading back from a hidden player.
+            for (int frame = 0; frame < 4; frame++)
+            {
+                Canvas.ForceUpdateCanvases();
+                RenderPipeline.SubmitRenderRequest(camera, new RenderPipeline.StandardRequest { destination = destination });
+                yield return null;
+            }
+            SaveCameraImage(camera, path, report, destination);
             camera.targetTexture = null; destination.Release(); UnityEngine.Object.Destroy(destination); UnityEngine.Object.Destroy(cameraObject);
             UnityEngine.Object.Destroy(copy); source.gameObject.SetActive(true);
             Check(report, File.Exists(path), name + " captured");
+            if (!string.IsNullOrEmpty(captureFilter))
+            {
+                report.complete = true;
+                File.WriteAllText(Path.Combine(directory, "Checks.json"), JsonUtility.ToJson(report, true));
+                Application.Quit(report.failures.Count == 0 ? 0 : 2);
+                yield return new WaitForSecondsRealtime(5);
+            }
         }
         private static void SaveCameraImage(Camera camera, string path, Report report, RenderTexture destination = null, bool submitRequest = true)
         {

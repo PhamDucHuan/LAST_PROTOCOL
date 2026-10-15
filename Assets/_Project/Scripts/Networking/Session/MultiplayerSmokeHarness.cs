@@ -200,7 +200,7 @@ namespace LastProtocol
                 foreach (var member in room.Members) allReady &= member.Ready;
                 if (allReady && ((levelSwitchStage == 0 && result.elapsed >= 15) || (levelSwitchStage == 1 && result.elapsed >= 19)))
                 {
-                    bool selected = session.TrySelectLevel(levelSwitchStage == 0 ? 1 - requestedLevel : requestedLevel);
+                    bool selected = session.TrySelectLevel(levelSwitchStage == 0 ? (requestedLevel + 1) % LevelCatalog.Count : requestedLevel);
                     bool reset = selected;
                     foreach (var member in room.Members) reset &= !member.Ready;
                     result.readyResetObserved |= reset;

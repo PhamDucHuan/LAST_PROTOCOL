@@ -16736,7 +16736,7 @@ GameObject:
   - component: {fileID: 7513866775512970163}
   - component: {fileID: 3966915973896817785}
   m_Layer: 0
-  m_Name: Text HOST-AUTHORITATIVE CO-OP   /   UP TO 4 AGENTS
+  m_Name: Text SQUAD CO-OP   /   UP TO 4 AGENTS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16789,7 +16789,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: HOST-AUTHORITATIVE CO-OP   /   UP TO 4 AGENTS
+  m_text: SQUAD CO-OP   /   UP TO 4 AGENTS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -19741,7 +19741,7 @@ GameObject:
   - component: {fileID: 4435038174657949983}
   - component: {fileID: 3444125460564460087}
   m_Layer: 0
-  m_Name: Text Create a Relay room or join with a code.
+  m_Name: Text Create a room or join with a code.
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19794,7 +19794,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Create a Relay room or join with a code.
+  m_text: 'Create a room or join with a code.
 
     Movement / combat / enemy
     / teammate revival.'

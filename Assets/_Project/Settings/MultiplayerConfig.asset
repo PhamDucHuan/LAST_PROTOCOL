@@ -46,4 +46,4 @@ MonoBehaviour:
   reviveHealthFraction: 0.4
   reviveHeartbeatTimeout: 0.5
   servicesEnvironment: production
-  menuPrefab: {fileID: 3400589531657452737, guid: 0e8789da15059f04584463875d14bcaf, type: 3}
+  menuPrefab: {fileID: 4389271256975945010, guid: 9cb0163c816337648b8258de37f2b96a, type: 3}

@@ -1,4 +1,4 @@
-param([string]$Player = '',[switch]$HealthTest,[switch]$CombatTest,[switch]$EnemyTest,[switch]$ReviveTest,[switch]$LevelTest,[ValidateRange(0,1)][int]$Level = 0)
+param([string]$Player = '',[switch]$HealthTest,[switch]$CombatTest,[switch]$EnemyTest,[switch]$ReviveTest,[switch]$LevelTest,[ValidateRange(0,2)][int]$Level = 0)
 $ErrorActionPreference = 'Stop'
 if ($EnemyTest -and $ReviveTest) { throw 'Run EnemyTest and ReviveTest separately to isolate their fixtures.' }
 $workspace = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))

@@ -1,6 +1,7 @@
 param(
-    [ValidateSet('Setup','Repair','Tests','Build','ControllerBuild','HealthSetup','HealthBuild','CombatSetup','CombatBuild','EnemySetup','EnemyBuild','ReviveSetup','ReviveBuild','MenuSetup','MenuBuild')][string]$Stage = 'Setup',
-    [string]$UnityEditor = 'C:\Program Files\Unity\Hub\Editor\6000.5.4f1\Editor\Unity.exe'
+    [ValidateSet('Setup','Repair','Tests','Build','ControllerBuild','HealthSetup','HealthBuild','CombatSetup','CombatBuild','EnemySetup','EnemyBuild','ReviveSetup','ReviveBuild','MenuSetup','MenuBuild','CanThoSetup','CanThoBuild','CanThoDetail','CanThoDetailRefresh')][string]$Stage = 'Setup',
+    [string]$UnityEditor = 'C:\Program Files\Unity\Hub\Editor\6000.5.4f1\Editor\Unity.exe',
+    [string]$CanThoArtDirectory = ''
 )
 $ErrorActionPreference = 'Stop'
 $workspace = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
@@ -15,6 +16,15 @@ foreach ($folder in @('Assets','Packages','ProjectSettings')) {
     New-Item -ItemType Directory -Path $destination -Force | Out-Null
     Get-ChildItem -LiteralPath (Join-Path $workspace $folder) -Force | Copy-Item -Destination $destination -Recurse -Force
 }
+if ($CanThoArtDirectory) {
+    if ($Stage -notin @('CanThoDetail','CanThoDetailRefresh')) { throw 'Staged art requires CanThoDetail or CanThoDetailRefresh.' }
+    $stagedLayout = Get-Content -Raw -LiteralPath (Join-Path $CanThoArtDirectory 'CanThoCampus.layout.json') | ConvertFrom-Json
+    if ($stagedLayout.artRevision -ne 2) { throw 'Staged Can Tho art must be revision 2.' }
+    $artDestination = Join-Path $validation 'Assets\_Project\Art\Environments\CanThoCampus'
+    foreach ($name in @('CanThoCampus.fbx','CanThoCampus.layout.json')) {
+        Copy-Item -LiteralPath (Join-Path $CanThoArtDirectory $name) -Destination (Join-Path $artDestination $name) -Force
+    }
+}
 $results = Join-Path $workspace 'Builds\ValidationResults'
 New-Item -ItemType Directory -Path $results -Force | Out-Null
 # Archive earlier evidence before new logs/results are produced.
@@ -28,6 +38,10 @@ if ($Stage -eq 'Tests') { [IO.File]::WriteAllText((Join-Path $results 'EditMode.
 $log = Join-Path $results ($Stage + '.log')
 $arguments = @('-batchmode','-nographics','-projectPath',('"' + $validation + '"'),'-logFile',('"' + $log + '"'))
 switch ($Stage) {
+    'CanThoDetailRefresh' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.CanThoDetailSetupTool.BatchRefresh') }
+    'CanThoDetail' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.CanThoDetailSetupTool.BatchApply') }
+    'CanThoSetup' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.CanThoMapSetupTool.BatchInstall') }
+    'CanThoBuild' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.MultiplayerSetupTool.BatchBuildCanTho') }
     'MenuSetup' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.MenuSetupTool.BatchInstall') }
     'MenuBuild' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.MultiplayerSetupTool.BatchBuildMenu') }
     'Setup' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.MultiplayerSetupTool.BatchSetup') }

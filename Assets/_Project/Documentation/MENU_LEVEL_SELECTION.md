@@ -54,7 +54,7 @@ Không xóa/ghi đè MainMenu, MultiplayerTest hoặc SampleScene. Menu mới đ
 .\Tools\Run-MultiplayerValidation.ps1 -Stage MenuSetup
 .\Tools\Run-MultiplayerValidation.ps1 -Stage Tests
 .\Tools\Run-MultiplayerValidation.ps1 -Stage MenuBuild
-.\Tools\Run-MenuPreview.ps1
+.\Tools\Run-MenuPreview.ps1 -FreshCapture
 .\Tools\Run-MultiplayerSmoke.ps1 -LevelTest -Level 0 -CombatTest
 .\Tools\Run-MultiplayerSmoke.ps1 -LevelTest -Level 1 -CombatTest
 ```

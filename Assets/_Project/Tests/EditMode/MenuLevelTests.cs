@@ -12,14 +12,14 @@ namespace LastProtocol.Tests
 {
     public sealed class MenuLevelTests
     {
-        [TestCase(-1)] [TestCase(2)] [TestCase(int.MaxValue)]
+        [TestCase(-1)] [TestCase(LevelCatalog.Count)] [TestCase(int.MaxValue)]
         public void UnknownLevelCannotResolveToAScene(int id)
         { Assert.IsFalse(LevelCatalog.IsValid(id)); Assert.IsNull(LevelCatalog.Get(id)); }
         [Test]
         public void PlayableLevelsHaveStableUniqueSceneNames()
         {
             var levels = Enumerable.Range(0, LevelCatalog.Count).Select(LevelCatalog.Get).ToArray();
-            Assert.AreEqual(2, levels.Length); Assert.AreEqual(2, levels.Select(x => x.SceneName).Distinct().Count());
+            Assert.AreEqual(LevelCatalog.Count, levels.Length); Assert.AreEqual(LevelCatalog.Count, levels.Select(x => x.SceneName).Distinct().Count());
             foreach (var level in levels) Assert.IsTrue(File.Exists(level.ScenePath), level.ScenePath);
         }
         [Test]
