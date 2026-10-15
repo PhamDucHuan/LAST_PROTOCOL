@@ -9,6 +9,7 @@ namespace LastProtocol
     public sealed class NetworkHitscanWeapon : NetworkBehaviour
     {
         public TrainingTarget trainingTargetPrefab;
+        public RobotEnemy enemyPrefab;
         public Material tracerMaterial;
         private PlayerHealth health;
         private InputAction attack;
@@ -42,6 +43,7 @@ namespace LastProtocol
             if (!IsSpawned || !IsOwner) return;
             var session = MultiplayerSession.Instance;
             bool active = session != null && session.CanMove && health.CanAct && Application.isFocused
+                && GetComponent<PlayerRevive>()?.IsChanneling != true
                 && Cursor.lockState == CursorLockMode.Locked;
             if (!active) { fireArmed = false; return; }
             bool pressed = attack?.IsPressed() == true;
@@ -59,6 +61,7 @@ namespace LastProtocol
         {
             var session = MultiplayerSession.Instance;
             if (!IsServer || !IsSpawned || session == null || !session.CanMove || !health.CanAct
+                || GetComponent<PlayerRevive>()?.IsChanneling == true
                 || rpc.Receive.SenderClientId != OwnerClientId) return;
             var config = session.config;
             if (!CombatRules.ValidAim(Eye, cameraOrigin, aimDirection, config.cameraDistance + 2)) return;
@@ -82,8 +85,10 @@ namespace LastProtocol
             {
                 endpoint = hit.point;
                 var target = hit.collider.GetComponentInParent<TrainingTarget>();
+                var enemy = hit.collider.GetComponentInParent<RobotEnemy>();
                 var player = hit.collider.GetComponentInParent<PlayerHealth>();
-                if (target != null) damaged = target.TryApplyDamageServer(config.weaponDamage);
+                if (enemy != null) damaged = enemy.TryApplyDamageServer(config.weaponDamage, health);
+                else if (target != null) damaged = target.TryApplyDamageServer(config.weaponDamage);
                 else if (player != null && player != health && config.friendlyFire)
                     damaged = player.TryApplyDamageServer(config.weaponDamage);
             }

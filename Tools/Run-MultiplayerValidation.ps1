@@ -1,5 +1,5 @@
 param(
-    [ValidateSet('Setup','Repair','Tests','Build','ControllerBuild','HealthSetup','HealthBuild','CombatSetup','CombatBuild')][string]$Stage = 'Setup',
+    [ValidateSet('Setup','Repair','Tests','Build','ControllerBuild','HealthSetup','HealthBuild','CombatSetup','CombatBuild','EnemySetup','EnemyBuild','ReviveSetup','ReviveBuild','MenuSetup','MenuBuild')][string]$Stage = 'Setup',
     [string]$UnityEditor = 'C:\Program Files\Unity\Hub\Editor\6000.5.4f1\Editor\Unity.exe'
 )
 $ErrorActionPreference = 'Stop'
@@ -28,6 +28,8 @@ if ($Stage -eq 'Tests') { [IO.File]::WriteAllText((Join-Path $results 'EditMode.
 $log = Join-Path $results ($Stage + '.log')
 $arguments = @('-batchmode','-nographics','-projectPath',('"' + $validation + '"'),'-logFile',('"' + $log + '"'))
 switch ($Stage) {
+    'MenuSetup' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.MenuSetupTool.BatchInstall') }
+    'MenuBuild' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.MultiplayerSetupTool.BatchBuildMenu') }
     'Setup' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.MultiplayerSetupTool.BatchSetup') }
     'Repair' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.MultiplayerSetupTool.BatchRepair') }
     'Tests' { $arguments += @('-runTests','-testPlatform','EditMode','-testFilter','LastProtocol.Tests','-testResults',('"' + (Join-Path $results 'EditMode.xml') + '"')) }
@@ -37,6 +39,10 @@ switch ($Stage) {
     'HealthBuild' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.MultiplayerSetupTool.BatchBuildHealth') }
     'CombatSetup' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.CombatSetupTool.BatchInstall') }
     'CombatBuild' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.MultiplayerSetupTool.BatchBuildCombat') }
+    'ReviveSetup' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.ReviveSetupTool.BatchInstall') }
+    'ReviveBuild' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.MultiplayerSetupTool.BatchBuildRevive') }
+    'EnemySetup' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.EnemySetupTool.BatchInstall') }
+    'EnemyBuild' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.MultiplayerSetupTool.BatchBuildEnemy') }
 }
 # Start only a hidden batch Editor, never touch/close the user's open Editor.
 $process = Start-Process -FilePath $UnityEditor -ArgumentList $arguments -PassThru -WindowStyle Hidden

@@ -12,6 +12,7 @@ namespace LastProtocol
         public float PlanarSpeed { get; private set; }
         public float VerticalSpeed => verticalVelocity;
         private void Awake() => controller = GetComponent<CharacterController>();
+        public void ResetMotion() { verticalVelocity = 0; jumpCooldown = 0; PlanarSpeed = 0; }
         public bool Simulate(Vector2 input, bool sprint, bool jump, MultiplayerConfig config, float deltaTime)
         {
             if (controller == null) controller = GetComponent<CharacterController>();

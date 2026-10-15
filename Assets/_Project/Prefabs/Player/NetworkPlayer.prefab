@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 1946623026553437102}
   - component: {fileID: 4632488216026426592}
   - component: {fileID: 5974811048935576407}
+  - component: {fileID: 7692954586251764955}
+  - component: {fileID: 6570594900439996604}
   m_Layer: 0
   m_Name: NetworkPlayer
   m_TagString: Player
@@ -296,6 +298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.NetworkHitscanWeapon
   ShowTopMostFoldoutHeaderGroup: 1
   trainingTargetPrefab: {fileID: 879489700242065894, guid: b7f0ddb78afdd5742bd6558a481348b6, type: 3}
+  enemyPrefab: {fileID: 688951318914098644, guid: e292e22578b6e054e89f683f461e1dcc, type: 3}
   tracerMaterial: {fileID: 2100000, guid: 29a4d183c178b3245b1d2d95e9b99d40, type: 2}
 --- !u!114 &5974811048935576407
 MonoBehaviour:
@@ -309,6 +312,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6e5b06066c34f0aa34a344cc8026e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.WeaponHUD
+  ShowTopMostFoldoutHeaderGroup: 1
+  font: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+--- !u!114 &7692954586251764955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056702543953329608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1426d28395714ea5a0386ab8393ee5bb, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.PlayerRevive
+  ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &6570594900439996604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056702543953329608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39cd857db05a4fa99cd6d6d01d3cd889, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.ReviveHUD
   ShowTopMostFoldoutHeaderGroup: 1
   font: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
 --- !u!1 &5231390282518668163

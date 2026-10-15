@@ -493,11 +493,34 @@ namespace LastProtocol.Editor
             BuildWindows("Builds/CombatPlayer");
         }
 
+        [MenuItem("LastProtocol/Enemy/Build Windows Enemy Demo")]
+        public static void BatchBuildEnemy()
+        {
+            EnemySetupTool.Install();
+            BuildWindows("Builds/EnemyPlayer");
+        }
+
+        [MenuItem("LastProtocol/Revive/Build Windows Revive Demo")]
+        public static void BatchBuildRevive()
+        {
+            ReviveSetupTool.Install();
+            BuildWindows("Builds/RevivePlayer");
+        }
+
+        [MenuItem("LastProtocol/Menu/Build Windows Menu Demo")]
+        public static void BatchBuildMenu()
+        {
+            MenuSetupTool.Install();
+            BuildWindows("Builds/MenuPlayer");
+        }
+
         private static void BuildWindows(string outputDirectory)
         {
             BatchSetup();
             Directory.CreateDirectory(outputDirectory);
-            var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions { scenes = new[] { MenuPath, GamePath },
+            var buildScenes = new List<string> { MenuPath, GamePath };
+            if (File.Exists(MenuSetupTool.YardPath)) buildScenes.Add(MenuSetupTool.YardPath);
+            var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions { scenes = buildScenes.ToArray(),
                 locationPathName = outputDirectory + "/LAST_PROTOCOL.exe", target = BuildTarget.StandaloneWindows64,
                 options = BuildOptions.Development });
             if (report.summary.result != BuildResult.Succeeded) throw new InvalidOperationException("Windows build failed: " + report.summary.result);

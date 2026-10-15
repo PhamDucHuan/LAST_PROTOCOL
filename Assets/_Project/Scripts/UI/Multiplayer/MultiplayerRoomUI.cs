@@ -22,6 +22,12 @@ namespace LastProtocol
         {
             session = MultiplayerSession.Instance;
             if (session == null) { Debug.LogError("Multiplayer UI requires MultiplayerSession."); enabled = false; return; }
+            if (menuPanel != null && session.config.menuPrefab != null)
+            {
+                Instantiate(session.config.menuPrefab);
+                gameObject.SetActive(false);
+                return;
+            }
             Bind(createButton, () => Run(session.CreateRoomAsync()));
             Bind(openJoinButton, () => { showingJoin = true; Refresh(); });
             Bind(joinButton, () => Run(session.JoinRoomAsync(joinCodeInput.text)));
@@ -82,7 +88,7 @@ namespace LastProtocol
             NetworkRoomState room = session.Room;
             int count = room != null ? room.Members.Count : 0;
             if (playerCountText != null) playerCountText.text = "PLAYERS " + count + "/" + MultiplayerConfig.MaxPlayers;
-            if (gameStatusText != null) gameStatusText.text = "CO-OP  " + count + "/" + MultiplayerConfig.MaxPlayers
+            if (gameStatusText != null) gameStatusText.text = (LevelCatalog.Get(session.SelectedLevelId)?.Title ?? "CO-OP") + "  " + count + "/" + MultiplayerConfig.MaxPlayers
                 + "  |  WASD: move  |  Shift: sprint  |  Space: jump  |  LMB: fire  |  Esc: cursor";
             if (playerListText != null)
             {

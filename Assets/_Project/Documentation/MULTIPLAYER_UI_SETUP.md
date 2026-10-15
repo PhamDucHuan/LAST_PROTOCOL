@@ -1,3 +1,7 @@
+# Menu mới (protocol 7)
+
+Giao diện Home / chọn 2 màn / Join / Lobby / Controls / Error đã triển khai trong OperationsMenu.prefab, kích hoạt qua MultiplayerConfig.menuPrefab khi Play MainMenu. Xem MENU_LEVEL_SELECTION.md để chơi thử, chỉnh prefab và build. Nội dung phía dưới mô tả UI MVP cũ, vẫn giữ làm fallback.
+
 # Multiplayer UI Setup
 
 Editor tool tạo uGUI Canvas + TextMeshPro + InputSystemUIInputModule. UI dùng font LiberationSans SDF và atlas đã tạo sẵn trong TMP Essential Resources chính thức, ở `_Project/Settings/TextMeshPro/Resources/Fonts & Materials`; giấy phép ở `_Project/Art/Fonts`. Không bắt buộc import toàn bộ TMP Essential Resources hoặc ghi đè font sẵn có.

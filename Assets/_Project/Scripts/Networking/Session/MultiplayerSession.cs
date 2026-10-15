@@ -24,9 +24,23 @@ namespace LastProtocol
         public string JoinCode { get; private set; } = string.Empty;
         public string LastError { get; private set; } = string.Empty;
         public NetworkRoomState Room { get; private set; }
+        private int preferredLevel;
+        public int SelectedLevelId => Room != null ? Room.SelectedLevel.Value : preferredLevel;
+        public bool TrySelectLevel(int id)
+        {
+            if (!LevelCatalog.IsValid(id) || IsBusy) return false;
+            if (Room != null)
+            {
+                bool selected = IsHost && Room.SelectLevelServer(id);
+                if (selected) preferredLevel = id;
+                return selected;
+            }
+            if (State != SessionState.Offline && State != SessionState.Error) return false;
+            preferredLevel = id; NotifyChanged(); return true;
+        }
         public bool IsBusy => operationRunning || cleaningUp;
         public bool IsHost => manager != null && manager.IsHost;
-        public bool CanMove => State == SessionState.InGame && Room != null && Room.Phase.Value == MatchPhase.Playing;
+        public bool CanMove => State == SessionState.InGame && Room != null && Room.Phase.Value == MatchPhase.Playing && !Room.TeamWiped.Value;
         public bool CanStartGame => IsHost && !IsBusy && Room != null
             && reservedClients.Count == manager.ConnectedClients.Count
             && reservedClients.Count == Room.Members.Count
@@ -252,6 +266,7 @@ namespace LastProtocol
         public void RegisterRoom(NetworkRoomState room)
         {
             Room = room;
+            if (IsHost && LevelCatalog.IsValid(preferredLevel)) Room.SelectedLevel.Value = preferredLevel;
             NotifyRoomChanged();
         }
         public void UnregisterRoom(NetworkRoomState room)
@@ -276,10 +291,13 @@ namespace LastProtocol
         {
             // Do not begin loading while an approved client is still synchronizing its lobby.
             if (!CanStartGame) return;
+            var level = LevelCatalog.Get(Room.SelectedLevel.Value);
+            if (level == null || !Application.CanStreamedLevelBeLoaded(level.SceneName))
+            { LastError = "Selected level is missing from the build. Run Menu Setup and rebuild all players."; ErrorRaised?.Invoke(LastError); NotifyChanged(); return; }
             acceptingPlayers = false;
             Room.Phase.Value = MatchPhase.Loading;
             SetState(SessionState.LoadingGame);
-            SceneEventProgressStatus status = manager.SceneManager.LoadScene(MultiplayerConfig.GameplayScene, LoadSceneMode.Single);
+            SceneEventProgressStatus status = manager.SceneManager.LoadScene(level.SceneName, LoadSceneMode.Single);
             if (status != SceneEventProgressStatus.Started)
             {
                 acceptingPlayers = true;
@@ -293,7 +311,7 @@ namespace LastProtocol
 
         private void OnSceneEvent(SceneEvent sceneEvent)
         {
-            if (!manager.IsServer || sceneEvent.SceneName != MultiplayerConfig.GameplayScene
+            if (!manager.IsServer || Room == null || sceneEvent.SceneName != LevelCatalog.Get(Room.SelectedLevel.Value)?.SceneName
                 || sceneEvent.SceneEventType != SceneEventType.LoadEventCompleted) return;
             foreach (ulong id in sceneEvent.ClientsThatTimedOut)
                 if (id != manager.LocalClientId) manager.DisconnectClient(id, "Gameplay scene loading timed out");
@@ -309,6 +327,7 @@ namespace LastProtocol
                 player.NetworkObject.SpawnAsPlayerObject(id, true);
             }
             TrainingTarget.SpawnArenaServer(playerPrefab.GetComponent<NetworkHitscanWeapon>()?.trainingTargetPrefab);
+            RobotEnemy.SpawnServer(playerPrefab.GetComponent<NetworkHitscanWeapon>()?.enemyPrefab);
             Room.Phase.Value = MatchPhase.Playing;
             SetState(SessionState.InGame);
         }

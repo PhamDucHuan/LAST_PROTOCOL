@@ -1,6 +1,7 @@
 using System;
 using Unity.Collections;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 
 namespace LastProtocol
@@ -29,6 +30,9 @@ namespace LastProtocol
         private NetworkList<RoomMember> members;
         public NetworkList<RoomMember> Members => members;
         public readonly NetworkVariable<MatchPhase> Phase = new NetworkVariable<MatchPhase>(MatchPhase.Lobby);
+        public readonly NetworkVariable<bool> TeamWiped = new NetworkVariable<bool>(false);
+        public readonly NetworkVariable<uint> RoundRestarts = new NetworkVariable<uint>(0);
+        public readonly NetworkVariable<int> SelectedLevel = new NetworkVariable<int>(LevelCatalog.Training);
         public event Action Changed;
 
         private void Awake() => members = new NetworkList<RoomMember>();
@@ -38,6 +42,8 @@ namespace LastProtocol
             DontDestroyOnLoad(gameObject);
             members.OnListChanged += OnMembersChanged;
             Phase.OnValueChanged += OnPhaseChanged;
+            TeamWiped.OnValueChanged += OnWipeChanged;
+            SelectedLevel.OnValueChanged += OnLevelChanged;
             if (IsServer)
             {
                 NetworkManager.OnClientConnectedCallback += AddMember;
@@ -51,6 +57,8 @@ namespace LastProtocol
         {
             members.OnListChanged -= OnMembersChanged;
             Phase.OnValueChanged -= OnPhaseChanged;
+            TeamWiped.OnValueChanged -= OnWipeChanged;
+            SelectedLevel.OnValueChanged -= OnLevelChanged;
             if (NetworkManager != null)
             {
                 NetworkManager.OnClientConnectedCallback -= AddMember;
@@ -58,6 +66,46 @@ namespace LastProtocol
             }
             MultiplayerSession.Instance?.UnregisterRoom(this);
         }
+
+        private void Update()
+        {
+            if (!IsSpawned || !IsServer || Phase.Value != MatchPhase.Playing || TeamWiped.Value
+                || NetworkManager.ConnectedClients.Count == 0) return;
+            foreach (var client in NetworkManager.ConnectedClients.Values)
+            {
+                var player = client.PlayerObject;
+                if (player == null || !player.IsSpawned || player.GetComponent<PlayerHealth>()?.Snapshot.IsDowned != true) return;
+            }
+            TeamWiped.Value = true;
+            foreach (var revive in FindObjectsByType<PlayerRevive>()) revive.CancelServer(true);
+        }
+
+        // Called only by the Host's local UI; no client RPC exposes round resets.
+        public bool RestartRoundServer()
+        {
+            if (!IsSpawned || !IsServer || !TeamWiped.Value || Phase.Value != MatchPhase.Playing) return false;
+            var points = FindAnyObjectByType<PlayerSpawnPoints>();
+            if (points == null) return false;
+            foreach (var client in NetworkManager.ConnectedClients.Values)
+                if (client.PlayerObject == null || !client.PlayerObject.IsSpawned || GetSlot(client.ClientId) < 0) return false;
+            foreach (var client in NetworkManager.ConnectedClients.Values)
+            {
+                var player = client.PlayerObject;
+                player.GetComponent<PlayerRevive>()?.ResetRoundServer();
+                var point = points.GetPoint(GetSlot(client.ClientId));
+                var controller = player.GetComponent<CharacterController>();
+                controller.enabled = false;
+                player.GetComponent<NetworkTransform>().Teleport(point.position, point.rotation, player.transform.localScale);
+                controller.enabled = true;
+                player.GetComponent<PlayerMovement>().ResetMotion();
+                player.GetComponent<PlayerHealth>().ResetRoundServer();
+            }
+            foreach (var enemy in FindObjectsByType<RobotEnemy>()) enemy.ResetRoundServer();
+            RoundRestarts.Value++;
+            TeamWiped.Value = false;
+            return true;
+        }
+        private void OnWipeChanged(bool previous, bool current) => Notify();
 
         private void AddMember(ulong id)
         {
@@ -87,10 +135,22 @@ namespace LastProtocol
 
         public bool CanStart(int minimum)
         {
-            if (Phase.Value != MatchPhase.Lobby || members.Count < minimum) return false;
+            if (Phase.Value != MatchPhase.Lobby || !LevelCatalog.IsValid(SelectedLevel.Value) || members.Count < minimum) return false;
             foreach (RoomMember member in members) if (!member.Ready) return false;
             return true;
         }
+
+        public bool SelectLevelServer(int id)
+        {
+            if (!IsSpawned || !IsServer || Phase.Value != MatchPhase.Lobby || !LevelCatalog.IsValid(id)
+                || MultiplayerSession.Instance?.IsBusy == true) return false;
+            if (SelectedLevel.Value == id) return true;
+            SelectedLevel.Value = id;
+            for (int i = 0; i < members.Count; i++)
+            { var member = members[i]; if (member.Ready) { member.Ready = false; members[i] = member; } }
+            return true;
+        }
+        private void OnLevelChanged(int before, int after) => Notify();
 
         [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
         public void SetReadyRpc(bool ready, RpcParams rpcParams = default)

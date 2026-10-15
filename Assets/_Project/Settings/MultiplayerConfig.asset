@@ -31,4 +31,19 @@ MonoBehaviour:
   friendlyFire: 0
   targetMaxHealth: 100
   targetResetSeconds: 3
+  enemyMaxHealth: 100
+  enemyMoveSpeed: 3
+  enemyDetectionRange: 12
+  enemyLoseRange: 18
+  enemyLeashDistance: 22
+  enemyAttackRange: 1.8
+  enemyAttackDamage: 10
+  enemyAttackWindup: 0.45
+  enemyAttackCooldown: 1
+  enemyRespawnSeconds: 8
+  reviveRange: 2.5
+  reviveDuration: 3
+  reviveHealthFraction: 0.4
+  reviveHeartbeatTimeout: 0.5
   servicesEnvironment: production
+  menuPrefab: {fileID: 3400589531657452737, guid: 0e8789da15059f04584463875d14bcaf, type: 3}

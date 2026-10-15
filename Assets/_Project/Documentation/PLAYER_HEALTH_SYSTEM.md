@@ -1,10 +1,10 @@
 # Player Health — LAST_PROTOCOL
 
-Ngày: 2026-10-15. Unity 6000.5.4f1 / NGO 2.13.3. Protocol **3**: Player prefab có thêm NetworkBehaviour, phải dùng cùng bản mới trên Host và Client.
+Ngày: 2026-10-15. Unity 6000.5.4f1 / NGO 2.13.3. Module Health ban đầu dùng protocol 3; project hiện tại dùng protocol **6**: Player prefab có thêm NetworkBehaviour, phải dùng cùng bản mới trên Host và Client.
 
 ## Phạm vi
 
-HP mặc định 100. HP = 0 là **Downed/Gục**, chặn đi/chạy/nhảy trên Host, vẫn áp dụng gravity và giữ camera/Leave Session hoạt động. Chưa có animation gục, chết vĩnh viễn, hồi sinh đồng đội, respawn, game over, friendly fire, combat hoặc nguồn sát thương môi trường tự động.
+HP mặc định 100. HP = 0 là **Downed/Gục**, chặn đi/chạy/nhảy trên Host, vẫn áp dụng gravity và giữ camera/Leave Session hoạt động. Đã có combat hitscan, Enemy và hồi sinh đồng đội (giữ E 3 giây, 2,5 m, hồi 40% HP). Cả đội gục thì Host restart test. Xem DOWNED_REVIVE_SYSTEM.md. Chưa có animation gục, chết vĩnh viễn hoặc nguồn sát thương môi trường tự động.
 
 ## Script và luồng dữ liệu
 

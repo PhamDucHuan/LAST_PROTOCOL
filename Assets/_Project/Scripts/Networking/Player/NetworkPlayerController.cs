@@ -93,6 +93,9 @@ namespace LastProtocol
             var session = MultiplayerSession.Instance;
             if (!IsServer || session == null || rpcParams.Receive.SenderClientId != OwnerClientId || !ConnectionPolicy.IsFinite(input)) return;
             controlsActive &= health == null || health.CanAct;
+            var revive = GetComponent<PlayerRevive>();
+            if (revive != null && revive.IsChanneling && (input.sqrMagnitude > 0.01f || jumpCounter != lastJumpCounter))
+                revive.CancelServer(true);
             if (hasSequence && unchecked((int)(inputSequence - lastSequence)) <= 0) return;
             double now = Time.realtimeSinceStartupAsDouble;
             if (now - lastAcceptedTime < MultiplayerConfig.InputInterval * 0.5) return;
@@ -114,6 +117,7 @@ namespace LastProtocol
             if (!IsSpawned || !IsServer || MultiplayerSession.Instance == null) return;
             var session = MultiplayerSession.Instance;
             bool fresh = session.CanMove && (health == null || health.CanAct)
+                && GetComponent<PlayerRevive>()?.IsChanneling != true
                 && Time.realtimeSinceStartupAsDouble - lastAcceptedTime < 0.25;
             movement.Simulate(fresh ? serverInput : Vector2.zero, fresh && serverSprint,
                 fresh && pendingServerJump, session.config, Time.fixedDeltaTime);

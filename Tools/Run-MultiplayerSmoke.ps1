@@ -1,15 +1,20 @@
-param([string]$Player = '',[switch]$HealthTest,[switch]$CombatTest)
+param([string]$Player = '',[switch]$HealthTest,[switch]$CombatTest,[switch]$EnemyTest,[switch]$ReviveTest,[switch]$LevelTest,[ValidateRange(0,1)][int]$Level = 0)
 $ErrorActionPreference = 'Stop'
+if ($EnemyTest -and $ReviveTest) { throw 'Run EnemyTest and ReviveTest separately to isolate their fixtures.' }
 $workspace = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 if (-not $Player) {
-    $buildFolder = if ($CombatTest) { 'CombatPlayer' } elseif ($HealthTest) { 'HealthPlayer' } else { 'ThirdPersonPlayer' }
+    $buildFolder = if ($LevelTest) { 'MenuPlayer' } elseif ($ReviveTest) { 'RevivePlayer' } elseif ($EnemyTest) { 'EnemyPlayer' } elseif ($CombatTest) { 'CombatPlayer' } elseif ($HealthTest) { 'HealthPlayer' } else { 'ThirdPersonPlayer' }
     $Player = Join-Path $workspace ('Builds\ValidationProject\Builds\' + $buildFolder + '\LAST_PROTOCOL.exe')
 }
+if ($EnemyTest -or $ReviveTest) { $CombatTest = $true }
 if ($CombatTest) { $HealthTest = $true }
 if (-not (Test-Path -LiteralPath $Player)) { throw 'Build Windows development MVP first.' }
 $results = Join-Path $workspace 'Builds\ValidationResults\Smoke'
 if ($HealthTest) { $results = Join-Path $workspace 'Builds\ValidationResults\HealthSmoke' }
 if ($CombatTest) { $results = Join-Path $workspace 'Builds\ValidationResults\CombatSmoke' }
+if ($EnemyTest) { $results = Join-Path $workspace 'Builds\ValidationResults\EnemySmoke' }
+if ($ReviveTest) { $results = Join-Path $workspace 'Builds\ValidationResults\ReviveSmoke' }
+if ($LevelTest) { $results = Join-Path $workspace ('Builds\ValidationResults\LevelSmoke' + $Level) }
 New-Item -ItemType Directory -Path $results -Force | Out-Null
 $previousFiles = @(Get-ChildItem -LiteralPath $results -File)
 if ($previousFiles.Count -gt 0) {
@@ -29,6 +34,9 @@ function Start-SmokePlayer([string]$Role,[string]$Name,[int]$Duration) {
         '--lp-auto-start','4','--lp-start-delay','25')
     if ($HealthTest) { $arguments += '--lp-health-test' }
     if ($CombatTest) { $arguments += '--lp-combat-test' }
+    if ($EnemyTest) { $arguments += '--lp-enemy-test' }
+    if ($ReviveTest) { $arguments += '--lp-revive-test' }
+    if ($LevelTest) { $arguments += @('--lp-level-test','--lp-level',$Level) }
     $process = Start-Process -FilePath $Player -ArgumentList $arguments -PassThru -WindowStyle Hidden
     $launched.Add($process)
     Write-Output ("Started {0}, PID {1}" -f $Name,$process.Id)
@@ -46,10 +54,12 @@ function Wait-Smoke([string]$Name,[scriptblock]$Condition,[int]$Seconds = 25) {
     throw ('Smoke condition timed out: ' + $Name)
 }
 try {
-    Start-SmokePlayer 'host' 'host' 60
+    $hostDuration = if ($EnemyTest -or $ReviveTest) { 120 } else { 60 }
+    $clientDuration = if ($EnemyTest -or $ReviveTest) { 125 } else { 65 }
+    Start-SmokePlayer 'host' 'host' $hostDuration
     Wait-Smoke 'host' { param($r) $r.state -eq 'Lobby' }
     foreach ($number in 1..3) {
-        Start-SmokePlayer 'client' ('client' + $number) 65
+        Start-SmokePlayer 'client' ('client' + $number) $clientDuration
         $expected = $number + 1
         Wait-Smoke 'host' { param($r) $r.maximumMembers -ge $expected }
     }
@@ -59,6 +69,10 @@ try {
     foreach ($name in @('host','client1','client2','client3')) {
         Wait-Smoke $name { param($r) $r.enteredGame -and $r.maximumPlayers -eq 4 -and $r.movedPlayers -eq 4 -and $r.rotatedPlayers -eq 4 -and $r.jumpedPlayers -eq 4 -and $r.sprintedPlayers -eq 4 } 40
         Write-Output ($name + ': four players moving, rotating, sprinting and jumping observed.')
+        if ($LevelTest) {
+            Wait-Smoke $name { param($r) $r.levelSelectionSynced -and $r.readyResetObserved -and $r.loadedSelectedScene -and $r.selectedLevel -eq $Level } 15
+            Write-Output ($name + ': selected scene loaded; Host choice and Ready reset synchronized.')
+        }
         if ($HealthTest) {
             Wait-Smoke $name { param($r) $r.initializedHealthPlayers -eq 4 -and $r.damagedHealthPlayers -eq 4 `
                 -and $r.downedHealthPlayers -eq 4 -and $r.resetHealthPlayers -eq 4 -and $r.recoveredMovingPlayers -eq 4 } 25
@@ -70,11 +84,19 @@ try {
                 -and $r.downedFireRejected -and $r.invalidAimRejected -and $r.friendlyFireBlocked -and $r.shotSpamLimited } 25
             Write-Output ($name + ': combat, target HP/reset, fire validation, friendly fire and cadence verified.')
         }
+        if ($ReviveTest) {
+            Wait-Smoke $name { param($r) $r.revive.passed } 65
+            Write-Output ($name + ': revive cancellation, completion and team wipe verified.')
+        }
+        if ($EnemyTest) {
+            Wait-Smoke $name { param($r) $r.enemy.passed } 50
+            Write-Output ($name + ': robot patrol/chase/attack/retarget/dodge/death/respawn and client gun damage verified.')
+        }
     }
     Start-SmokePlayer 'client' 'closed' 8
     Wait-Smoke 'closed' { param($r) $r.error -eq 'Room Closed' }
     Write-Output 'Joining after Start Game rejected with Room Closed.'
-    Wait-Smoke 'client1' { param($r) $r.sawHostDisconnect -and $r.state -eq 'Error' } 45
+    Wait-Smoke 'client1' { param($r) $r.sawHostDisconnect -and $r.state -eq 'Error' } 65
     foreach ($process in $launched) { $process.WaitForExit() }
     $summary = @()
     foreach ($name in @('host','client1','client2','client3')) {
@@ -83,6 +105,7 @@ try {
             -and $r.movedPlayers -eq 4 -and $r.rotatedPlayers -eq 4 -and $r.localOwnedPlayer -and $r.serverAuthority -and $r.cameraBound `
             -and $r.jumpedPlayers -eq 4 -and $r.sprintedPlayers -eq 4 -and -not $r.excessiveJumpHeight
         if ($name -ne 'host') { $pass = $pass -and $r.sawHostDisconnect }
+
         if ($HealthTest) {
             $pass = $pass -and $r.initializedHealthPlayers -eq 4 -and $r.damagedHealthPlayers -eq 4 `
                 -and $r.downedHealthPlayers -eq 4 -and $r.resetHealthPlayers -eq 4 -and $r.recoveredMovingPlayers -eq 4 `
@@ -94,6 +117,12 @@ try {
                 -and $r.targetDamageObserved -and $r.targetDownObserved -and $r.targetResetObserved `
                 -and $r.downedFireRejected -and $r.invalidAimRejected -and $r.friendlyFireBlocked -and $r.shotSpamLimited
         }
+        if ($LevelTest) {
+            $pass = $pass -and $r.levelSelectionSynced -and $r.readyResetObserved -and $r.loadedSelectedScene -and $r.selectedLevel -eq $Level
+            if ($name -ne 'host') { $pass = $pass -and $r.clientLevelChangeRejected }
+        }
+        if ($EnemyTest) { $pass = $pass -and $r.enemy.passed }
+        if ($ReviveTest) { $pass = $pass -and $r.revive.passed }
         $summary += [PSCustomObject]@{ Name=$name; Passed=[bool]$pass; Result=$r }
     }
     $summary += [PSCustomObject]@{Name='fifth';Passed=[bool](Read-Smoke 'fifth').sawRoomFull;Result=(Read-Smoke 'fifth')}

@@ -20,13 +20,15 @@ MVP sử dụng Relay API **bên trong Multiplayer Services SDK**, theo [hướn
 | PlayerHealthView / PlayerHealthSetupTool | Thanh máu/HUD theo sự kiện, công cụ test Host Development và cài prefab có backup |
 | NetworkHitscanWeapon / CombatRules / ShotGate | Owner yêu cầu bắn, Host kiểm tra aim/LOS/cadence/sequence và quyết định damage |
 | TrainingTarget / WeaponHUD / CombatSetupTool | Bia tập bắn đồng bộ, crosshair/HIT/tracer, prefab migration có backup |
+| RobotEnemy / EnemyState / EnemyRules | Một robot server-authoritative, NavMesh patrol/chase/melee, HP/death/respawn |
+| RobotEnemyView / EnemySetupTool | Visual/HP/state của robot, bake NavMesh sân mẫu, đăng ký prefab có backup |
 | LocalPlayerCamera | Cinemachine chỉ theo owner, chuột orbit, Esc mở/khóa cursor |
 | MultiplayerRoomUI | UI theo sự kiện, Ready, Copy Code, quyền Start/Leave |
 | MultiplayerSetupTool | Tạo asset/scene không ghi đè; validate, build Windows |
 | MultiplayerSmokeHarness | Kiểm thử loopback opt-in chỉ Editor/Development Build |
 
 ## Quyền xử lý
-Host ghi roster, phase, transform và HP. Client gửi **hướng di chuyển**, không gửi vị trí cuối cùng. Server kiểm tra sender, hữu hạn, sequence, độ lớn <= 1, tần suất, input timeout và khả năng hoạt động theo Health. NetworkTransform mặc định server authoritative + interpolation. Chưa có prediction/reconciliation. Health và combat hitscan đã triển khai, xem PLAYER_HEALTH_SYSTEM.md và BASIC_COMBAT_SYSTEM.md; protocol hiện tại là 4. Chỉ Host quyết định kết quả hit/damage; friendly fire mặc định OFF.
+Host ghi roster, phase, transform và HP. Client gửi **hướng di chuyển**, không gửi vị trí cuối cùng. Server kiểm tra sender, hữu hạn, sequence, độ lớn <= 1, tần suất, input timeout và khả năng hoạt động theo Health. NetworkTransform mặc định server authoritative + interpolation. Chưa có prediction/reconciliation. Health, combat hitscan và Enemy đầu tiên đã triển khai; protocol hiện tại là 7. Chỉ Host quyết định hit/damage và chạy NavMeshAgent/AI; friendly fire mặc định OFF giữa Player. Xem PLAYER_HEALTH_SYSTEM.md, BASIC_COMBAT_SYSTEM.md và FIRST_ENEMY_SYSTEM.md.
 
 Anonymous Authentication xác thực với UGS, Relay kiểm soát truy cập allocation. Connection Approval kiểm tra wire protocol, phòng mở và số slot đã reserve; payload không phải bằng chứng danh tính UGS. Không có backend xác thực player token độc lập trong MVP. Người có Join Code có thể yêu cầu vào phòng khi còn chỗ. Không gửi token UGS/Relay vào log hoặc roster.
 
@@ -47,11 +49,15 @@ Start cũng yêu cầu số slot đã approval, số client đã kết nối và
 Menu chứa NetworkManager/Session persistent; Room được spawn với `destroyWithScene=false`. Approval luôn `CreatePlayerObject=false`. Sau `LoadEventCompleted` của NGO, Host spawn mỗi PlayerObject đúng một lần ở slot tương ứng. Player thuộc gameplay scene; manager/room không được đặt lại trong gameplay scene. Client load timeout bị ngắt kết nối.
 
 ## Mở rộng co-op
-Đã có combat hitscan cơ bản và bia tập bắn; chưa triển khai inventory, AI hoặc quest. Khi mở rộng, dùng NetworkBehaviour cụ thể trước khi tạo interface:
-- Health/damage đã có API server-only và đồng bộ HP/Downed. Combat và revive về sau phải validate hit/range/cooldown/trạng thái sống trên Host trước khi thay đổi Health; chưa có cơ chế hồi sinh gameplay.
-- Enemy/Boss AI: chạy server; client hiển thị trạng thái/animation và effect.
+Đã có combat hitscan, bia tập bắn và một robot AI trên sân mẫu; chưa triển khai inventory, Boss AI hoặc quest. Khi mở rộng, dùng NetworkBehaviour cụ thể trước khi tạo interface:
+- Health/damage đã có API server-only và đồng bộ HP/Downed. Combat và revive đều validate trên Host. Giữ E 3 giây, trong 2,5 m và có LOS để cứu đồng đội gục với 40% HP; channel bị hủy khi gián đoạn. Team wipe do Host phát hiện và reset vòng thử nghiệm. Xem DOWNED_REVIVE_SYSTEM.md.
+- Enemy robot hiện chạy server, Client hiển thị transform/HP/mode; Boss/waves/nhiều loại enemy và hệ thống spawn theo nhiệm vụ là bước sau. NavMesh hiện dành riêng cho sân mẫu, chưa phải pipeline bản đồ đầy đủ.
 - Inventory: server quyết định item ownership; tách dữ liệu riêng và dữ liệu công khai.
 - Mission/quest: server ghi tiến độ chung, điều kiện hoàn thành và phần thưởng.
 - CONTROL CHIP / AI Core: server giữ client đang tương tác, điều kiện có chip, khoảng cách, thời gian channel và tiến độ. Một người channel, đồng đội bảo vệ; mất kết nối/downed/rời phạm vi thì server hủy channel hoặc xử lý theo thiết kế. Client chỉ hiển thị tiến độ đã đồng bộ.
 
 Giới hạn: Host là điểm lỗi duy nhất, Host có thể gian lận, không dedicated server/host migration, không reconnect giữa trận, không lưu tiến độ, không bù trễ combat. Relay không thay thế server authority.
+
+
+## Menu và chọn màn
+Host chọn một trong hai scene whitelist (Training Grounds / Containment Yard), đồng bộ bằng SelectedLevel server-write. Đổi màn trong Lobby đặt toàn bộ Ready về false. StartGame kiểm tra scene tồn tại trong build rồi tải bằng NGO, chỉ spawn sau LoadEventCompleted của scene đã chọn. Menu prefab dùng chung Session hiện có, không thêm NetworkManager; xem MENU_LEVEL_SELECTION.md.

@@ -29,10 +29,17 @@ namespace LastProtocol
         }
         public HealthState Heal(int amount)
         {
-            // Recovering a downed teammate belongs to the future revive system.
+            // Ordinary healing cannot bypass the validated teammate revive channel.
             if (!IsInitialized || amount <= 0 || IsDowned) return this;
             var next = this;
             next.current += Math.Min(amount, maximum - current);
+            return next;
+        }
+        public HealthState Revive(int amount)
+        {
+            if (!IsDowned || amount <= 0) return this;
+            var next = this;
+            next.current = Math.Min(amount, maximum);
             return next;
         }
         public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter

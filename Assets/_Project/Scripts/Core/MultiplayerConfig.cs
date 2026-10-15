@@ -6,11 +6,12 @@ namespace LastProtocol
     public sealed class MultiplayerConfig : ScriptableObject
     {
         public const int MaxPlayers = 4;
-        public const int ProtocolVersion = 4;
+        public const int ProtocolVersion = 7;
         public const string MenuScene = "MainMenu";
         public const string GameplayScene = "MultiplayerTest";
         public const int NetworkTickRate = 30;
         public const float InputInterval = 1f / NetworkTickRate;
+        public const float ReviveInputInterval = 0.1f;
 
         [Min(2)] public int minimumPlayersToStart = 2;
         [Min(5)] public float operationTimeoutSeconds = 30;
@@ -31,7 +32,22 @@ namespace LastProtocol
         public bool friendlyFire;
         [Min(1)] public int targetMaxHealth = 100;
         [Min(1)] public float targetResetSeconds = 3;
+        [Min(1)] public int enemyMaxHealth = 100;
+        [Min(0.1f)] public float enemyMoveSpeed = 3;
+        [Min(1)] public float enemyDetectionRange = 12;
+        [Min(1)] public float enemyLoseRange = 18;
+        [Min(1)] public float enemyLeashDistance = 22;
+        [Min(0.5f)] public float enemyAttackRange = 1.8f;
+        [Min(1)] public int enemyAttackDamage = 10;
+        [Min(0.1f)] public float enemyAttackWindup = 0.45f;
+        [Min(0.1f)] public float enemyAttackCooldown = 1;
+        [Min(1)] public float enemyRespawnSeconds = 8;
+        [Min(0.5f)] public float reviveRange = 2.5f;
+        [Min(0.5f)] public float reviveDuration = 3;
+        [Range(0.01f, 1)] public float reviveHealthFraction = 0.4f;
+        [Min(0.3f)] public float reviveHeartbeatTimeout = 0.5f;
         public string servicesEnvironment = "production";
+        public MenuFrontEnd menuPrefab;
 
         public bool IsValid => minimumPlayersToStart >= 1 && minimumPlayersToStart <= MaxPlayers
             && FiniteAtLeast(operationTimeoutSeconds, 5) && FiniteAtLeast(connectionTimeoutSeconds, 5)
@@ -42,7 +58,16 @@ namespace LastProtocol
             && FiniteAtLeast(cameraDistance, 1) && playerMaxHealth >= 1
             && weaponDamage >= 1 && FiniteAtLeast(weaponRange, 1)
             && FiniteAtLeast(weaponShotsPerSecond, 1) && weaponShotsPerSecond <= 10
-            && targetMaxHealth >= 1 && FiniteAtLeast(targetResetSeconds, 1);
+            && targetMaxHealth >= 1 && FiniteAtLeast(targetResetSeconds, 1)
+            && enemyMaxHealth >= 1 && FiniteAtLeast(enemyMoveSpeed, 0.1f)
+            && FiniteAtLeast(enemyDetectionRange, 1) && FiniteAtLeast(enemyLoseRange, enemyDetectionRange)
+            && FiniteAtLeast(enemyLeashDistance, enemyLoseRange) && FiniteAtLeast(enemyAttackRange, 0.5f)
+            && enemyAttackRange <= enemyDetectionRange && enemyAttackDamage >= 1
+            && FiniteAtLeast(enemyAttackWindup, 0.1f) && FiniteAtLeast(enemyAttackCooldown, 0.1f)
+            && FiniteAtLeast(enemyRespawnSeconds, 1)
+            && FiniteAtLeast(reviveRange, 0.5f) && FiniteAtLeast(reviveDuration, 0.5f)
+            && FiniteAtLeast(reviveHealthFraction, 0.01f) && reviveHealthFraction <= 1
+            && FiniteAtLeast(reviveHeartbeatTimeout, 0.3f) && reviveHeartbeatTimeout <= reviveDuration;
 
         private static bool FiniteAtLeast(float value, float minimum) =>
             !float.IsNaN(value) && !float.IsInfinity(value) && value >= minimum;

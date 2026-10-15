@@ -30,6 +30,11 @@ namespace LastProtocol
             public int maximumTargets, shootingPlayers, damagingPlayers;
             public bool targetDamageObserved, targetDownObserved, targetResetObserved;
             public bool downedFireRejected, invalidAimRejected, friendlyFireBlocked, shotSpamLimited;
+            public EnemySmokeReport enemy;
+            public ReviveSmokeReport revive;
+            public int selectedLevel;
+            public string activeScene;
+            public bool levelSelectionSynced, readyResetObserved, clientLevelChangeRejected, loadedSelectedScene;
             public float elapsed;
         }
         private MultiplayerSession session;
@@ -49,6 +54,10 @@ namespace LastProtocol
         private bool testJumpSent, testAirJumpSent;
         private bool healthTest;
         private bool combatTest;
+        private EnemySmokeScenario enemyScenario;
+        private ReviveSmokeScenario reviveScenario;
+        private bool levelTest, sawOtherLevel;
+        private int requestedLevel, observedLevel = -1, levelSwitchStage;
         private int combatRequestStage;
         private bool combatPositionsSet;
         private readonly HashSet<ulong> damagedTargets = new HashSet<ulong>(), downedTargets = new HashSet<ulong>();
@@ -72,14 +81,21 @@ namespace LastProtocol
             autoStart = (int)Number(args, "--lp-auto-start", MultiplayerConfig.MaxPlayers);
             healthTest = Array.IndexOf(args, "--lp-health-test") >= 0;
             combatTest = Array.IndexOf(args, "--lp-combat-test") >= 0;
+            if (Array.IndexOf(args, "--lp-enemy-test") >= 0) { enemyScenario = new EnemySmokeScenario(); combatTest = true; }
+            if (Array.IndexOf(args, "--lp-revive-test") >= 0) { reviveScenario = new ReviveSmokeScenario(); combatTest = true; }
             healthTest |= combatTest;
+            levelTest = Array.IndexOf(args, "--lp-level-test") >= 0;
+            requestedLevel = (int)Number(args, "--lp-level", 0);
             leaveAfter = Number(args, "--lp-leave-after", 0);
             rejoinAfter = Number(args, "--lp-rejoin-after", 0);
             recreateAfter = Number(args, "--lp-recreate-after", 0);
             startTime = Time.realtimeSinceStartup;
             session = MultiplayerSession.Instance;
             result = new Result { role = role };
+            if (enemyScenario != null) result.enemy = enemyScenario.Report;
+            if (reviveScenario != null) result.revive = reviveScenario.Report;
             active = true;
+            if (role == "host") session.TrySelectLevel(requestedLevel);
             try { await session.StartLocalTestAsync(role == "host"); }
             catch (Exception exception) { result.error = exception.Message; }
         }
@@ -98,6 +114,7 @@ namespace LastProtocol
             result.sawHostDisconnect |= result.role == "client" && result.confirmedConnection && session.State == SessionState.Error;
             if (session.Room != null)
             {
+                if (levelTest) CheckLevelSelection();
                 result.currentMembers = session.Room.Members.Count;
                 if (result.currentMembers < previousMembers) result.departuresObserved++;
                 previousMembers = result.currentMembers;
@@ -119,6 +136,8 @@ namespace LastProtocol
             if (session.State == SessionState.InGame)
             {
                 result.enteredGame = true;
+                result.activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+                result.loadedSelectedScene |= result.activeScene == LevelCatalog.Get(requestedLevel)?.SceneName;
                 gameTime += Time.unscaledDeltaTime;
                 var players = FindObjectsByType<NetworkPlayerController>();
                 result.maximumPlayers = Mathf.Max(result.maximumPlayers, players.Length);
@@ -164,11 +183,40 @@ namespace LastProtocol
                 result.rotatedPlayers = rotated.Count;
                 result.jumpedPlayers = jumped.Count;
                 result.sprintedPlayers = sprinted.Count;
-                if (healthTest) CheckHealth(players);
+                if (healthTest && ((enemyScenario == null && reviveScenario == null) || gameTime < 23)) CheckHealth(players);
                 if (combatTest) CheckCombat(players);
+                enemyScenario?.Tick(session, players, gameTime);
+                reviveScenario?.Tick(session, players, gameTime);
             }
             if (result.elapsed >= nextCapture) { nextCapture = result.elapsed + 1; WriteResult(); }
             if (result.elapsed >= duration) { wroteFinal = true; WriteResult(); Application.Quit(); }
+        }
+        private void CheckLevelSelection()
+        {
+            var room = session.Room;
+            if (session.IsHost && session.State == SessionState.Lobby && room.Members.Count == MultiplayerConfig.MaxPlayers)
+            {
+                bool allReady = true;
+                foreach (var member in room.Members) allReady &= member.Ready;
+                if (allReady && ((levelSwitchStage == 0 && result.elapsed >= 15) || (levelSwitchStage == 1 && result.elapsed >= 19)))
+                {
+                    bool selected = session.TrySelectLevel(levelSwitchStage == 0 ? 1 - requestedLevel : requestedLevel);
+                    bool reset = selected;
+                    foreach (var member in room.Members) reset &= !member.Ready;
+                    result.readyResetObserved |= reset;
+                    levelSwitchStage++;
+                }
+            }
+            int current = room.SelectedLevel.Value;
+            if (observedLevel != current)
+            {
+                if (observedLevel >= 0) result.readyResetObserved |= !room.IsReady(NetworkManager.Singleton.LocalClientId);
+                observedLevel = current; readySent = false;
+            }
+            sawOtherLevel |= current != requestedLevel;
+            result.selectedLevel = current;
+            result.levelSelectionSynced |= sawOtherLevel && current == requestedLevel;
+            if (!session.IsHost) result.clientLevelChangeRejected |= !session.TrySelectLevel(1 - current);
         }
         private void CheckHealth(NetworkPlayerController[] players)
         {
@@ -185,13 +233,14 @@ namespace LastProtocol
                     downed.Add(id);
                     if (!downedPositions.ContainsKey(id)) downedPositions[id] = player.transform.position;
                     Vector3 delta = player.transform.position - downedPositions[id];
-                    if (new Vector2(delta.x, delta.z).magnitude > 0.15f) result.movedWhileDowned = true;
+                    if (gameTime >= 8.3f && gameTime < 9.5f && new Vector2(delta.x, delta.z).magnitude > 0.15f) result.movedWhileDowned = true;
                 }
                 if (downed.Contains(id) && state.Current == session.config.playerMaxHealth)
                 {
                     reset.Add(id);
+                    if (gameTime >= 10.3f && gameTime < 11.5f) downedPositions[id] = player.transform.position;
                     Vector3 delta = player.transform.position - downedPositions[id];
-                    if (new Vector2(delta.x, delta.z).magnitude > 0.5f) recovered.Add(id);
+                    if (gameTime >= 12 && new Vector2(delta.x, delta.z).magnitude > 0.5f) recovered.Add(id);
                 }
                 if (player.IsOwner && !session.IsHost && !result.clientHealthWritesRejected && state.IsInitialized)
                 {
@@ -206,7 +255,7 @@ namespace LastProtocol
                 else if (healthStage == 1 && gameTime >= 8)
                 { foreach (var player in players) player.GetComponent<PlayerHealth>().TryApplyDamageServer(int.MaxValue); healthStage = 2; }
                 else if (healthStage == 2 && gameTime >= 10)
-                { foreach (var player in players) player.GetComponent<PlayerHealth>().DebugResetHealthServer(); healthStage = 3; }
+                { session.Room.RestartRoundServer(); healthStage = 3; }
             }
             result.initializedHealthPlayers = healthy.Count;
             result.damagedHealthPlayers = damaged.Count;
