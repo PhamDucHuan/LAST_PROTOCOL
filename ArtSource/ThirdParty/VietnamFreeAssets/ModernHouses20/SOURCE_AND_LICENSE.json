@@ -39,5 +39,10 @@
       "SHA256": "4FAA259EDA6B71351B848B7077131C50C71949C5407B9BD46139418F93D00C21"
     }
   ],
-  "status": "Downloaded and extracted; not yet integrated into the Unity map"
+  "status": "Integrated into CanThoCampus revision 11",
+  "integration": {
+    "artRevision": 11,
+    "placements": 306,
+    "report": "ArtSource/Blender/CanThoCampus/ModernHouseIntegration.json"
+  }
 }

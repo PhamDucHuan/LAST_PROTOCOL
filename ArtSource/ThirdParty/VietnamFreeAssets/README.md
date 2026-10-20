@@ -45,7 +45,7 @@
 
 ## Bổ sung ngày 20/10/2026 — 20 Houses và Town House
 
-Hai bộ sau đã tải qua nút Free Download chính thức bằng tài khoản CGTrader đang đăng nhập, tổng 7 tệp nguồn, 35.711.904 byte. Chưa tích hợp hai bộ này vào map.
+Hai bộ sau đã tải qua nút Free Download chính thức bằng tài khoản CGTrader đang đăng nhập, tổng 7 tệp nguồn, 35.711.904 byte. Đã tích hợp vào map revision 11 để thay 327 căn: 306 căn dùng bộ 20 Houses và 21 căn dùng Town House. Chi tiết chỉnh sửa, giấy phép và kiểm tra tại `Assets/_Project/Documentation/CAN_THO_MODERN_HOUSES.md`.
 
 ### Low Poly Modern House Pack — 20 Houses — ilkhom23
 

@@ -6,7 +6,7 @@ sys.dont_write_bytecode=True
 root,out=map(os.path.abspath,sys.argv[sys.argv.index('--')+1:][:2])
 os.makedirs(os.path.join(out,'Textures'),exist_ok=True)
 assets=os.path.join(root,'ArtSource/ThirdParty/VietnamFreeAssets')
-palettes=[];report=[]
+palettes=[];report=[];mirrored=0
 def triangles(o):return sum(len(p.vertices)-2 for p in o.data.polygons)
 def bounds(obs):
     pts=[o.matrix_world@Vector(p) for o in obs for p in o.bound_box]
@@ -57,7 +57,9 @@ bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.fbx(filepath=os.path.join(assets,'ModernHouses20/LowPoly_Modern_Houses_fbx.FBX'))
 objs=[o for o in bpy.context.scene.objects if o.type=='MESH'];groups=collections.defaultdict(list)
 for o in objs:
-    o.data=o.data.copy();o.data.transform(o.matrix_world);o.parent=None;o.matrix_world=Matrix.Identity(4)
+    world=o.matrix_world.copy();o.data=o.data.copy();o.data.transform(world)
+    if world.determinant()<0:o.data.flip_normals();mirrored+=1
+    o.parent=None;o.matrix_world=Matrix.Identity(4)
 bpy.context.view_layer.update()
 for o in objs:
     lo,hi=bounds([o]);groups[(round((lo.x+hi.x)/50)*25,round((lo.y+hi.y)/50)*25)].append(o)
@@ -69,7 +71,7 @@ for i,(anchor,parts) in enumerate(sorted(groups.items()),1):
         a,b=bounds([o]);s=b-a
         # The authored gardens, low bollards, pots and base plates are separate.
         # Keep actual architecture and roof/door/window parts without collapsing walls.
-        if b.z<lo.z+1.9 or max(s.x,s.y)<1.3:removed.append(o);continue
+        if b.z<lo.z+1.9 or (max(s.x,s.y)<1.3 and s.z<2.4):removed.append(o);continue
         planar(o)
         count=triangles(o)
         if count>120:reduce_detail(o,.35)
@@ -84,11 +86,13 @@ obs=[o for o in bpy.context.scene.objects if o not in before and o.type=='MESH']
 mat=material('CT11_TownHouse',os.path.join(assets,'TownHouse/Extracted/Residental_building/textures/building_texture.png'),os.path.join(assets,'TownHouse/Extracted/Residental_building/textures/building_texture_N.png'))
 original=sum(triangles(o) for o in obs)
 for o in obs:
-    o.data=o.data.copy();o.data.transform(o.matrix_world);o.parent=None;o.matrix_world=Matrix.Identity(4);planar(o);reduce_detail(o,.45)
+    world=o.matrix_world.copy();o.data=o.data.copy();o.data.transform(world)
+    if world.determinant()<0:o.data.flip_normals();mirrored+=1
+    o.parent=None;o.matrix_world=Matrix.Identity(4);planar(o);reduce_detail(o,.45)
 obj=merge('TownHouse',obs,mat)
 report.append(dict(name=obj.name,originalTriangles=original,adaptedTriangles=triangles(obj)))
 for o in list(bpy.context.scene.objects):
     if o.type!='MESH':bpy.data.objects.remove(o,do_unlink=True)
-with open(os.path.join(out,'PreparedAssets.json'),'w',encoding='utf-8') as f:json.dump(dict(templates=report,materials=palettes),f,indent=2)
+with open(os.path.join(out,'PreparedAssets.json'),'w',encoding='utf-8') as f:json.dump(dict(templates=report,materials=palettes,mirroredSourceTransformsCorrected=mirrored),f,indent=2)
 bpy.ops.wm.save_as_mainfile(filepath=os.path.join(out,'ModernHouses.Prepared.blend'))
 print('MODERN_HOUSES_PREPARED '+json.dumps(report),flush=True)

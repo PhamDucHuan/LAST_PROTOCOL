@@ -1,0 +1,241 @@
+{
+  "templates": [
+    {
+      "name": "ModernHouse01",
+      "sourceAnchor": [
+        0,
+        -100
+      ],
+      "originalTriangles": 1840,
+      "adaptedTriangles": 556,
+      "removedGardenParts": 11
+    },
+    {
+      "name": "ModernHouse02",
+      "sourceAnchor": [
+        0,
+        -75
+      ],
+      "originalTriangles": 1891,
+      "adaptedTriangles": 628,
+      "removedGardenParts": 14
+    },
+    {
+      "name": "ModernHouse03",
+      "sourceAnchor": [
+        0,
+        -50
+      ],
+      "originalTriangles": 1553,
+      "adaptedTriangles": 492,
+      "removedGardenParts": 11
+    },
+    {
+      "name": "ModernHouse04",
+      "sourceAnchor": [
+        0,
+        -25
+      ],
+      "originalTriangles": 1559,
+      "adaptedTriangles": 481,
+      "removedGardenParts": 12
+    },
+    {
+      "name": "ModernHouse05",
+      "sourceAnchor": [
+        0,
+        0
+      ],
+      "originalTriangles": 1461,
+      "adaptedTriangles": 457,
+      "removedGardenParts": 10
+    },
+    {
+      "name": "ModernHouse06",
+      "sourceAnchor": [
+        25,
+        -100
+      ],
+      "originalTriangles": 1328,
+      "adaptedTriangles": 378,
+      "removedGardenParts": 10
+    },
+    {
+      "name": "ModernHouse07",
+      "sourceAnchor": [
+        25,
+        -75
+      ],
+      "originalTriangles": 1696,
+      "adaptedTriangles": 331,
+      "removedGardenParts": 10
+    },
+    {
+      "name": "ModernHouse08",
+      "sourceAnchor": [
+        25,
+        -50
+      ],
+      "originalTriangles": 1205,
+      "adaptedTriangles": 406,
+      "removedGardenParts": 9
+    },
+    {
+      "name": "ModernHouse09",
+      "sourceAnchor": [
+        25,
+        -25
+      ],
+      "originalTriangles": 1677,
+      "adaptedTriangles": 459,
+      "removedGardenParts": 11
+    },
+    {
+      "name": "ModernHouse10",
+      "sourceAnchor": [
+        25,
+        0
+      ],
+      "originalTriangles": 1703,
+      "adaptedTriangles": 562,
+      "removedGardenParts": 14
+    },
+    {
+      "name": "ModernHouse11",
+      "sourceAnchor": [
+        50,
+        -100
+      ],
+      "originalTriangles": 1649,
+      "adaptedTriangles": 555,
+      "removedGardenParts": 9
+    },
+    {
+      "name": "ModernHouse12",
+      "sourceAnchor": [
+        50,
+        -75
+      ],
+      "originalTriangles": 1472,
+      "adaptedTriangles": 598,
+      "removedGardenParts": 8
+    },
+    {
+      "name": "ModernHouse13",
+      "sourceAnchor": [
+        50,
+        -50
+      ],
+      "originalTriangles": 1740,
+      "adaptedTriangles": 492,
+      "removedGardenParts": 10
+    },
+    {
+      "name": "ModernHouse14",
+      "sourceAnchor": [
+        50,
+        -25
+      ],
+      "originalTriangles": 1728,
+      "adaptedTriangles": 464,
+      "removedGardenParts": 10
+    },
+    {
+      "name": "ModernHouse15",
+      "sourceAnchor": [
+        50,
+        0
+      ],
+      "originalTriangles": 1539,
+      "adaptedTriangles": 430,
+      "removedGardenParts": 16
+    },
+    {
+      "name": "ModernHouse16",
+      "sourceAnchor": [
+        75,
+        -100
+      ],
+      "originalTriangles": 1189,
+      "adaptedTriangles": 398,
+      "removedGardenParts": 9
+    },
+    {
+      "name": "ModernHouse17",
+      "sourceAnchor": [
+        75,
+        -75
+      ],
+      "originalTriangles": 1538,
+      "adaptedTriangles": 455,
+      "removedGardenParts": 11
+    },
+    {
+      "name": "ModernHouse18",
+      "sourceAnchor": [
+        75,
+        -50
+      ],
+      "originalTriangles": 1848,
+      "adaptedTriangles": 649,
+      "removedGardenParts": 10
+    },
+    {
+      "name": "ModernHouse19",
+      "sourceAnchor": [
+        75,
+        -25
+      ],
+      "originalTriangles": 1328,
+      "adaptedTriangles": 373,
+      "removedGardenParts": 10
+    },
+    {
+      "name": "ModernHouse20",
+      "sourceAnchor": [
+        75,
+        0
+      ],
+      "originalTriangles": 1754,
+      "adaptedTriangles": 473,
+      "removedGardenParts": 12
+    },
+    {
+      "name": "TownHouse",
+      "originalTriangles": 3598,
+      "adaptedTriangles": 1084
+    }
+  ],
+  "materials": [
+    {
+      "name": "CT11_ModernPalette",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "normalScale": 0.6,
+      "baseMap": "Textures/CT11_ModernPalette_Base.png"
+    },
+    {
+      "name": "CT11_TownHouse",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "normalScale": 0.6,
+      "baseMap": "Textures/CT11_TownHouse_Base.png",
+      "normalMap": "Textures/CT11_TownHouse_Normal.png"
+    }
+  ],
+  "mirroredSourceTransformsCorrected": 195
+}

@@ -37,6 +37,7 @@ namespace LastProtocol.Editor
         [Serializable] public sealed class LayoutBounds { public Vector3 center, size; }
         [Serializable] public sealed class NeighborhoodHouse { public string name, district, family, replaces; public Vector3 position, size, euler, front; }
         [Serializable] public sealed class PeripheralRoad { public string id, title; public float width; public Vector3[] points; }
+        [Serializable] public sealed class CampusRoad { public string name; public Vector3 a, b; public float width; }
         [Serializable] public sealed class Layout
         {
             public int version;
@@ -55,9 +56,11 @@ namespace LastProtocol.Editor
             public NeighborhoodHouse[] neighborhoodHouses;
             public PeripheralRoad[] peripheralRoads;
             public PeripheralRoad[] localLanes;
+            public CampusRoad[] roads;
             public Vector3[] streetscapeTrees, streetscapeBenches, streetscapeLamps;
             public NeighborhoodHouse[] infillBuildings;
             public NeighborhoodHouse[] importedVietnamAssets;
+            public NeighborhoodHouse[] importedModernHouses;
             public Vector3[] infillAccessChecks;
             public Vector3[] waterBoundary, waterChecks;
             public Vector3 neighborhoodCameraProbe, neighborhoodCameraEuler;
@@ -180,7 +183,7 @@ namespace LastProtocol.Editor
             {
                 importer.textureType = TextureImporterType.NormalMap; importer.sRGBTexture = false; importer.SaveAndReimport();
             }
-            if (relative.Contains("CT10_Pho_") && importer.filterMode != FilterMode.Point)
+            if ((relative.Contains("CT10_Pho_") || relative.Contains("CT11_ModernPalette")) && importer.filterMode != FilterMode.Point)
             { importer.filterMode = FilterMode.Point; importer.SaveAndReimport(); }
             var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
             if (texture == null) throw new InvalidOperationException("Campus texture import failed: " + path);
@@ -335,6 +338,21 @@ namespace LastProtocol.Editor
                 targets = targets.Take(targets.Length - 1).Concat(featured.Select(x => x.position + Vector3.up * (x.family == "Pho" ? .5f : 2.8f))).Concat(new[] { targets.Last() }).ToArray();
                 names = names.Take(names.Length - 1).Concat(featured.Select((x, i) => "Unity-CanTho-Vietnam-" + x.family + "-" + i)).Concat(new[] { names.Last() }).ToArray();
             }
+            if (ReadLayout().importedModernHouses is { Length: > 0 } modern)
+            {
+                var featured = modern.GroupBy(x => x.family).Select(x => x.First()).ToArray();
+                var eyes = featured.Select(h => h.position + h.front * (h.size.z * .5f + 11)
+                    + Vector3.Cross(Vector3.up, h.front) * 6 + Vector3.up * 5).ToArray();
+                positions = positions.Take(positions.Length - 1).Concat(eyes).Concat(new[] { positions.Last() }).ToArray();
+                targets = targets.Take(targets.Length - 1).Concat(featured.Select(h => h.position + Vector3.up * 3.2f)).Concat(new[] { targets.Last() }).ToArray();
+                names = names.Take(names.Length - 1).Concat(featured.Select(h => "Unity-CanTho-New-" + h.family)).Concat(new[] { names.Last() }).ToArray();
+            }
+            positions = positions.Take(positions.Length - 1).Concat(new[] {
+                new Vector3(-30, 23, 58), new Vector3(-45.5f, 76, 13.5f), positions.Last() }).ToArray();
+            targets = targets.Take(targets.Length - 1).Concat(new[] {
+                new Vector3(-45.5f, 4, 16), new Vector3(-45.5f, 0, 13.51f), targets.Last() }).ToArray();
+            names = names.Take(names.Length - 1).Concat(new[] {
+                "Unity-CanTho-TurtleRoadClearance", "Unity-CanTho-TurtlePlot", names.Last() }).ToArray();
             for (int i = 0; i < positions.Length; i++)
             {
                 // Overview is an inspection view, so remove distance fog temporarily.

@@ -117,6 +117,16 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: CT11_ModernPalette
+    second: {fileID: 2100000, guid: 86cbd80c0537d6a4d81cc84e9d3cee93, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT11_TownHouse
+    second: {fileID: 2100000, guid: 39dde9178b8df014bb2d0f4615c228d1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: CT2_Asphalt
     second: {fileID: 2100000, guid: 24808765fa751f845bef949737a04115, type: 2}
   - first:
