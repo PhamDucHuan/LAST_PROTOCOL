@@ -1,0 +1,18 @@
+{
+  "title": "Residential Building - Town House",
+  "author": "narkr",
+  "cgtraderItemId": 713042,
+  "sourceUrl": "https://www.cgtrader.com/free-3d-models/exterior/house/residental-building-town-house",
+  "downloadedDate": "2026-10-20",
+  "licenseLabel": "Royalty Free License (no AI)",
+  "termsUrl": "https://www.cgtrader.com/pages/terms-and-conditions",
+  "downloadMethod": "Official signed-in CGTrader Free Download page",
+  "originalFiles": [
+    {
+      "File": "TownHouse/Residental_building_full_file.zip",
+      "Bytes": 18101550,
+      "SHA256": "2A038030E7925677BED04C90571834560E4D2548743DCC59944BF66F922588E2"
+    }
+  ],
+  "status": "Downloaded and extracted; not yet integrated into the Unity map"
+}

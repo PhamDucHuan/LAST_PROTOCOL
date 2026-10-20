@@ -7,6 +7,116 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: CT10_Asian_Dry_concrete
+    second: {fileID: 2100000, guid: 26b305f0f24d8304d895709ead69c458, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_Asian_Floor_Tiling
+    second: {fileID: 2100000, guid: 068901e4dc140c7419ef97160c87a936, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_Asian_Frozen_white_metal
+    second: {fileID: 2100000, guid: 1e24139e6c6c930498a2a57519d9a6d6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_Asian_Glass_002
+    second: {fileID: 2100000, guid: 302c9ccc36f34e7499dfa9b93685bee2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_Asian_Large_Floor_Tiles_001
+    second: {fileID: 2100000, guid: f06469870a27e7447ab714ce75594fac, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_Asian_Metal
+    second: {fileID: 2100000, guid: b6e6fe25550daa14cbfb443bc69198fa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_Asian_Metal_002
+    second: {fileID: 2100000, guid: aa3e5cca6fa242042bfb20709b3e09fb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_Asian_Plastic
+    second: {fileID: 2100000, guid: 80bcf2ceef897104ea98afa13ccc26dd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_Asian_Stone_Brick
+    second: {fileID: 2100000, guid: 89499d19508a81540b1a40ef4a6f62bd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_Asian_Text_o_dien_new
+    second: {fileID: 2100000, guid: dc64e4952f2bea346ae76626d126a8e0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_Asian_Tile_Floor
+    second: {fileID: 2100000, guid: 765ed5a0670898f44b0018624fbc2cd7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_Asian_White_Wall_Paint
+    second: {fileID: 2100000, guid: b9956ce1e5f3096439fe2c19dc4c362b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_Asian_curtan_bc
+    second: {fileID: 2100000, guid: 0b641d1a1ee3e10458885981fbaf1531, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_Asian_text_cua_cuon
+    second: {fileID: 2100000, guid: 541ad6acf471fce47836667bc08b7fb5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_Asian_wall_black
+    second: {fileID: 2100000, guid: e154a4aece7bf9c47b759897e8ca1086, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_HoiAn_Base_Texture_002
+    second: {fileID: 2100000, guid: 4b93e3e79591e6b46b3361fe37da56b7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_HoiAn_DoorwWindow_Texture_002
+    second: {fileID: 2100000, guid: e7374574fda267a4db0b91b4de398102, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_HoiAn_RailingClumn_Texture_002
+    second: {fileID: 2100000, guid: 4dc71cded2bac6649b9ec1aaeb78f893, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_HoiAn_RoofBase_Texture_002
+    second: {fileID: 2100000, guid: bcf55004d2a0ae7439ff3e8c254c793a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_HoiAn_Walls_Texture_002
+    second: {fileID: 2100000, guid: b80b57841b1fc3846b58fa02c9dfb278, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_Pho_Atlas
+    second: {fileID: 2100000, guid: 16533b560e7e83641940e6fbeca41c5f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT10_PolygonTree_Lowpoly_VietNam_v01_M
+    second: {fileID: 2100000, guid: 747c8256e3fc5a64b9dbaee7f571da72, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: CT2_Asphalt
     second: {fileID: 2100000, guid: 24808765fa751f845bef949737a04115, type: 2}
   - first:

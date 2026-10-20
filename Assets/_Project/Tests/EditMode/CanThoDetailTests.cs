@@ -15,13 +15,13 @@ namespace LastProtocol.Tests
         [Test]
         public void DetailedArtHasNativeMaterialsAndNewObstacleIsExcludedFromNavigation()
         {
-            Assert.That(CanThoMapSetupTool.ReadLayout().artRevision, Is.InRange(2, 9));
+            Assert.That(CanThoMapSetupTool.ReadLayout().artRevision, Is.InRange(2, 10));
             Assert.NotNull(AssetDatabase.LoadMainAssetAtPath(CanThoDetailSetupTool.ProfilePath));
             var model = AssetDatabase.LoadAssetAtPath<GameObject>(CanThoMapSetupTool.ModelPath);
             var renderers = model.GetComponentsInChildren<MeshRenderer>();
             Assert.IsTrue(renderers.Any(x => x.name.Contains("03_LearningResource")));
             Assert.IsTrue(renderers.Any(x => x.name.Contains("33_Transit")));
-            Assert.IsTrue(renderers.All(x => x.sharedMaterials.All(m => m != null && (m.name.StartsWith("CT2_") || m.name.StartsWith("CT3_") || m.name.StartsWith("CT4_") || m.name.StartsWith("CT5_") || m.name.StartsWith("CT9_")) && m.shader.name == "Universal Render Pipeline/Lit")));
+            Assert.IsTrue(renderers.All(x => x.sharedMaterials.All(m => m != null && (m.name.StartsWith("CT2_") || m.name.StartsWith("CT3_") || m.name.StartsWith("CT4_") || m.name.StartsWith("CT5_") || m.name.StartsWith("CT9_") || m.name.StartsWith("CT10_")) && m.shader.name == "Universal Render Pipeline/Lit")));
             var nav = NavMesh.AddNavMeshData(AssetDatabase.LoadAssetAtPath<NavMeshData>(CanThoMapSetupTool.NavigationPath));
             try { Assert.IsFalse(NavMesh.SamplePosition(new Vector3(75, 0, -25), out _, 0.5f, NavMesh.AllAreas), "Data mast must block AI navigation"); }
             finally { nav.Remove(); }

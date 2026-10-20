@@ -1,0 +1,616 @@
+{
+  "sourceRevision": 9,
+  "artRevision": 10,
+  "sources": [
+    {
+      "family": "HoiAn",
+      "originalTriangles": 80007,
+      "adaptedTriangles": 3847,
+      "materials": 5
+    },
+    {
+      "family": "Asian",
+      "originalTriangles": 124364,
+      "adaptedTriangles": 2382,
+      "materials": 15
+    },
+    {
+      "family": "PolygonTree",
+      "originalTriangles": 581,
+      "adaptedTriangles": 581,
+      "materials": 1
+    },
+    {
+      "family": "Pho",
+      "originalTriangles": 396,
+      "adaptedTriangles": 350,
+      "materials": 1
+    },
+    {
+      "family": "Pho",
+      "originalTriangles": 496,
+      "adaptedTriangles": 360,
+      "materials": 1
+    },
+    {
+      "family": "Pho",
+      "originalTriangles": 1490,
+      "adaptedTriangles": 420,
+      "materials": 1
+    },
+    {
+      "family": "Pho",
+      "originalTriangles": 172,
+      "adaptedTriangles": 172,
+      "materials": 1
+    }
+  ],
+  "placements": [
+    {
+      "name": "Vietnam HoiAn District house 181",
+      "family": "HoiAn",
+      "replaces": "District house 181",
+      "position": {
+        "x": -274.0,
+        "y": 0,
+        "z": -30.4
+      },
+      "size": {
+        "x": 6.1,
+        "y": 5.1,
+        "z": 7.2
+      },
+      "front": {
+        "x": -0.0,
+        "y": 0,
+        "z": -1.0
+      },
+      "euler": {
+        "x": 0,
+        "y": -180.0,
+        "z": 0
+      },
+      "triangles": 3847,
+      "originalParcel": {
+        "name": "District house 181",
+        "position": {
+          "x": -274.0,
+          "y": 0,
+          "z": -27.0
+        },
+        "size": {
+          "x": 7.5,
+          "y": 6.8,
+          "z": 14
+        },
+        "euler": {
+          "x": 0,
+          "y": -180.0,
+          "z": 0
+        },
+        "district": "bung_xang",
+        "front": {
+          "x": -0.0,
+          "y": 0,
+          "z": -1.0
+        }
+      }
+    },
+    {
+      "name": "Vietnam HoiAn District house 182",
+      "family": "HoiAn",
+      "replaces": "District house 182",
+      "position": {
+        "x": -286.0,
+        "y": 0,
+        "z": -30.4
+      },
+      "size": {
+        "x": 6.1,
+        "y": 5.1,
+        "z": 7.2
+      },
+      "front": {
+        "x": -0.0,
+        "y": 0,
+        "z": -1.0
+      },
+      "euler": {
+        "x": 0,
+        "y": -180.0,
+        "z": 0
+      },
+      "triangles": 3847,
+      "originalParcel": {
+        "name": "District house 182",
+        "position": {
+          "x": -286.0,
+          "y": 0,
+          "z": -29.0
+        },
+        "size": {
+          "x": 6.5,
+          "y": 6.8,
+          "z": 10
+        },
+        "euler": {
+          "x": 0,
+          "y": -180.0,
+          "z": 0
+        },
+        "district": "bung_xang",
+        "front": {
+          "x": -0.0,
+          "y": 0,
+          "z": -1.0
+        }
+      }
+    },
+    {
+      "name": "Vietnam Asian District house 044",
+      "family": "Asian",
+      "replaces": "District house 044",
+      "position": {
+        "x": -233.74699,
+        "y": 0,
+        "z": -4.97336
+      },
+      "size": {
+        "x": 6.1,
+        "y": 13.2,
+        "z": 17.7
+      },
+      "front": {
+        "x": -0.98503,
+        "y": 0,
+        "z": -0.17238
+      },
+      "euler": {
+        "x": 0,
+        "y": -99.92625,
+        "z": 0
+      },
+      "triangles": 2382,
+      "originalParcel": {
+        "name": "District house 044",
+        "position": {
+          "x": -233.59924,
+          "y": 0,
+          "z": -4.9475
+        },
+        "size": {
+          "x": 6.9,
+          "y": 13.2,
+          "z": 18
+        },
+        "euler": {
+          "x": 0,
+          "y": -99.92625,
+          "z": 0
+        },
+        "district": "bung_xang",
+        "front": {
+          "x": -0.98503,
+          "y": 0,
+          "z": -0.17238
+        }
+      }
+    },
+    {
+      "name": "Vietnam Asian District house 086",
+      "family": "Asian",
+      "replaces": "District house 086",
+      "position": {
+        "x": -235.81556,
+        "y": 0,
+        "z": 6.847
+      },
+      "size": {
+        "x": 6.1,
+        "y": 10.0,
+        "z": 17.7
+      },
+      "front": {
+        "x": -0.98503,
+        "y": 0,
+        "z": -0.17238
+      },
+      "euler": {
+        "x": 0,
+        "y": -99.92625,
+        "z": 0
+      },
+      "triangles": 2382,
+      "originalParcel": {
+        "name": "District house 086",
+        "position": {
+          "x": -235.66781,
+          "y": 0,
+          "z": 6.87286
+        },
+        "size": {
+          "x": 6.9,
+          "y": 10.0,
+          "z": 18
+        },
+        "euler": {
+          "x": 0,
+          "y": -99.92625,
+          "z": 0
+        },
+        "district": "bung_xang",
+        "front": {
+          "x": -0.98503,
+          "y": 0,
+          "z": -0.17238
+        }
+      }
+    },
+    {
+      "name": "Vietnam Pho dining 0",
+      "family": "Pho",
+      "position": {
+        "x": -220,
+        "y": 0,
+        "z": 265.5
+      },
+      "size": {
+        "x": 2,
+        "y": 0.95,
+        "z": 0.8
+      },
+      "front": {
+        "x": 0,
+        "y": 0,
+        "z": -1
+      }
+    },
+    {
+      "name": "Vietnam Pho dining 1",
+      "family": "Pho",
+      "position": {
+        "x": -220,
+        "y": 0,
+        "z": 268.5
+      },
+      "size": {
+        "x": 2,
+        "y": 0.95,
+        "z": 0.8
+      },
+      "front": {
+        "x": 0,
+        "y": 0,
+        "z": -1
+      }
+    },
+    {
+      "name": "Vietnam Pho dining 2",
+      "family": "Pho",
+      "position": {
+        "x": -220,
+        "y": 0,
+        "z": 278.5
+      },
+      "size": {
+        "x": 2,
+        "y": 0.95,
+        "z": 0.8
+      },
+      "front": {
+        "x": 0,
+        "y": 0,
+        "z": -1
+      }
+    },
+    {
+      "name": "Vietnam Polygon tree 0",
+      "family": "PolygonTree",
+      "position": {
+        "x": -246,
+        "y": 0,
+        "z": -42
+      },
+      "size": {
+        "x": 3,
+        "y": 5,
+        "z": 3
+      },
+      "front": {
+        "x": 0,
+        "y": 0,
+        "z": -1
+      }
+    },
+    {
+      "name": "Vietnam Polygon tree 1",
+      "family": "PolygonTree",
+      "position": {
+        "x": -278,
+        "y": 0,
+        "z": -43
+      },
+      "size": {
+        "x": 3,
+        "y": 5,
+        "z": 3
+      },
+      "front": {
+        "x": 0,
+        "y": 0,
+        "z": -1
+      }
+    },
+    {
+      "name": "Vietnam Polygon tree 2",
+      "family": "PolygonTree",
+      "position": {
+        "x": -226,
+        "y": 0,
+        "z": 254
+      },
+      "size": {
+        "x": 3,
+        "y": 5,
+        "z": 3
+      },
+      "front": {
+        "x": 0,
+        "y": 0,
+        "z": -1
+      }
+    }
+  ],
+  "removedObjects": [
+    "District house 181",
+    "Infill plinth.013",
+    "Infill roof coping.013",
+    "Infill shop shutter.013",
+    "Infill entrance reveal.013",
+    "Infill awning.013",
+    "Infill window frame.080",
+    "Infill glazing.080",
+    "Infill mullion.080",
+    "Infill window frame.081",
+    "Infill glazing.081",
+    "Infill mullion.081",
+    "Infill window frame.082",
+    "Infill glazing.082",
+    "Infill mullion.082",
+    "Infill window frame.083",
+    "Infill glazing.083",
+    "Infill mullion.083",
+    "Infill balcony slab.020",
+    "Infill balcony rail.020",
+    "Infill side window.040",
+    "Infill side window.041",
+    "Infill downpipe.013",
+    "Infill solar array.013",
+    "Infill roof tank.013",
+    "District house 182",
+    "Infill plinth.014",
+    "Infill roof coping.014",
+    "Infill shop shutter.014",
+    "Infill entrance reveal.014",
+    "Infill awning.014",
+    "Infill window frame.084",
+    "Infill glazing.084",
+    "Infill mullion.084",
+    "Infill window frame.085",
+    "Infill glazing.085",
+    "Infill mullion.085",
+    "Infill window frame.086",
+    "Infill glazing.086",
+    "Infill mullion.086",
+    "Infill window frame.087",
+    "Infill glazing.087",
+    "Infill mullion.087",
+    "Infill balcony slab.021",
+    "Infill balcony rail.021",
+    "Infill side window.042",
+    "Infill side window.043",
+    "Infill downpipe.014",
+    "Infill solar array.014",
+    "Infill roof tank.014",
+    "District house 044",
+    "House plinth.043",
+    "House roof parapet.043",
+    "Recessed shop glazing.043",
+    "Shopfront pillar.086",
+    "Shopfront pillar.087",
+    "Shop sign fascia.043",
+    "Corrugated shop awning.043",
+    "Framed upper window.142",
+    "Window transom.142",
+    "Window mullion.142",
+    "Framed upper window.143",
+    "Window transom.143",
+    "Window mullion.143",
+    "Balcony slab.046",
+    "Balcony top rail.046",
+    "Balcony rail.230",
+    "Balcony rail.231",
+    "Balcony rail.232",
+    "Balcony rail.233",
+    "Balcony rail.234",
+    "Framed upper window.144",
+    "Window transom.144",
+    "Window mullion.144",
+    "Framed upper window.145",
+    "Window transom.145",
+    "Window mullion.145",
+    "Balcony slab.047",
+    "Balcony top rail.047",
+    "Balcony rail.235",
+    "Balcony rail.236",
+    "Balcony rail.237",
+    "Balcony rail.238",
+    "Balcony rail.239",
+    "Framed upper window.146",
+    "Window transom.146",
+    "Window mullion.146",
+    "Framed upper window.147",
+    "Window transom.147",
+    "Window mullion.147",
+    "Balcony slab.048",
+    "Balcony top rail.048",
+    "Balcony rail.240",
+    "Balcony rail.241",
+    "Balcony rail.242",
+    "Balcony rail.243",
+    "Balcony rail.244",
+    "Aircon condenser.010",
+    "Aircon fan grille.010",
+    "House side window surround.284",
+    "House side window glazing.284",
+    "House side window transom.284",
+    "House side window surround.285",
+    "House side window glazing.285",
+    "House side window transom.285",
+    "House side window surround.286",
+    "House side window glazing.286",
+    "House side window transom.286",
+    "House side window surround.287",
+    "House side window glazing.287",
+    "House side window transom.287",
+    "House rear window surround.142",
+    "House rear window glazing.142",
+    "House rear window mullion.142",
+    "House rear window surround.143",
+    "House rear window glazing.143",
+    "House rear window mullion.143",
+    "Rear rain ledge.071",
+    "House side window surround.288",
+    "House side window glazing.288",
+    "House side window transom.288",
+    "House side window surround.289",
+    "House side window glazing.289",
+    "House side window transom.289",
+    "House side window surround.290",
+    "House side window glazing.290",
+    "House side window transom.290",
+    "House side window surround.291",
+    "House side window glazing.291",
+    "House side window transom.291",
+    "House rear window surround.144",
+    "House rear window glazing.144",
+    "House rear window mullion.144",
+    "House rear window surround.145",
+    "House rear window glazing.145",
+    "House rear window mullion.145",
+    "Rear rain ledge.072",
+    "House side window surround.292",
+    "House side window glazing.292",
+    "House side window transom.292",
+    "House side window surround.293",
+    "House side window glazing.293",
+    "House side window transom.293",
+    "House side window surround.294",
+    "House side window glazing.294",
+    "House side window transom.294",
+    "House side window surround.295",
+    "House side window glazing.295",
+    "House side window transom.295",
+    "House rear window surround.146",
+    "House rear window glazing.146",
+    "House rear window mullion.146",
+    "House rear window surround.147",
+    "House rear window glazing.147",
+    "House rear window mullion.147",
+    "Rear rain ledge.073",
+    "House rear service door.043",
+    "Rear downpipe.043",
+    "District house 086",
+    "House plinth.085",
+    "House roof parapet.085",
+    "Recessed shop glazing.085",
+    "Shopfront pillar.170",
+    "Shopfront pillar.171",
+    "Shop sign fascia.085",
+    "Corrugated shop awning.085",
+    "Framed upper window.278",
+    "Window transom.278",
+    "Window mullion.278",
+    "Framed upper window.279",
+    "Window transom.279",
+    "Window mullion.279",
+    "Balcony slab.094",
+    "Balcony top rail.094",
+    "Balcony rail.470",
+    "Balcony rail.471",
+    "Balcony rail.472",
+    "Balcony rail.473",
+    "Balcony rail.474",
+    "Framed upper window.280",
+    "Window transom.280",
+    "Window mullion.280",
+    "Framed upper window.281",
+    "Window transom.281",
+    "Window mullion.281",
+    "Balcony slab.095",
+    "Balcony top rail.095",
+    "Balcony rail.475",
+    "Balcony rail.476",
+    "Balcony rail.477",
+    "Balcony rail.478",
+    "Balcony rail.479",
+    "House side window surround.556",
+    "House side window glazing.556",
+    "House side window transom.556",
+    "House side window surround.557",
+    "House side window glazing.557",
+    "House side window transom.557",
+    "House side window surround.558",
+    "House side window glazing.558",
+    "House side window transom.558",
+    "House side window surround.559",
+    "House side window glazing.559",
+    "House side window transom.559",
+    "House rear window surround.278",
+    "House rear window glazing.278",
+    "House rear window mullion.278",
+    "House rear window surround.279",
+    "House rear window glazing.279",
+    "House rear window mullion.279",
+    "Rear rain ledge.139",
+    "House side window surround.560",
+    "House side window glazing.560",
+    "House side window transom.560",
+    "House side window surround.561",
+    "House side window glazing.561",
+    "House side window transom.561",
+    "House side window surround.562",
+    "House side window glazing.562",
+    "House side window transom.562",
+    "House side window surround.563",
+    "House side window glazing.563",
+    "House side window transom.563",
+    "House rear window surround.280",
+    "House rear window glazing.280",
+    "House rear window mullion.280",
+    "House rear window surround.281",
+    "House rear window glazing.281",
+    "House rear window mullion.281",
+    "Rear rain ledge.140",
+    "House rear service door.085",
+    "Rear downpipe.085"
+  ],
+  "treeOptimization": {
+    "originalTriangles": 598989,
+    "removedOverlappingLeafCards": 3368,
+    "treePositionsUnchanged": true
+  },
+  "triangles": 593498,
+  "bounds": {
+    "center": {
+      "x": -90,
+      "y": 10,
+      "z": 30
+    },
+    "size": {
+      "x": 940,
+      "y": 40,
+      "z": 840
+    }
+  }
+}

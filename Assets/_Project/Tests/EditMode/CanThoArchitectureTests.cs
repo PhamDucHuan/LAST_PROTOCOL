@@ -15,7 +15,7 @@ namespace LastProtocol.Tests
         public void TiledSurfacesHaveImportedColorAndLinearNormalMapsWithMetricUVs()
         {
             var layout = CanThoMapSetupTool.ReadLayout();
-            Assert.That(layout.artRevision, Is.InRange(5, 9));
+            Assert.That(layout.artRevision, Is.InRange(5, 10));
             var textured = layout.materials.Where(x => !string.IsNullOrEmpty(x.normalMap)).ToArray();
             Assert.That(textured.Length, Is.GreaterThanOrEqualTo(8));
             foreach (var entry in textured)

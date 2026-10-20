@@ -19,7 +19,7 @@ foreach ($folder in @('Assets','Packages','ProjectSettings')) {
 if ($CanThoArtDirectory) {
     if ($Stage -notin @('CanThoDetail','CanThoDetailRefresh')) { throw 'Staged art requires CanThoDetail or CanThoDetailRefresh.' }
     $stagedLayout = Get-Content -Raw -LiteralPath (Join-Path $CanThoArtDirectory 'CanThoCampus.layout.json') | ConvertFrom-Json
-    if ($stagedLayout.artRevision -notin @(2,3,4,5,6,7,8,9)) { throw 'Staged Can Tho art must be supported revision 2 to 9.' }
+    if ($stagedLayout.artRevision -notin @(2,3,4,5,6,7,8,9,10)) { throw 'Staged Can Tho art must be supported revision 2 to 10.' }
     $artDestination = Join-Path $validation 'Assets\_Project\Art\Environments\CanThoCampus'
     foreach ($name in @('CanThoCampus.fbx','CanThoCampus.layout.json')) {
         Copy-Item -LiteralPath (Join-Path $CanThoArtDirectory $name) -Destination (Join-Path $artDestination $name) -Force

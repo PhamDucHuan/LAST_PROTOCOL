@@ -11,10 +11,11 @@ def finish(output, render):
         raise RuntimeError('Not the generated LAST_PROTOCOL campus source.')
     groups={}
     source_count=0
+    membership={obj.name:collection.name for collection in bpy.data.collections for obj in collection.objects}
     for obj in list(scene.objects):
         if obj.type!='MESH': continue
         source_count+=1
-        key=(obj.users_collection[0].name,obj.data.materials[0].name if obj.data.materials else 'None')
+        key=(membership[obj.name],obj.data.materials[0].name if obj.data.materials else 'None')
         groups.setdefault(key,[]).append(obj)
     exports=[]
     # Build merged meshes directly. Shared primitive meshes remain editable in the source;

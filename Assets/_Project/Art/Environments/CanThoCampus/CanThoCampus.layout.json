@@ -1,7 +1,7 @@
 {
   "version": 1,
   "title": "Cần Thơ • Đại học Cần Thơ Khu II",
-  "note": "Revision9: existing-land building infill. Original 940m x 840m ground, roads, water, campus and routes unchanged. Google Maps visual relationships, gameplay scale.",
+  "note": "Revision10: licensed Vietnamese architecture and dining props on existing parcels. Original land, campus buildings, roads and water retained.",
   "bounds": {
     "center": {
       "x": -90,
@@ -830,6 +830,324 @@
       "baseMap": "Textures/CT9_FacadeAtlas_Base.png",
       "normalMap": "Textures/CT9_FacadeAtlas_Normal.png",
       "normalScale": 0.7
+    },
+    {
+      "name": "CT10_HoiAn_Base_Texture_002",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_HoiAn_Base_Texture_002_Base.png"
+    },
+    {
+      "name": "CT10_HoiAn_DoorwWindow_Texture_002",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_HoiAn_DoorwWindow_Texture_002_Base.png"
+    },
+    {
+      "name": "CT10_HoiAn_RailingClumn_Texture_002",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_HoiAn_RailingClumn_Texture_002_Base.png"
+    },
+    {
+      "name": "CT10_HoiAn_RoofBase_Texture_002",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_HoiAn_RoofBase_Texture_002_Base.png"
+    },
+    {
+      "name": "CT10_HoiAn_Walls_Texture_002",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_HoiAn_Walls_Texture_002_Base.png"
+    },
+    {
+      "name": "CT10_Asian_White_Wall_Paint",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_Asian_White_Wall_Paint_Base.png",
+      "normalMap": "Textures/CT10_Asian_White_Wall_Paint_Normal.png"
+    },
+    {
+      "name": "CT10_Asian_wall_black",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_Asian_wall_black_Base.png",
+      "normalMap": "Textures/CT10_Asian_wall_black_Normal.png"
+    },
+    {
+      "name": "CT10_Asian_Stone_Brick",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_Asian_Stone_Brick_Base.png"
+    },
+    {
+      "name": "CT10_Asian_Tile_Floor",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_Asian_Tile_Floor_Base.png",
+      "normalMap": "Textures/CT10_Asian_Tile_Floor_Normal.png"
+    },
+    {
+      "name": "CT10_Asian_Dry_concrete",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_Asian_Dry_concrete_Base.png",
+      "normalMap": "Textures/CT10_Asian_Dry_concrete_Normal.png"
+    },
+    {
+      "name": "CT10_Asian_Floor_Tiling",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_Asian_Floor_Tiling_Base.png",
+      "normalMap": "Textures/CT10_Asian_Floor_Tiling_Normal.png"
+    },
+    {
+      "name": "CT10_Asian_Large_Floor_Tiles_001",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_Asian_Large_Floor_Tiles_001_Base.png",
+      "normalMap": "Textures/CT10_Asian_Large_Floor_Tiles_001_Normal.png"
+    },
+    {
+      "name": "CT10_Asian_Metal_002",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_Asian_Metal_002_Base.png",
+      "normalMap": "Textures/CT10_Asian_Metal_002_Normal.png"
+    },
+    {
+      "name": "CT10_Asian_Frozen_white_metal",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_Asian_Frozen_white_metal_Base.png",
+      "normalMap": "Textures/CT10_Asian_Frozen_white_metal_Normal.png"
+    },
+    {
+      "name": "CT10_Asian_Plastic",
+      "color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "roughness": 1.0,
+      "metallic": 1.0,
+      "emission": 0,
+      "normalScale": 0.55
+    },
+    {
+      "name": "CT10_Asian_Glass_002",
+      "color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "roughness": 1.0,
+      "metallic": 1.0,
+      "emission": 0,
+      "normalScale": 0.55
+    },
+    {
+      "name": "CT10_Asian_curtan_bc",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_Asian_curtan_bc_Base.png",
+      "normalMap": "Textures/CT10_Asian_curtan_bc_Normal.png"
+    },
+    {
+      "name": "CT10_Asian_Metal",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_Asian_Metal_Base.png",
+      "normalMap": "Textures/CT10_Asian_Metal_Normal.png"
+    },
+    {
+      "name": "CT10_Asian_text_cua_cuon",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_Asian_text_cua_cuon_Base.png",
+      "normalMap": "Textures/CT10_Asian_text_cua_cuon_Normal.png"
+    },
+    {
+      "name": "CT10_Asian_Text_o_dien_new",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_Asian_Text_o_dien_new_Base.png",
+      "normalMap": "Textures/CT10_Asian_Text_o_dien_new_Normal.png"
+    },
+    {
+      "name": "CT10_PolygonTree_Lowpoly_VietNam_v01_M",
+      "color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "roughness": 0.5527864098548889,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_PolygonTree_Base.png"
+    },
+    {
+      "name": "CT10_Pho_Atlas",
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "emission": 0,
+      "normalScale": 0.55,
+      "baseMap": "Textures/CT10_Pho_Atlas_Base.png"
     }
   ],
   "collisions": [
@@ -6749,14 +7067,14 @@
     {
       "name": "District house 044",
       "position": {
-        "x": -233.59924,
+        "x": -233.74699,
         "y": 6.6,
-        "z": -4.9475
+        "z": -4.97336
       },
       "size": {
-        "x": 6.9,
+        "x": 6.1,
         "y": 13.2,
-        "z": 18.0
+        "z": 17.7
       },
       "euler": {
         "x": 0,
@@ -9017,14 +9335,14 @@
     {
       "name": "District house 086",
       "position": {
-        "x": -235.6678,
+        "x": -235.81556,
         "y": 5.0,
-        "z": 6.87286
+        "z": 6.847
       },
       "size": {
-        "x": 6.9,
+        "x": 6.1,
         "y": 10.0,
-        "z": 18.0
+        "z": 17.7
       },
       "euler": {
         "x": 0,
@@ -15586,13 +15904,13 @@
       "name": "District house 181",
       "position": {
         "x": -274.0,
-        "y": 3.4,
-        "z": -27.0
+        "y": 2.55,
+        "z": -30.4
       },
       "size": {
-        "x": 7.5,
-        "y": 6.8,
-        "z": 14
+        "x": 6.1,
+        "y": 5.1,
+        "z": 7.2
       },
       "euler": {
         "x": 0,
@@ -15604,13 +15922,13 @@
       "name": "District house 182",
       "position": {
         "x": -286.0,
-        "y": 3.4,
-        "z": -29.0
+        "y": 2.55,
+        "z": -30.4
       },
       "size": {
-        "x": 6.5,
-        "y": 6.8,
-        "z": 10
+        "x": 6.1,
+        "y": 5.1,
+        "z": 7.2
       },
       "euler": {
         "x": 0,
@@ -40522,6 +40840,45 @@
         "y": 0.0,
         "z": 0
       }
+    },
+    {
+      "name": "Vietnam Polygon trunk 0",
+      "position": {
+        "x": -246,
+        "y": 2,
+        "z": -42
+      },
+      "size": {
+        "x": 0.5,
+        "y": 4,
+        "z": 0.5
+      }
+    },
+    {
+      "name": "Vietnam Polygon trunk 1",
+      "position": {
+        "x": -278,
+        "y": 2,
+        "z": -43
+      },
+      "size": {
+        "x": 0.5,
+        "y": 4,
+        "z": 0.5
+      }
+    },
+    {
+      "name": "Vietnam Polygon trunk 2",
+      "position": {
+        "x": -226,
+        "y": 2,
+        "z": 254
+      },
+      "size": {
+        "x": 0.5,
+        "y": 4,
+        "z": 0.5
+      }
     }
   ],
   "landmarks": [
@@ -41348,7 +41705,7 @@
       "z": 28
     }
   ],
-  "artRevision": 9,
+  "artRevision": 10,
   "detailStats": {
     "heroLandmarksRebuilt": 4,
     "referencePhotos": 7,
@@ -44626,14 +44983,14 @@
     {
       "name": "District house 044",
       "position": {
-        "x": -233.59924,
+        "x": -233.74699,
         "y": 0,
-        "z": -4.9475
+        "z": -4.97336
       },
       "size": {
-        "x": 6.9,
+        "x": 6.1,
         "y": 13.2,
-        "z": 18
+        "z": 17.7
       },
       "euler": {
         "x": 0,
@@ -45634,14 +45991,14 @@
     {
       "name": "District house 086",
       "position": {
-        "x": -235.66781,
+        "x": -235.81556,
         "y": 0,
-        "z": 6.87286
+        "z": 6.847
       },
       "size": {
-        "x": 6.9,
+        "x": 6.1,
         "y": 10.0,
-        "z": 18
+        "z": 17.7
       },
       "euler": {
         "x": 0,
@@ -47916,12 +48273,12 @@
       "position": {
         "x": -274.0,
         "y": 0,
-        "z": -27.0
+        "z": -30.4
       },
       "size": {
-        "x": 7.5,
-        "y": 6.8,
-        "z": 14
+        "x": 6.1,
+        "y": 5.1,
+        "z": 7.2
       },
       "euler": {
         "x": 0,
@@ -47940,12 +48297,12 @@
       "position": {
         "x": -286.0,
         "y": 0,
-        "z": -29.0
+        "z": -30.4
       },
       "size": {
-        "x": 6.5,
-        "y": 6.8,
-        "z": 10
+        "x": 6.1,
+        "y": 5.1,
+        "z": 7.2
       },
       "euler": {
         "x": 0,
@@ -109180,5 +109537,329 @@
         "z": 840
       }
     }
+  },
+  "importedVietnamAssets": [
+    {
+      "name": "Vietnam HoiAn District house 181",
+      "family": "HoiAn",
+      "replaces": "District house 181",
+      "position": {
+        "x": -274.0,
+        "y": 0,
+        "z": -30.4
+      },
+      "size": {
+        "x": 6.1,
+        "y": 5.1,
+        "z": 7.2
+      },
+      "front": {
+        "x": -0.0,
+        "y": 0,
+        "z": -1.0
+      },
+      "euler": {
+        "x": 0,
+        "y": -180.0,
+        "z": 0
+      },
+      "triangles": 3847,
+      "originalParcel": {
+        "name": "District house 181",
+        "position": {
+          "x": -274.0,
+          "y": 0,
+          "z": -27.0
+        },
+        "size": {
+          "x": 7.5,
+          "y": 6.8,
+          "z": 14
+        },
+        "euler": {
+          "x": 0,
+          "y": -180.0,
+          "z": 0
+        },
+        "district": "bung_xang",
+        "front": {
+          "x": -0.0,
+          "y": 0,
+          "z": -1.0
+        }
+      }
+    },
+    {
+      "name": "Vietnam HoiAn District house 182",
+      "family": "HoiAn",
+      "replaces": "District house 182",
+      "position": {
+        "x": -286.0,
+        "y": 0,
+        "z": -30.4
+      },
+      "size": {
+        "x": 6.1,
+        "y": 5.1,
+        "z": 7.2
+      },
+      "front": {
+        "x": -0.0,
+        "y": 0,
+        "z": -1.0
+      },
+      "euler": {
+        "x": 0,
+        "y": -180.0,
+        "z": 0
+      },
+      "triangles": 3847,
+      "originalParcel": {
+        "name": "District house 182",
+        "position": {
+          "x": -286.0,
+          "y": 0,
+          "z": -29.0
+        },
+        "size": {
+          "x": 6.5,
+          "y": 6.8,
+          "z": 10
+        },
+        "euler": {
+          "x": 0,
+          "y": -180.0,
+          "z": 0
+        },
+        "district": "bung_xang",
+        "front": {
+          "x": -0.0,
+          "y": 0,
+          "z": -1.0
+        }
+      }
+    },
+    {
+      "name": "Vietnam Asian District house 044",
+      "family": "Asian",
+      "replaces": "District house 044",
+      "position": {
+        "x": -233.74699,
+        "y": 0,
+        "z": -4.97336
+      },
+      "size": {
+        "x": 6.1,
+        "y": 13.2,
+        "z": 17.7
+      },
+      "front": {
+        "x": -0.98503,
+        "y": 0,
+        "z": -0.17238
+      },
+      "euler": {
+        "x": 0,
+        "y": -99.92625,
+        "z": 0
+      },
+      "triangles": 2382,
+      "originalParcel": {
+        "name": "District house 044",
+        "position": {
+          "x": -233.59924,
+          "y": 0,
+          "z": -4.9475
+        },
+        "size": {
+          "x": 6.9,
+          "y": 13.2,
+          "z": 18
+        },
+        "euler": {
+          "x": 0,
+          "y": -99.92625,
+          "z": 0
+        },
+        "district": "bung_xang",
+        "front": {
+          "x": -0.98503,
+          "y": 0,
+          "z": -0.17238
+        }
+      }
+    },
+    {
+      "name": "Vietnam Asian District house 086",
+      "family": "Asian",
+      "replaces": "District house 086",
+      "position": {
+        "x": -235.81556,
+        "y": 0,
+        "z": 6.847
+      },
+      "size": {
+        "x": 6.1,
+        "y": 10.0,
+        "z": 17.7
+      },
+      "front": {
+        "x": -0.98503,
+        "y": 0,
+        "z": -0.17238
+      },
+      "euler": {
+        "x": 0,
+        "y": -99.92625,
+        "z": 0
+      },
+      "triangles": 2382,
+      "originalParcel": {
+        "name": "District house 086",
+        "position": {
+          "x": -235.66781,
+          "y": 0,
+          "z": 6.87286
+        },
+        "size": {
+          "x": 6.9,
+          "y": 10.0,
+          "z": 18
+        },
+        "euler": {
+          "x": 0,
+          "y": -99.92625,
+          "z": 0
+        },
+        "district": "bung_xang",
+        "front": {
+          "x": -0.98503,
+          "y": 0,
+          "z": -0.17238
+        }
+      }
+    },
+    {
+      "name": "Vietnam Pho dining 0",
+      "family": "Pho",
+      "position": {
+        "x": -220,
+        "y": 0,
+        "z": 265.5
+      },
+      "size": {
+        "x": 2,
+        "y": 0.95,
+        "z": 0.8
+      },
+      "front": {
+        "x": 0,
+        "y": 0,
+        "z": -1
+      }
+    },
+    {
+      "name": "Vietnam Pho dining 1",
+      "family": "Pho",
+      "position": {
+        "x": -220,
+        "y": 0,
+        "z": 268.5
+      },
+      "size": {
+        "x": 2,
+        "y": 0.95,
+        "z": 0.8
+      },
+      "front": {
+        "x": 0,
+        "y": 0,
+        "z": -1
+      }
+    },
+    {
+      "name": "Vietnam Pho dining 2",
+      "family": "Pho",
+      "position": {
+        "x": -220,
+        "y": 0,
+        "z": 278.5
+      },
+      "size": {
+        "x": 2,
+        "y": 0.95,
+        "z": 0.8
+      },
+      "front": {
+        "x": 0,
+        "y": 0,
+        "z": -1
+      }
+    },
+    {
+      "name": "Vietnam Polygon tree 0",
+      "family": "PolygonTree",
+      "position": {
+        "x": -246,
+        "y": 0,
+        "z": -42
+      },
+      "size": {
+        "x": 3,
+        "y": 5,
+        "z": 3
+      },
+      "front": {
+        "x": 0,
+        "y": 0,
+        "z": -1
+      }
+    },
+    {
+      "name": "Vietnam Polygon tree 1",
+      "family": "PolygonTree",
+      "position": {
+        "x": -278,
+        "y": 0,
+        "z": -43
+      },
+      "size": {
+        "x": 3,
+        "y": 5,
+        "z": 3
+      },
+      "front": {
+        "x": 0,
+        "y": 0,
+        "z": -1
+      }
+    },
+    {
+      "name": "Vietnam Polygon tree 2",
+      "family": "PolygonTree",
+      "position": {
+        "x": -226,
+        "y": 0,
+        "z": 254
+      },
+      "size": {
+        "x": 3,
+        "y": 5,
+        "z": 3
+      },
+      "front": {
+        "x": 0,
+        "y": 0,
+        "z": -1
+      }
+    }
+  ],
+  "vietnamAssetRevision": {
+    "sourceFamilies": 4,
+    "houseReplacements": 4,
+    "diningSets": 3,
+    "trees": 3,
+    "groundExpanded": false,
+    "sourceDate": "2026-10-20"
   }
 }

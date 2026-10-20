@@ -577,6 +577,14 @@ namespace LastProtocol.Editor
             BuildWindows("Builds/CanThoInfillPlayer");
         }
 
+        [MenuItem("LastProtocol/Maps/Build Windows Campus Vietnam Assets")]
+        public static void BatchBuildCampusVietnamAssets()
+        {
+            CanThoDetailSetupTool.Apply();
+            MissionSetupTool.Install();
+            BuildWindows("Builds/CanThoVietnamPlayer");
+        }
+
         private static void BuildWindows(string outputDirectory)
         {
             BatchSetup();

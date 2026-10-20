@@ -35,7 +35,7 @@ namespace LastProtocol.Editor
         [Serializable] public sealed class Gate { public string id; public Vector3 position; public float clearWidth; }
         [Serializable] public sealed class Landmark { public string id, title; public Vector3 position, approach; }
         [Serializable] public sealed class LayoutBounds { public Vector3 center, size; }
-        [Serializable] public sealed class NeighborhoodHouse { public string name, district; public Vector3 position, size, euler, front; }
+        [Serializable] public sealed class NeighborhoodHouse { public string name, district, family, replaces; public Vector3 position, size, euler, front; }
         [Serializable] public sealed class PeripheralRoad { public string id, title; public float width; public Vector3[] points; }
         [Serializable] public sealed class Layout
         {
@@ -57,6 +57,7 @@ namespace LastProtocol.Editor
             public PeripheralRoad[] localLanes;
             public Vector3[] streetscapeTrees, streetscapeBenches, streetscapeLamps;
             public NeighborhoodHouse[] infillBuildings;
+            public NeighborhoodHouse[] importedVietnamAssets;
             public Vector3[] infillAccessChecks;
             public Vector3[] waterBoundary, waterChecks;
             public Vector3 neighborhoodCameraProbe, neighborhoodCameraEuler;
@@ -179,6 +180,8 @@ namespace LastProtocol.Editor
             {
                 importer.textureType = TextureImporterType.NormalMap; importer.sRGBTexture = false; importer.SaveAndReimport();
             }
+            if (relative.Contains("CT10_Pho_") && importer.filterMode != FilterMode.Point)
+            { importer.filterMode = FilterMode.Point; importer.SaveAndReimport(); }
             var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
             if (texture == null) throw new InvalidOperationException("Campus texture import failed: " + path);
             return texture;
@@ -322,6 +325,15 @@ namespace LastProtocol.Editor
                 positions = positions.Take(positions.Length - 1).Concat(eyes).Concat(new[] { positions.Last() }).ToArray();
                 targets = targets.Take(targets.Length - 1).Concat(selected.Select(h => h.position + Vector3.up * Mathf.Min(h.size.y * .45f, 5))).Concat(new[] { targets.Last() }).ToArray();
                 names = names.Take(names.Length - 1).Concat(new[] { "Unity-CanTho-InfillFacade", "Unity-CanTho-InfillBlock", "Unity-CanTho-InfillRental" }).Concat(new[] { names.Last() }).ToArray();
+            }
+            if (ReadLayout().importedVietnamAssets is { Length: > 0 } imported)
+            {
+                var featured = imported.Where(x => x.family == "HoiAn" || x.family == "Asian" || x.family == "Pho").ToArray();
+                var eyes = featured.Select(x => x.position + x.front * (x.size.z * .5f + (x.family == "Pho" ? 3 : 10))
+                    + Vector3.Cross(Vector3.up, x.front) * (x.family == "Pho" ? 1.5f : 5) + Vector3.up * (x.family == "Pho" ? 1.8f : 4)).ToArray();
+                positions = positions.Take(positions.Length - 1).Concat(eyes).Concat(new[] { positions.Last() }).ToArray();
+                targets = targets.Take(targets.Length - 1).Concat(featured.Select(x => x.position + Vector3.up * (x.family == "Pho" ? .5f : 2.8f))).Concat(new[] { targets.Last() }).ToArray();
+                names = names.Take(names.Length - 1).Concat(featured.Select((x, i) => "Unity-CanTho-Vietnam-" + x.family + "-" + i)).Concat(new[] { names.Last() }).ToArray();
             }
             for (int i = 0; i < positions.Length; i++)
             {

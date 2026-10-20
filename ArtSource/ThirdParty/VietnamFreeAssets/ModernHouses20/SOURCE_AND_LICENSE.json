@@ -1,0 +1,43 @@
+{
+  "title": "Low Poly Modern House Pack - 20 Houses low poly",
+  "author": "ilkhom23",
+  "cgtraderItemId": 3315233,
+  "sourceUrl": "https://www.cgtrader.com/free-3d-models/exterior/house/lowpoly-modern-house-pack-20-houses-low-poly",
+  "downloadedDate": "2026-10-20",
+  "licenseLabel": "Royalty Free License (no AI)",
+  "termsUrl": "https://www.cgtrader.com/pages/terms-and-conditions",
+  "downloadMethod": "Official signed-in CGTrader Free Download page",
+  "originalFiles": [
+    {
+      "File": "ModernHouses20/LowPoly_Modern_Houses_fbx.FBX",
+      "Bytes": 2404128,
+      "SHA256": "F29C9DA1CF263D9941B5EA4E70C2FC6F0EFD3E35726CCD467F57C5F7F1AC76AF"
+    },
+    {
+      "File": "ModernHouses20/LowPoly_Modern_House_Collection_01_blend.blend",
+      "Bytes": 5667940,
+      "SHA256": "AFDE12299F2BA54B775B1531BD7CAD589500488DF07EEEFAAAA5E3A91D9475FB"
+    },
+    {
+      "File": "ModernHouses20/LowPoly_Modern_House_obj.obj",
+      "Bytes": 2576757,
+      "SHA256": "3336694A387472D0C197587650DBD66CDD4FE04B3FDFD0052FCB3F0F5D0193B3"
+    },
+    {
+      "File": "ModernHouses20/LowPoly_Modern_House_objmtl.mtl",
+      "Bytes": 312,
+      "SHA256": "BA18FBEF9F48EB08CADC8ACF47DC9EAC4F6744F9045DF9E75AC1C3619C36B2B3"
+    },
+    {
+      "File": "ModernHouses20/textures.rar",
+      "Bytes": 1005407,
+      "SHA256": "B1A07293FCC4B09F646E8967B63F127119A4BDEBD39B62E5C1505701176C5E48"
+    },
+    {
+      "File": "ModernHouses20/previews.rar",
+      "Bytes": 5955810,
+      "SHA256": "4FAA259EDA6B71351B848B7077131C50C71949C5407B9BD46139418F93D00C21"
+    }
+  ],
+  "status": "Downloaded and extracted; not yet integrated into the Unity map"
+}
