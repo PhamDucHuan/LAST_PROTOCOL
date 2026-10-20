@@ -72,7 +72,7 @@ Nguồn: https://www.turbosquid.com/3d-models/3d-model-hanoi-townhouse-1775220
 3. Polygon World – Vietnam: https://assetstore.unity.com/packages/3d/environments/polygon-world-vietnam-328183 — trang Unity vẫn ghi FREE và hỗ trợ URP trên Unity 2022.3.3f1. Phù hợp phong cách hoạt hình; chưa thử Unity 6 của dự án.
 4. Phở Dining Set demo: https://alleybits.itch.io/asian-street-food-pack#download-demo — chỉ tải phần Download demo, tệp AsianStreetFoodPack_PhoDiningSet_Free.zip 1,1 MB. Có 9 kit gồm bàn, ghế, tô phở, đồ gia vị và giỏ/thùng. Toàn bộ pack vẫn trả phí. Trang tác giả cho phép dự án cá nhân/thương mại; đối chiếu điều khoản kèm demo khi tải.
 
-Các lựa chọn miễn phí này không phải bộ thay thế đầy đủ tương đương Vietnam Street Corner. Chưa tải hoặc import các lựa chọn trên vào dự án.
+Các lựa chọn miễn phí này không phải bộ thay thế đầy đủ tương đương Vietnam Street Corner. Đã tải đủ cả bốn vào `ArtSource/ThirdParty/VietnamFreeAssets/`; chi tiết nguồn và giấy phép trong README ở thư mục đó. Chưa import vào scene map.
 
 1. Thử một nhà và một cụm quán ăn trong scene riêng; đối chiếu kích thước với đường và nền hiện có.
 2. Chuyển vật liệu sang URP/Lit hoặc shader tương thích, kiểm tra texture và tỷ lệ.

@@ -1,0 +1,24 @@
+{
+  "Name": "Asian House",
+  "AssetBaseId": "d0c4d779-5fbb-433d-80e0-c1a4a0e619b8",
+  "AssetVersionId": "1cb4e31a-9f47-4192-b34f-1f124f61923a",
+  "Author": "HUY TRAN",
+  "License": "royalty_free",
+  "IsFree": true,
+  "Source": "https://www.blendkit.com/asset-gallery-detail/d0c4d779-5fbb-433d-80e0-c1a4a0e619b8/",
+  "DownloadedOn": "2026-10-20",
+  "Files": [
+    {
+      "File": "AsianHouse_HUY_TRAN_blend.blend",
+      "Format": "blend",
+      "Bytes": 90279403,
+      "SHA256": "CBE7E3A49934B9C161AB43CD75DE827B0BD9C95C0293E673A2828820842EBC0D"
+    },
+    {
+      "File": "AsianHouse_HUY_TRAN_gltf.glb",
+      "Format": "gltf",
+      "Bytes": 9047184,
+      "SHA256": "A5DD080F190539B0D7E90C4325F11982E0FA8E0BD6813D35A6751595E8EEF1DE"
+    }
+  ]
+}
