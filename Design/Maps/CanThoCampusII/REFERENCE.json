@@ -1,0 +1,15 @@
+{
+  "Reference": "CampusII-UserReference.png",
+  "SHA256": "D10825BAF000486F85105785516410126E2B7E627FACB2E1CA0C39441D88BF55",
+  "AdoptedOn": "2026-10-16",
+  "Purpose": "Campus II relative arrangement supplied by user",
+  "Coordinates": "Diagram tracing at displayed 1910x1280, estimated 0.32m/pixel, not surveyed data",
+  "SourceArt": "ArtSource/Blender/CanThoCampus/CanThoCampus.blend",
+  "ArtRevision": 4,
+  "Protocol": 14,
+  "Backup": "Builds/CanThoBackups/20261016-SchematicLayout",
+  "Candidate": "Builds/CanThoMap/20261016-SchematicLayout/Candidate02",
+  "UnityValidation": "Builds/ValidationProject",
+  "IntegratedAt": "2026-10-16T14:44:58.4562877+07:00",
+  "Verification": "Builds/CanThoMap/20261016-SchematicLayout/FinalVerification.json"
+}

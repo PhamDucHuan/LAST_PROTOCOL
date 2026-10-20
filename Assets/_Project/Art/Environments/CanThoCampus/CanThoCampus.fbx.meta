@@ -132,6 +132,206 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: CT3_Aluminium
+    second: {fileID: 2100000, guid: 52bc815831872074aa1d0f2d889f72f6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT3_FrameBlue
+    second: {fileID: 2100000, guid: 05916cba74bbb4649b3032d217edcffd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT3_Glazing
+    second: {fileID: 2100000, guid: 370d44d2d822d9f43a6e10dd56087986, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT3_LeafDeep
+    second: {fileID: 2100000, guid: 47b14041f1397bb47a76b63a10e98510, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT3_LeafMid
+    second: {fileID: 2100000, guid: d63af5c6657fd274eaed94a6d5eb7c8d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT3_LeafSun
+    second: {fileID: 2100000, guid: f9aa05ce33d6bdb4ea450824486591da, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT3_Plaster
+    second: {fileID: 2100000, guid: d6e97f015a0bb0349bb89cf28485b99a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT3_RedPaver
+    second: {fileID: 2100000, guid: c5c35535573ad66438d0ac7ab9269d7d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT3_Stone
+    second: {fileID: 2100000, guid: 7001e87085378a24ab6198526eabccaa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT3_Walk
+    second: {fileID: 2100000, guid: 9b3c92236eee36848b84afa7689273c9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT4_Asphalt
+    second: {fileID: 2100000, guid: 80a13e59ae46ab643912df69869b89f3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT4_Court
+    second: {fileID: 2100000, guid: dbea15ffadd532a468751d083c349047, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT4_DormCourtyard
+    second: {fileID: 2100000, guid: b4e1a754c8a62ed46aecec35ce5dda6d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT4_Grass
+    second: {fileID: 2100000, guid: 84f7353460d90c741a80eb0e624ca2ac, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT4_Green
+    second: {fileID: 2100000, guid: 7dc7d9e361924bd4a8a6414a1c6684fb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT4_ResearchPlot
+    second: {fileID: 2100000, guid: bd68df449a9fb6c4e8fc141be8aa53b6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT4_SciencePlot
+    second: {fileID: 2100000, guid: 69308e540bc99f44aa87479ba2225e40, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT4_Soil
+    second: {fileID: 2100000, guid: 1ca4e97773d3f274ab444d80f6b84241, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT4_Stone
+    second: {fileID: 2100000, guid: ed93a54d156effe45a12e5678ef5f105, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT4_Walk
+    second: {fileID: 2100000, guid: 31d28aa6cdacea643ae9641eb9190ea9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_Asphalt
+    second: {fileID: 2100000, guid: 04b324a0f0912ce4d8962fb26831e3bd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_Bark
+    second: {fileID: 2100000, guid: 3cceb7f1662e2314a834301a77a24674, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_BluePaint
+    second: {fileID: 2100000, guid: b9b763dbdacf6e24ea7880deba2546b2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_Concrete
+    second: {fileID: 2100000, guid: 18101180335b9814cbbb6ef85eddbafe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_Glass
+    second: {fileID: 2100000, guid: 3504dad456cac43479d69afda8f14435, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_Gold
+    second: {fileID: 2100000, guid: 37fc8a7719a83a24fb7117bb66b33523, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_Grass
+    second: {fileID: 2100000, guid: 2a7da3cb3f237ae4fab2ce2e40da0ffc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_LeafCluster
+    second: {fileID: 2100000, guid: c4eb526bc8815174da2b1c77fd017d40, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_LetterBlue
+    second: {fileID: 2100000, guid: c509fdc91b99e5a48824b5accc856b1e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_LetterRed
+    second: {fileID: 2100000, guid: 519193c8c08f4994aa77c9b9ab6ca271, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_Metal
+    second: {fileID: 2100000, guid: 421e2983675ea5b4c95e0d7aa3fd0d5e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_Plaster
+    second: {fileID: 2100000, guid: 2dc14560c5d347b4bb14b1a6f4b0d4db, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_RedPaver
+    second: {fileID: 2100000, guid: 4948f1640e3519748a747ba72c31a0a8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_Shadow
+    second: {fileID: 2100000, guid: 4505b6efedff8ae409833e97bbf40fb1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_SilverCladding
+    second: {fileID: 2100000, guid: 14c70b5ae9e28f84c95bf707b0b640eb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_Status
+    second: {fileID: 2100000, guid: 74e389ebc1ad7b843b2f63ad49e1e1ee, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_Terracotta
+    second: {fileID: 2100000, guid: 41e4094ca4246304e9212cd8323c4f97, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_Walk
+    second: {fileID: 2100000, guid: df9ad3e73983cd24a9545646282f6c52, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT5_WarmPaint
+    second: {fileID: 2100000, guid: 4cbd87afc442d9544bb576f90dbf8ac8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT9_FacadeAtlas
+    second: {fileID: 2100000, guid: 8c51e1395bbb7524cbb8ade0337dcc50, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: CT_Asphalt
     second: {fileID: 2100000, guid: 1fda9c7749a8d54498773e7196fb6503, type: 2}
   - first:

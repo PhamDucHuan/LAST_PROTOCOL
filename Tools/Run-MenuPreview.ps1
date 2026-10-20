@@ -1,4 +1,4 @@
-param([string]$Player = '',[switch]$FreshCapture,[ValidateRange(0,2)][int]$Level = 1)
+param([string]$Player = '',[switch]$FreshCapture,[ValidateRange(0,2)][int]$Level = 1,[switch]$CampusRoute,[switch]$Mission)
 $ErrorActionPreference = 'Stop'
 $workspace = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 if (-not $Player) { $Player = Join-Path $workspace 'Builds\ValidationProject\Builds\MenuPlayer\LAST_PROTOCOL.exe' }
@@ -14,6 +14,14 @@ New-Item -ItemType Directory -Path $results -Force | Out-Null
 [IO.File]::WriteAllText((Join-Path $results 'Checks.json'), '{}')
 $arguments = @('-force-d3d11','-screen-width','1600','-screen-height','900','-screen-fullscreen','0',
     '-logFile',('"' + (Join-Path $results 'Player.log') + '"'),'--lp-menu-preview',('"' + $results + '"'),'--lp-preview-level',$Level)
+if ($CampusRoute) {
+    if ($Level -ne 2 -or $FreshCapture) { throw 'CampusRoute requires Level 2 without FreshCapture.' }
+    $arguments += '--lp-campus-route-preview'
+}
+if ($Mission) {
+    if ($Level -ne 2 -or $FreshCapture) { throw 'Mission requires Level 2 without FreshCapture.' }
+    $arguments += '--lp-mission-preview'
+}
 $process = Start-Process -FilePath $Player -ArgumentList $arguments -PassThru -WindowStyle Hidden
 Write-Output ('Menu graphical preview PID=' + $process.Id)
 try {

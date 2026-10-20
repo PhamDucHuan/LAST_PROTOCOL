@@ -1,0 +1,36 @@
+{
+  "artRevision": 8,
+  "protocol": 18,
+  "date": "2026-10-17",
+  "candidate": "Builds/CanThoMap/20261017-Streetscape/Candidate02/",
+  "streetscape": {
+    "originalHouses": 167,
+    "addedHouses": 84,
+    "localLanes": 7,
+    "trees": 185,
+    "benches": 12,
+    "lamps": 69,
+    "note": "Local lanes and parcels are fictional gameplay infill, not surveyed real addresses. Referenced main roads, campus, waterfront and existing parcels retained.",
+    "sealedBendSurfaces": 58
+  },
+  "stats": {
+    "blender": "5.2.2 LTS",
+    "sourceObjects": 49503,
+    "renderers": 430,
+    "triangles": 581597,
+    "collisionBoxes": 1245,
+    "landmarkEntries": 40,
+    "result": "PASS"
+  },
+  "sourceReference": "Design/Maps/CanThoCampusII/PERIPHERAL_PLAN.json",
+  "unchanged": [
+    "campus geometry",
+    "original 167 houses",
+    "main streets",
+    "water boundary",
+    "Recon mission",
+    "23-leg peripheral route"
+  ],
+  "internetRetest": "CHUA_KIEM_THU",
+  "targetHardwareFPS": "CHUA_KIEM_THU"
+}

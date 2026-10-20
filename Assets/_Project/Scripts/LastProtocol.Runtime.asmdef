@@ -1,6 +1,6 @@
 {
   "name": "LastProtocol.Runtime",
   "rootNamespace": "LastProtocol",
-  "references": ["Unity.Netcode.Runtime", "Unity.Networking.Transport", "Unity.Collections", "Unity.InputSystem", "Unity.Cinemachine", "Unity.TextMeshPro", "UnityEngine.UI", "Unity.Services.Core", "Unity.Services.Core.Environments", "Unity.Services.Authentication", "Unity.Services.Multiplayer"],
+  "references": ["Unity.Netcode.Runtime", "Unity.Networking.Transport", "Unity.Collections", "Unity.InputSystem", "Unity.Cinemachine", "Unity.TextMeshPro", "UnityEngine.UI", "Unity.Services.Core", "Unity.Services.Core.Environments", "Unity.Services.Authentication", "Unity.Services.Multiplayer", "Unity.RenderPipelines.Universal.Runtime", "Unity.RenderPipelines.Core.Runtime"],
   "autoReferenced": true
 }

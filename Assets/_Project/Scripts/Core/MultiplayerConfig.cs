@@ -6,7 +6,7 @@ namespace LastProtocol
     public sealed class MultiplayerConfig : ScriptableObject
     {
         public const int MaxPlayers = 4;
-        public const int ProtocolVersion = 10;
+        public const int ProtocolVersion = 19;
         public const string MenuScene = "MainMenu";
         public const string GameplayScene = "MultiplayerTest";
         public const int NetworkTickRate = 30;

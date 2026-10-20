@@ -1,0 +1,20 @@
+{
+  "AdoptedOn": "2026-10-20",
+  "UserTimezone": "Asia/Saigon",
+  "ArtRevision": 9,
+  "Protocol": 19,
+  "GroundExpanded": false,
+  "AddedBuildings": 1100,
+  "TotalBuildings": 1351,
+  "NewRoads": 0,
+  "GroundSize": {
+    "X": 940,
+    "Z": 840
+  },
+  "Reference": "ArtSource/References/CanThoCampus/REFERENCES_BUILDING_INFILL.md",
+  "SourceArt": "ArtSource/Blender/CanThoCampus/CanThoCampus.blend",
+  "Backup": "Builds/CanThoBackups/20261020-BuildingInfill",
+  "Candidate": "Builds/CanThoMap/20261020-BuildingInfill/Candidate01",
+  "Validation": "Builds/CanThoMap/20261020-BuildingInfill/FinalVerification.json",
+  "IntegratedAt": "2026-10-20T09:24:38.0827734+07:00"
+}

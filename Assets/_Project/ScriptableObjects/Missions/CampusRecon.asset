@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e7530196aa44b69a5abbdba5db48900, type: 3}
+  m_Name: CampusRecon
+  m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.MissionDefinition
+  missionId: CTU_00_RECON
+  title: CAMPUS RECON
+  briefing: Regroup at Gate B, survey the administration building, then locate the
+    Learning Resource Centre uplink.
+  completionText: Route surveyed. Regroup or explore the campus.
+  levelId: 2
+  objectives:
+  - id: RECON_GATE_B
+    title: REGROUP AT GATE B
+    instruction: Everyone alive inside the cyan ring.
+    center: {x: 0, y: 0, z: -40}
+    radius: 6
+    heightTolerance: 2.5
+    holdSeconds: 2
+  - id: RECON_ADMIN
+    title: REACH THE ADMINISTRATION BUILDING
+    instruction: Everyone alive inside the cyan ring.
+    center: {x: 32, y: 0, z: -21}
+    radius: 6
+    heightTolerance: 2.5
+    holdSeconds: 2
+  - id: RECON_LIBRARY
+    title: REACH THE LEARNING RESOURCE CENTRE
+    instruction: Everyone alive inside the cyan ring.
+    center: {x: 57, y: 0, z: -42}
+    radius: 6
+    heightTolerance: 2.5
+    holdSeconds: 2

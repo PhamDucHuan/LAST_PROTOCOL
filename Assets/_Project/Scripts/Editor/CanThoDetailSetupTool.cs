@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TMPro;
+using Unity.Cinemachine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -26,7 +27,9 @@ namespace LastProtocol.Editor
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("Exit Play Mode first.");
             var layout = CanThoMapSetupTool.ReadLayout();
-            if (layout.artRevision != 2) throw new InvalidOperationException("Expected revision 2 art and layout.");
+            if (layout.artRevision < 2 || layout.artRevision > 9) throw new InvalidOperationException("Expected supported detailed art revision 2 to 9.");
+            if (layout.artRevision >= 3 && (layout.playableRoute == null || layout.playableRoute.Length < 6))
+                throw new InvalidOperationException("Campus playable route is missing.");
             if (Application.isBatchMode && string.IsNullOrEmpty(SceneManager.GetActiveScene().path))
                 EditorSceneManager.OpenScene(MultiplayerSetupTool.MenuPath, OpenSceneMode.Single);
             var previous = SceneManager.GetActiveScene();
@@ -71,9 +74,10 @@ namespace LastProtocol.Editor
                 foreach (var box in layout.collisions)
                 {
                     var go = new GameObject(box.name); go.transform.SetParent(collisionRoot.transform, false); go.transform.position = box.position;
+                    go.transform.rotation = Quaternion.Euler(box.euler);
                     go.AddComponent<BoxCollider>().size = box.size;
                     sources.Add(new NavMeshBuildSource { shape = NavMeshBuildSourceShape.Box, size = box.size,
-                        transform = Matrix4x4.Translate(box.position), area = box.name == "Campus soil" ? 0 : 1 });
+                        transform = Matrix4x4.TRS(box.position, Quaternion.Euler(box.euler), Vector3.one), area = box.name == "Campus soil" ? 0 : 1 });
                 }
                 for (int slot = 0; slot < MultiplayerConfig.MaxPlayers; slot++) sources.Add(new NavMeshBuildSource
                 { shape = NavMeshBuildSourceShape.Box, size = new Vector3(1.1f, 2, 1.1f), transform = Matrix4x4.Translate(new Vector3(-9 + slot * 6, 1, 10)), area = 1 });
@@ -90,6 +94,52 @@ namespace LastProtocol.Editor
                     var data = camera.GetUniversalAdditionalCameraData(); data.renderPostProcessing = true;
                     data.antialiasing = AntialiasingMode.SubpixelMorphologicalAntiAliasing; data.antialiasingQuality = AntialiasingQuality.High;
                     camera.allowHDR = true;
+                    if (layout.artRevision >= 3) camera.nearClipPlane = 0.08f;
+                }
+                if (layout.artRevision >= 3)
+                {
+                    foreach (var follow in scene.GetRootGameObjects().SelectMany(x => x.GetComponentsInChildren<CinemachineThirdPersonFollow>()))
+                    {
+                        follow.AvoidObstacles.Enabled = true; follow.AvoidObstacles.CollisionFilter = 1;
+                        follow.AvoidObstacles.IgnoreTag = "Player"; follow.AvoidObstacles.CameraRadius = 0.28f;
+                        follow.AvoidObstacles.DampingIntoCollision = 0; follow.AvoidObstacles.DampingFromCollision = 0.5f;
+                    }
+                    var previousRoute = root.Cast<Transform>().SingleOrDefault(x => x.name == "Playable Campus Route");
+                    if (previousRoute != null) UnityEngine.Object.DestroyImmediate(previousRoute.gameObject);
+                    var routeRoot = new GameObject("Playable Campus Route"); routeRoot.transform.SetParent(root, false);
+                    for (int i = 0; i < layout.playableRoute.Length; i++)
+                    {
+                        var point = new GameObject((i + 1).ToString("00") + " - Route waypoint");
+                        point.transform.SetParent(routeRoot.transform, false); point.transform.position = layout.playableRoute[i];
+                    }
+                    var markers = root.Cast<Transform>().SingleOrDefault(x => x.name == "Landmark Markers / Editable");
+                    var oldNeighborhood = root.Find("Playable Neighborhood Route");
+                    var oldProbe = root.Find("Neighborhood Camera Probe");
+                    if (oldProbe != null) UnityEngine.Object.DestroyImmediate(oldProbe.gameObject);
+                    if (layout.artRevision >= 7)
+                    {
+                        var probe = new GameObject("Neighborhood Camera Probe"); probe.transform.SetParent(root, false);
+                        probe.transform.SetPositionAndRotation(layout.neighborhoodCameraProbe, Quaternion.Euler(layout.neighborhoodCameraEuler));
+                    }
+                    if (oldNeighborhood != null) UnityEngine.Object.DestroyImmediate(oldNeighborhood.gameObject);
+                    if (layout.neighborhoodRoute != null && layout.neighborhoodRoute.Length > 1)
+                    {
+                        var neighborhoodRoot = new GameObject("Playable Neighborhood Route"); neighborhoodRoot.transform.SetParent(root, false);
+                        for (int i = 0; i < layout.neighborhoodRoute.Length; i++)
+                        {
+                            var point = new GameObject((i + 1).ToString("00") + " - Neighborhood waypoint");
+                            point.transform.SetParent(neighborhoodRoot.transform, false); point.transform.position = layout.neighborhoodRoute[i];
+                        }
+                    }
+                    if (markers != null)
+                    {
+                        foreach (var child in markers.Cast<Transform>().ToArray()) UnityEngine.Object.DestroyImmediate(child.gameObject);
+                        foreach (var landmark in layout.landmarks)
+                        {
+                            var marker = new GameObject(landmark.title);
+                            marker.transform.SetParent(markers, false); marker.transform.position = landmark.approach;
+                        }
+                    }
                 }
                 foreach (var light in scene.GetRootGameObjects().SelectMany(x => x.GetComponentsInChildren<Light>()))
                 { light.intensity = 1.65f; light.color = new Color(1, 0.9f, 0.77f); light.transform.rotation = Quaternion.Euler(38, -40, 0); }
@@ -107,7 +157,7 @@ namespace LastProtocol.Editor
                 ImproveLighting(scene);
                 if (!EditorSceneManager.SaveScene(scene)) throw new IOException("Could not save detailed campus scene.");
                 UpdateMenuVersion(); AssetDatabase.SaveAssets(); Validate(scene);
-                Debug.Log("LAST_PROTOCOL Can Tho detailed art revision 2 PASS; backup=" + backup);
+                Debug.Log("LAST_PROTOCOL Can Tho detailed art revision " + layout.artRevision + " PASS; backup=" + backup);
             }
             finally
             {
@@ -171,7 +221,7 @@ namespace LastProtocol.Editor
         {
             var roots = scene.GetRootGameObjects();
             var environment = roots.SelectMany(x => x.GetComponentsInChildren<LevelEnvironment>()).Single();
-            if (environment.artRevision != 2 || environment.GetComponent<Volume>()?.sharedProfile == null)
+            if (environment.artRevision != CanThoMapSetupTool.ReadLayout().artRevision || environment.GetComponent<Volume>()?.sharedProfile == null)
                 throw new InvalidOperationException("Detailed environment profile/revision missing.");
             if (roots.SelectMany(x => x.GetComponentsInChildren<Collider>()).Count() < CanThoMapSetupTool.ReadLayout().collisions.Length)
                 throw new InvalidOperationException("Detailed collision layout incomplete.");

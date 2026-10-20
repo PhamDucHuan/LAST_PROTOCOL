@@ -135,6 +135,7 @@ namespace LastProtocol.Editor
                 capsule.AddComponent<NetworkObject>();
                 var networkTransform = capsule.AddComponent<NetworkTransform>();
                 networkTransform.Interpolate = true;
+                NetworkMotionSettings.Configure(networkTransform);
                 networkTransform.SyncScaleX = networkTransform.SyncScaleY = networkTransform.SyncScaleZ = false;
                 // Default NGO NetworkTransform authority is Server; no owner-authority override.
                 var input = capsule.AddComponent<PlayerInput>();
@@ -519,6 +520,61 @@ namespace LastProtocol.Editor
         {
             CanThoMapSetupTool.Install();
             BuildWindows("Builds/CanThoPlayer");
+        }
+
+        [MenuItem("LastProtocol/Missions/Build Windows Campus Recon")]
+        public static void BatchBuildMission()
+        {
+            MissionSetupTool.Install();
+            BuildWindows("Builds/MissionPlayer");
+        }
+
+        [MenuItem("LastProtocol/Maps/Build Windows Campus Schematic")]
+        public static void BatchBuildCampusSchematic()
+        {
+            CanThoDetailSetupTool.Apply();
+            MissionSetupTool.Install();
+            BuildWindows("Builds/CanThoSchematicPlayer");
+        }
+
+        [MenuItem("LastProtocol/Maps/Build Windows Campus Architecture")]
+        public static void BatchBuildCampusArchitecture()
+        {
+            CanThoDetailSetupTool.Apply();
+            MissionSetupTool.Install();
+            BuildWindows("Builds/CanThoArchitecturePlayer");
+        }
+
+        [MenuItem("LastProtocol/Maps/Build Windows Campus Neighborhood")]
+        public static void BatchBuildCampusNeighborhood()
+        {
+            CanThoDetailSetupTool.Apply();
+            MissionSetupTool.Install();
+            BuildWindows("Builds/CanThoNeighborhoodPlayer");
+        }
+
+        [MenuItem("LastProtocol/Maps/Build Windows Campus Periphery")]
+        public static void BatchBuildCampusPeriphery()
+        {
+            CanThoDetailSetupTool.Apply();
+            MissionSetupTool.Install();
+            BuildWindows("Builds/CanThoPeripheralPlayer");
+        }
+
+        [MenuItem("LastProtocol/Maps/Build Windows Campus Streetscape")]
+        public static void BatchBuildCampusStreetscape()
+        {
+            CanThoDetailSetupTool.Apply();
+            MissionSetupTool.Install();
+            BuildWindows("Builds/CanThoStreetscapePlayer");
+        }
+
+        [MenuItem("LastProtocol/Maps/Build Windows Campus Building Infill")]
+        public static void BatchBuildCampusInfill()
+        {
+            CanThoDetailSetupTool.Apply();
+            MissionSetupTool.Install();
+            BuildWindows("Builds/CanThoInfillPlayer");
         }
 
         private static void BuildWindows(string outputDirectory)

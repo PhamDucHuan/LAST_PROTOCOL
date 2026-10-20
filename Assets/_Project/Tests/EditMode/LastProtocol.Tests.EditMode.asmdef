@@ -1,7 +1,7 @@
 {
   "name": "LastProtocol.Tests.EditMode",
   "rootNamespace": "LastProtocol.Tests",
-  "references": ["LastProtocol.Runtime", "LastProtocol.Editor", "Unity.Netcode.Runtime"],
+  "references": ["LastProtocol.Runtime", "LastProtocol.Editor", "Unity.Netcode.Runtime", "Unity.Cinemachine"],
   "includePlatforms": ["Editor"],
   "optionalUnityReferences": ["TestAssemblies"],
   "autoReferenced": false

@@ -1,0 +1,19 @@
+{
+  "artRevision": 6,
+  "protocol": 16,
+  "candidate": "Builds/CanThoMap/20261016-Neighborhood/Candidate05",
+  "source": "ArtSource/Blender/CanThoCampus/CanThoCampus.blend",
+  "newHouseCount": 167,
+  "sourceMeshObjects": 39010,
+  "mergedRenderers": 334,
+  "triangles": 506766,
+  "collisionBoxes": 807,
+  "campusLandmarks": 40,
+  "playableGroundSize": [560, 640],
+  "scope": "Student neighborhood outside existing Duong3/2 campus frontage, three service alleys, residential cross streets and an open food court",
+  "fidelity": "Reference-inspired gameplay adaptation; no cadastral or measured reconstruction. Alley placement is fictional.",
+  "references": "ArtSource/References/CanThoCampus/REFERENCES_NEIGHBORHOOD.md",
+  "retained": ["campus footprint", "campus roads", "campus fence spans", "gates A B C", "faculty landmarks", "Recon mission and spawn points"],
+  "excluded": ["interiors", "new quests or enemy waves", "traffic or civilian AI", "Bung Xang lake", "world streaming"],
+  "testReport": "Assets/_Project/Documentation/CAN_THO_NEIGHBORHOOD_TEST_RESULTS.md"
+}

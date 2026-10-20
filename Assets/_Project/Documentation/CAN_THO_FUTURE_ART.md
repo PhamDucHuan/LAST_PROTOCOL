@@ -1,5 +1,7 @@
 # Campus Cần Thơ phiên bản chi tiết và tương lai
 
+Bản hiện tại đã nâng lên **art revision 3 / protocol 11**: xem `CAN_THO_PLAYABLE_ROUTE.md` cho tuyến chơi, kiến trúc và kiểm thử mới. Nội dung bên dưới ghi lịch sử nâng cấp revision 2, trước lần hoàn thiện tuyến ngày 2026-10-16.
+
 Art revision 2 giữ bố cục campus và hai sân test cũ, đồng thời dựng lại bốn điểm mốc chính theo ảnh tham khảo. Sau đó bổ sung hạ tầng hư cấu của AI MEKONG để hợp với bối cảnh LAST_PROTOCOL. Đây vẫn là môi trường stylized với tỷ lệ giản lược cho gameplay.
 
 ## Điểm thay đổi

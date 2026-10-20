@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 namespace LastProtocol
 {
+    // NGO applies interpolated transforms in PreLateUpdate. Follow them afterwards,
+    // before CinemachineBrain evaluates its camera in LateUpdate.
+    [DefaultExecutionOrder(-50)]
     public sealed class LocalPlayerCamera : MonoBehaviour
     {
         public CinemachineCamera virtualCamera;
@@ -34,6 +37,12 @@ namespace LastProtocol
             captureRequested = true;
             ApplyCursorState();
             follow.CameraDistance = MultiplayerSession.Instance.config.cameraDistance;
+            var brain = UnityEngine.Camera.main?.GetComponent<CinemachineBrain>();
+            if (brain != null)
+            {
+                brain.UpdateMethod = CinemachineBrain.UpdateMethods.LateUpdate;
+                brain.BlendUpdateMethod = CinemachineBrain.BrainUpdateMethods.LateUpdate;
+            }
         }
         public void Unbind(Transform target)
         {
@@ -79,8 +88,11 @@ namespace LastProtocol
                 pitch = Mathf.Clamp(pitch - delta.y * sensitivity, -25, 70);
             }
             discardMouseDelta = false;
-            pivot.position = playerTarget.position;
-            pivot.rotation = Quaternion.Euler(pitch, yaw, 0);
+        }
+        private void LateUpdate()
+        {
+            if (playerTarget == null || pivot == null) return;
+            pivot.SetPositionAndRotation(playerTarget.position, Quaternion.Euler(pitch, yaw, 0));
         }
         private void OnDestroy()
         {

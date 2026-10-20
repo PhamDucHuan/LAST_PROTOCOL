@@ -1,0 +1,25 @@
+{
+  "revision": 1,
+  "basis": "Manual visual interpretation of Google Maps road and satellite views on 2026-10-16, corroborated by CTU and Bao Can Tho. Topological reconstruction compressed into the existing campus coordinate system; not a cadastral survey or exported Google dataset.",
+  "mapNorthInUnity": [0.77, 0, 0.64],
+  "bounds": {"center": {"x": -90, "y": 10, "z": 30}, "size": {"x": 940, "y": 40, "z": 840}},
+  "roads": [
+    {"id":"three_february","title":"ĐƯỜNG 3 THÁNG 2","width":20,"quota":36,"points":[[-470,-64],[330,-64]]},
+    {"id":"bung_xang","title":"BÚNG XÁNG / HẺM 51","width":7.5,"quota":30,"points":[[-250,-64],[-250,-20],[-257,20],[-265,55],[-269,90],[-263,125],[-244,165],[-222,205],[-205,245],[-199,300],[-187,360],[-170,415]]},
+    {"id":"mac_thien_tich","title":"MẠC THIÊN TÍCH","width":7.5,"quota":28,"points":[[-5,-64],[35,-100],[65,-137],[90,-155],[105,-142],[115,-112],[155,-130],[184.6875,-145]]},
+    {"id":"tran_van_hoai","title":"TRẦN VĂN HOÀI","width":12,"quota":32,"points":[[-72,-64],[-65,-125],[-58,-215],[-10,-290],[60,-320],[124,-320]]},
+    {"id":"mau_than","title":"MẬU THÂN","width":15,"quota":24,"points":[[240,380],[230,330],[218,220],[212,90],[210,-64],[180,-160],[145,-260],[110,-360]]},
+    {"id":"nguyen_van_cu","title":"HƯỚNG NGUYỄN VĂN CỪ","width":14,"quota":17,"points":[[-500,440],[-350,425],[-170,415],[20,405],[240,380]]}
+  ],
+  "waterBoundary":[[-300,75],[-340,90],[-375,130],[-410,195],[-430,260],[-425,315],[-395,355],[-350,380],[-315,377],[-288,350],[-278,305],[-260,260],[-243,215],[-249,180],[-275,125]],
+  "waterTitle":"HỒ BÚNG XÁNG / NHÁNH RẠCH RAU MUỐNG",
+  "waterChecks":[[-330,120],[-365,230],[-345,330]],
+  "route":[[0,-40],[0,-64],[-125,-64],[-250,-64],[-257,20],[-269,90],[-263,125],[-244,165],[-222,205],[-205,245],[-199,300],[-187,360],[-170,415],[-50,408.6842],[70,399.3182],[190,385.6818],[240,380],[230,330],[218,220],[212,90],[210,-64],[100,-64],[0,-64],[0,-40]],
+  "references":[
+    "https://www.google.com/maps/@10.0299337,105.7706153,16z",
+    "https://www.google.com/maps/search/?api=1&query=C%C3%B4ng+vi%C3%AAn+B%E1%BB%9D+H%E1%BB%93+B%C3%BAng+X%C3%A1ng+C%E1%BA%A7n+Th%C6%A1",
+    "https://cenres.ctu.edu.vn/images/upload/news/tuyensinh2018/Thng-tin-hu-ch-cho-sinh-vin-TN.pdf",
+    "https://baocantho.com.vn/bung-xang-va-dia-danh-co-thanh-to-bung-o-bscl-a139733.html"
+  ],
+  "limits":["Campus gate spacing is retained from the user schematic, not fitted to GPS.","Road widths, parcel depths and distances are gameplay estimates.","Northern Nguyen Van Cu is a simplified directional connector, not a detailed measured street reconstruction.","Generic houses and storefronts are reused; individual real addresses and businesses are not claimed.","No Google imagery or map tiles are included in shipped artwork."]
+}

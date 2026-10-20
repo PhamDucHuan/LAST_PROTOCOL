@@ -23,10 +23,20 @@ namespace LastProtocol.Editor
         public const string MenuPath = "Assets/_Project/Prefabs/UI/CanThoOperationsMenu.prefab";
         private const string MaterialsPath = "Assets/_Project/Materials/CanThoCampus";
 
-        [Serializable] public sealed class Palette { public string name; public Color color; public float roughness, metallic, emission; }
-        [Serializable] public sealed class CollisionBox { public string name; public Vector3 position, size; }
+        [Serializable] public sealed class Palette
+        {
+            public string name, baseMap, normalMap;
+            public Color color;
+            public float roughness, metallic, emission, normalScale;
+            public bool alphaClip, doubleSided;
+        }
+        [Serializable] public sealed class CollisionBox { public string name; public Vector3 position, size, euler; }
+        [Serializable] public sealed class FenceSpan { public string name; public Vector3 a, b; }
+        [Serializable] public sealed class Gate { public string id; public Vector3 position; public float clearWidth; }
         [Serializable] public sealed class Landmark { public string id, title; public Vector3 position, approach; }
         [Serializable] public sealed class LayoutBounds { public Vector3 center, size; }
+        [Serializable] public sealed class NeighborhoodHouse { public string name, district; public Vector3 position, size, euler, front; }
+        [Serializable] public sealed class PeripheralRoad { public string id, title; public float width; public Vector3[] points; }
         [Serializable] public sealed class Layout
         {
             public int version;
@@ -37,6 +47,19 @@ namespace LastProtocol.Editor
             public CollisionBox[] collisions;
             public Landmark[] landmarks;
             public Vector3[] navigationChecks;
+            public Vector3[] playableRoute;
+            public Vector3[] campusBoundary;
+            public FenceSpan[] fenceSpans;
+            public Gate[] gates;
+            public Vector3[] neighborhoodChecks, neighborhoodRoute;
+            public NeighborhoodHouse[] neighborhoodHouses;
+            public PeripheralRoad[] peripheralRoads;
+            public PeripheralRoad[] localLanes;
+            public Vector3[] streetscapeTrees, streetscapeBenches, streetscapeLamps;
+            public NeighborhoodHouse[] infillBuildings;
+            public Vector3[] infillAccessChecks;
+            public Vector3[] waterBoundary, waterChecks;
+            public Vector3 neighborhoodCameraProbe, neighborhoodCameraEuler;
         }
 
         public static Layout ReadLayout()
@@ -118,6 +141,20 @@ namespace LastProtocol.Editor
                     material.SetFloat("_Smoothness", 1 - entry.roughness);
                     if (entry.emission > 0)
                     { material.EnableKeyword("_EMISSION"); material.SetColor("_EmissionColor", entry.color * entry.emission); }
+                    if (!string.IsNullOrEmpty(entry.baseMap)) material.SetTexture("_BaseMap", LoadSurfaceTexture(entry.baseMap, false));
+                    if (!string.IsNullOrEmpty(entry.normalMap))
+                    {
+                        material.SetTexture("_BumpMap", LoadSurfaceTexture(entry.normalMap, true));
+                        material.SetFloat("_BumpScale", entry.normalScale); material.EnableKeyword("_NORMALMAP");
+                    }
+                    if (entry.alphaClip)
+                    {
+                        material.SetFloat("_AlphaClip", 1); material.SetFloat("_Cutoff", .35f);
+                        material.EnableKeyword("_ALPHATEST_ON"); material.SetOverrideTag("RenderType", "TransparentCutout");
+                        material.renderQueue = (int)RenderQueue.AlphaTest;
+                    }
+                    if (entry.doubleSided) { material.SetFloat("_Cull", 0); material.doubleSidedGI = true; }
+                    material.enableInstancing = true;
                     AssetDatabase.CreateAsset(material, path);
                 }
                 var identifier = new AssetImporter.SourceAssetIdentifier(typeof(Material), entry.name);
@@ -129,6 +166,22 @@ namespace LastProtocol.Editor
             if (importer.importAnimation) { importer.importAnimation = false; changed = true; }
             if (importer.addCollider) { importer.addCollider = false; changed = true; }
             if (changed) importer.SaveAndReimport();
+        }
+
+        private static Texture2D LoadSurfaceTexture(string relative, bool normal)
+        {
+            if (relative.Contains("..") || Path.IsPathRooted(relative) || !relative.StartsWith("Textures/", StringComparison.Ordinal))
+                throw new InvalidOperationException("Campus texture must stay in its owned Textures directory.");
+            string path = ArtRoot + "/" + relative;
+            var importer = AssetImporter.GetAtPath(path) as TextureImporter;
+            if (importer == null) throw new FileNotFoundException("Campus surface texture missing: " + path);
+            if (normal && (importer.textureType != TextureImporterType.NormalMap || importer.sRGBTexture))
+            {
+                importer.textureType = TextureImporterType.NormalMap; importer.sRGBTexture = false; importer.SaveAndReimport();
+            }
+            var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+            if (texture == null) throw new InvalidOperationException("Campus texture import failed: " + path);
+            return texture;
         }
 
         private static void CreateScene(Layout layout)
@@ -156,9 +209,10 @@ namespace LastProtocol.Editor
                 {
                     var go = new GameObject(box.name); go.transform.SetParent(colliders.transform, false);
                     go.transform.position = box.position;
+                    go.transform.rotation = Quaternion.Euler(box.euler);
                     go.AddComponent<BoxCollider>().size = box.size;
                     sources.Add(new NavMeshBuildSource { shape = NavMeshBuildSourceShape.Box, size = box.size,
-                        transform = Matrix4x4.Translate(box.position), area = box.name == "Campus soil" ? 0 : 1 });
+                        transform = Matrix4x4.TRS(box.position, Quaternion.Euler(box.euler), Vector3.one), area = box.name == "Campus soil" ? 0 : 1 });
                 }
                 // Training targets are spawned at runtime. Reserve them in static navigation.
                 for (int i = 0; i < MultiplayerConfig.MaxPlayers; i++) sources.Add(new NavMeshBuildSource
@@ -218,16 +272,69 @@ namespace LastProtocol.Editor
             captureData.antialiasing = AntialiasingMode.SubpixelMorphologicalAntiAliasing; captureData.antialiasingQuality = AntialiasingQuality.High;
             camera.allowHDR = true;
             camera.farClipPlane = 1600; camera.clearFlags = CameraClearFlags.Skybox;
-            var positions = new[] { new Vector3(370, 410, -350), new Vector3(24, 7, -77), new Vector3(-64, 6, -19), new Vector3(82, 7, -42), new Vector3(-8, 7, -40), new Vector3(30, 3, -67) };
-            var targets = new[] { new Vector3(-20, 0, 105), new Vector3(0, 5, -40), new Vector3(-45, 8, 12), new Vector3(57, 8, -25), new Vector3(-33, 12, -21), new Vector3(36, 2.2f, -49.5f) };
-            var names = new[] { "Unity-CanTho-Overview", "Unity-CanTho-GateB", "Unity-CanTho-TurtleHall", "Unity-CanTho-Library", "Unity-CanTho-ATL", "Unity-CanTho-FrontFence" };
+            var positions = new[] { new Vector3(320, 365, -330), new Vector3(24, 7, -77), new Vector3(-77, 17, -9), new Vector3(82, 7, -42), new Vector3(-8, 7, -40), new Vector3(30, 3, -67), new Vector3(12, 5, -34), new Vector3(57, 5, -46.5f), new Vector3(-7, 12, -42), new Vector3(83, 11, -56), new Vector3(-30, 500, 95) };
+            var targets = new[] { new Vector3(-30, 0, 95), new Vector3(0, 5, -40), new Vector3(-45, 8, 12), new Vector3(57, 8, -25), new Vector3(-33, 12, -21), new Vector3(36, 2.2f, -49.5f), new Vector3(22, 10, -2), new Vector3(57, 7, -26), new Vector3(22, 11, -2), new Vector3(57, 8, -25), new Vector3(-30, 0, 95) };
+            var names = new[] { "Unity-CanTho-Overview", "Unity-CanTho-GateB", "Unity-CanTho-TurtleHall", "Unity-CanTho-Library", "Unity-CanTho-ATL", "Unity-CanTho-FrontFence", "Unity-CanTho-AdministrationRoute", "Unity-CanTho-LibraryRoute", "Unity-CanTho-AdministrationPhoto", "Unity-CanTho-LibraryPhoto", "Unity-CanTho-SchematicPlan" };
+            if (ReadLayout().artRevision >= 6)
+            {
+                // Keep plan last: it receives the orthographic inspection settings.
+                positions = positions.Take(positions.Length - 1).Concat(new[] {
+                    new Vector3(170, 150, -350), new Vector3(-8, 3, -110), new Vector3(-289, 5, -131),
+                    new Vector3(92, 6, -243), new Vector3(-15, 600, 5) }).ToArray();
+                targets = targets.Take(targets.Length - 1).Concat(new[] {
+                    new Vector3(-35, 0, -140), new Vector3(0, 2, -180), new Vector3(-281, 1, -158),
+                    new Vector3(55, 3, -270), new Vector3(-15, 0, 5) }).ToArray();
+                names = names.Take(names.Length - 1).Concat(new[] {
+                    "Unity-CanTho-NeighborhoodOverview", "Unity-CanTho-StudentAlley", "Unity-CanTho-FoodCourt",
+                    "Unity-CanTho-RentalHousing", "Unity-CanTho-SchematicPlan" }).ToArray();
+                positions[0] = new Vector3(350, 400, -390); targets[0] = new Vector3(-15, 0, 5);
+            }
+            if (ReadLayout().artRevision >= 7)
+            {
+                positions = positions.Take(10).Concat(new[] {
+                    new Vector3(290, 380, -460), new Vector3(-235, 6, -79), new Vector3(-203, 5, 260),
+                    new Vector3(-243, 5, 125), new Vector3(-447, 28, 285), new Vector3(180, 18, -210),
+                    new Vector3(-90, 700, 30) }).ToArray();
+                targets = targets.Take(10).Concat(new[] {
+                    new Vector3(-100, 0, 90), new Vector3(-253, 2, -5), new Vector3(-227, 1, 283),
+                    new Vector3(-310, 1, 165), new Vector3(-300, 0, 250), new Vector3(80, 2, -150),
+                    new Vector3(-90, 0, 30) }).ToArray();
+                names = names.Take(10).Concat(new[] {
+                    "Unity-CanTho-PeripheralOverview", "Unity-CanTho-Hem51", "Unity-CanTho-LakesideFoodCourt",
+                    "Unity-CanTho-Promenade", "Unity-CanTho-BungXang", "Unity-CanTho-UrbanJunction",
+                    "Unity-CanTho-SchematicPlan" }).ToArray();
+                positions[0] = new Vector3(390, 500, -560); targets[0] = new Vector3(-90, 0, 30);
+            }
+            if (ReadLayout().artRevision >= 8)
+            {
+                var lane = ReadLayout().localLanes[0];
+                var direction = (lane.points[1] - lane.points[0]).normalized;
+                var eye = lane.points[0] + direction * 22 + Vector3.up * 2.7f;
+                positions = positions.Take(positions.Length - 1).Concat(new[] { eye, positions.Last() }).ToArray();
+                targets = targets.Take(targets.Length - 1).Concat(new[] { eye + direction * 35, targets.Last() }).ToArray();
+                names = names.Take(names.Length - 1).Concat(new[] { "Unity-CanTho-InfillStreet", names.Last() }).ToArray();
+            }
+            if (ReadLayout().artRevision >= 9)
+            {
+                var houses = ReadLayout().infillBuildings;
+                var selected = new[] { houses[0], houses[houses.Length / 3], houses[houses.Length * 2 / 3] };
+                var eyes = selected.Select(h => h.position + h.front * (h.size.z * .5f + 18) + Vector3.Cross(Vector3.up, h.front) * 12 + Vector3.up * 20).ToArray();
+                positions = positions.Take(positions.Length - 1).Concat(eyes).Concat(new[] { positions.Last() }).ToArray();
+                targets = targets.Take(targets.Length - 1).Concat(selected.Select(h => h.position + Vector3.up * Mathf.Min(h.size.y * .45f, 5))).Concat(new[] { targets.Last() }).ToArray();
+                names = names.Take(names.Length - 1).Concat(new[] { "Unity-CanTho-InfillFacade", "Unity-CanTho-InfillBlock", "Unity-CanTho-InfillRental" }).Concat(new[] { names.Last() }).ToArray();
+            }
             for (int i = 0; i < positions.Length; i++)
             {
                 // Overview is an inspection view, so remove distance fog temporarily.
-                RenderSettings.fog = i != 0;
+                bool plan = i == positions.Length - 1;
+                RenderSettings.fog = !names[i].EndsWith("Overview", StringComparison.Ordinal) && !plan;
                 camera.transform.position = positions[i]; camera.transform.LookAt(targets[i]);
-                camera.orthographic = i == 0; camera.orthographicSize = 240; camera.fieldOfView = 65;
-                var texture = new RenderTexture(1600, 1000, 24); texture.Create();
+                if (plan) camera.transform.rotation = Quaternion.Euler(90, 0, 0);
+                camera.orthographic = i == 0 || plan;
+                camera.orthographicSize = ReadLayout().artRevision >= 6 ? (plan ? 330 : 300) : (plan ? 190 : 240);
+                if (ReadLayout().artRevision >= 7) camera.orthographicSize = plan ? 460 : 400;
+                camera.fieldOfView = 65;
+                var texture = new RenderTexture(1600, plan ? 1400 : 1000, 24); texture.Create();
                 for (int frame = 0; frame < 4; frame++) RenderPipeline.SubmitRenderRequest(camera, new RenderPipeline.StandardRequest { destination = texture });
                 var previous = RenderTexture.active; RenderTexture.active = texture;
                 var pixels = new Texture2D(texture.width, texture.height, TextureFormat.RGB24, false);

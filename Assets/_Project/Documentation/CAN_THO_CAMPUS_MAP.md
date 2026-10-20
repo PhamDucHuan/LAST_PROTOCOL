@@ -1,5 +1,15 @@
 # Map Cần Thơ và Đại học Cần Thơ Khu II
 
+> **Bản hiện tại:** [nhà bổ sung trên đất cũ revision9 / Protocol19](CAN_THO_BUILDING_INFILL.md). Thêm 1.100 nhà, tổng 1.351 nhà ngoại vi; giữ nguyên nền 940 × 840 m, campus, đường và hồ. [Kết quả kiểm tra](CAN_THO_BUILDING_INFILL_TEST_RESULTS.md).
+
+> **Lịch sử revision8:** [ngoại vi và bờ hồ / Protocol18](CAN_THO_STREETSCAPE.md). Thêm nhà trong hẻm, cây, ghế và đèn.
+
+> **Lịch sử:** [ngoại vi theo Google Maps revision7 / Protocol17](CAN_THO_PERIPHERAL_LAYOUT.md). Chỉnh mạng đường, bổ sung bờ hồ và sắp lại167 nhà; campus/Recon giữ nguyên. Các bản dưới đây là lịch sử.
+
+> **Lịch sử:** [ngoại thất theo ảnh revision5 / Protocol15](CAN_THO_ARCHITECTURE_REALISM.md). Bố cục schematic revision4 giữ lại, nâng kiến trúc, vật liệu, cây và collider. Các đoạn protocol/stat phía dưới là lịch sử.
+
+> **Lịch sử 16/10/2026:** [bố cục sơ đồ Campus II revision4](CAN_THO_SCHEMATIC_LAYOUT.md), Protocol14. Đã sắp lại nhà/đường/hàng rào theo ảnh mới của người dùng và bổ sung các khu còn thiếu. Phần bên dưới là lịch sử bản dựng đầu, gồm protocol và thống kê cũ; dùng hướng dẫn revision4 khi chơi hoặc chỉnh map hiện tại.
+
 **Cập nhật hiện tại:** đã có art revision 2 chi tiết và phong cách MEKONG tương lai. Xem `CAN_THO_FUTURE_ART.md` và `CAN_THO_FUTURE_TEST_RESULTS.md`. Các số liệu/bối cảnh của bản đầu bên dưới được giữ để tham khảo lịch sử; bản build mới dùng protocol 9.
 
 Map đầu tiên của thành phố Cần Thơ trong LAST_PROTOCOL là một bản dựng 3D có thể khám phá, lấy bố cục từ sơ đồ Khu II do người dùng cung cấp. Các công trình được tạo bằng Blender, xuất FBX và tích hợp vào Unity URP. Hai sân test cũ được giữ nguyên.

@@ -93,12 +93,14 @@ namespace LastProtocol
             var session = MultiplayerSession.Instance;
             if (!IsServer || session == null || rpcParams.Receive.SenderClientId != OwnerClientId || !ConnectionPolicy.IsFinite(input)) return;
             controlsActive &= health == null || health.CanAct;
+            if (hasSequence && unchecked((int)(inputSequence - lastSequence)) <= 0) return;
             var revive = GetComponent<PlayerRevive>();
             if (revive != null && revive.IsChanneling && (input.sqrMagnitude > 0.01f || jumpCounter != lastJumpCounter))
                 revive.CancelServer(true);
-            if (hasSequence && unchecked((int)(inputSequence - lastSequence)) <= 0) return;
             double now = Time.realtimeSinceStartupAsDouble;
-            if (now - lastAcceptedTime < MultiplayerConfig.InputInterval * 0.5) return;
+            // Packets sent 33 ms apart can arrive in the same frame after network jitter.
+            // Keep the newest intent, including stop/release. RPC receipt never simulates
+            // movement: FixedUpdate alone applies the server-configured speed once/step.
             lastAcceptedTime = now;
             lastSequence = inputSequence;
             hasSequence = true;

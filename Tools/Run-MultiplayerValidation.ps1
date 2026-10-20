@@ -1,5 +1,5 @@
 param(
-    [ValidateSet('Setup','Repair','Tests','Build','ControllerBuild','HealthSetup','HealthBuild','CombatSetup','CombatBuild','EnemySetup','EnemyBuild','ReviveSetup','ReviveBuild','MenuSetup','MenuBuild','CanThoSetup','CanThoBuild','CanThoDetail','CanThoDetailRefresh')][string]$Stage = 'Setup',
+    [ValidateSet('Setup','Repair','Tests','Build','ControllerBuild','HealthSetup','HealthBuild','CombatSetup','CombatBuild','EnemySetup','EnemyBuild','ReviveSetup','ReviveBuild','MenuSetup','MenuBuild','CanThoSetup','CanThoBuild','CanThoDetail','CanThoDetailRefresh','MissionSetup','MissionBuild')][string]$Stage = 'Setup',
     [string]$UnityEditor = 'C:\Program Files\Unity\Hub\Editor\6000.5.4f1\Editor\Unity.exe',
     [string]$CanThoArtDirectory = ''
 )
@@ -19,10 +19,15 @@ foreach ($folder in @('Assets','Packages','ProjectSettings')) {
 if ($CanThoArtDirectory) {
     if ($Stage -notin @('CanThoDetail','CanThoDetailRefresh')) { throw 'Staged art requires CanThoDetail or CanThoDetailRefresh.' }
     $stagedLayout = Get-Content -Raw -LiteralPath (Join-Path $CanThoArtDirectory 'CanThoCampus.layout.json') | ConvertFrom-Json
-    if ($stagedLayout.artRevision -ne 2) { throw 'Staged Can Tho art must be revision 2.' }
+    if ($stagedLayout.artRevision -notin @(2,3,4,5,6,7,8,9)) { throw 'Staged Can Tho art must be supported revision 2 to 9.' }
     $artDestination = Join-Path $validation 'Assets\_Project\Art\Environments\CanThoCampus'
     foreach ($name in @('CanThoCampus.fbx','CanThoCampus.layout.json')) {
         Copy-Item -LiteralPath (Join-Path $CanThoArtDirectory $name) -Destination (Join-Path $artDestination $name) -Force
+    }
+    if (Test-Path -LiteralPath (Join-Path $CanThoArtDirectory 'Textures')) {
+        $textureDestination = Join-Path $artDestination 'Textures'
+        New-Item -ItemType Directory -Path $textureDestination -Force | Out-Null
+        Get-ChildItem -LiteralPath (Join-Path $CanThoArtDirectory 'Textures') -Filter '*.png' -File | Copy-Item -Destination $textureDestination -Force
     }
 }
 $results = Join-Path $workspace 'Builds\ValidationResults'
@@ -38,6 +43,8 @@ if ($Stage -eq 'Tests') { [IO.File]::WriteAllText((Join-Path $results 'EditMode.
 $log = Join-Path $results ($Stage + '.log')
 $arguments = @('-batchmode','-nographics','-projectPath',('"' + $validation + '"'),'-logFile',('"' + $log + '"'))
 switch ($Stage) {
+    'MissionSetup' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.MissionSetupTool.BatchInstall') }
+    'MissionBuild' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.MultiplayerSetupTool.BatchBuildMission') }
     'CanThoDetailRefresh' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.CanThoDetailSetupTool.BatchRefresh') }
     'CanThoDetail' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.CanThoDetailSetupTool.BatchApply') }
     'CanThoSetup' { $arguments += @('-quit','-executeMethod','LastProtocol.Editor.CanThoMapSetupTool.BatchInstall') }

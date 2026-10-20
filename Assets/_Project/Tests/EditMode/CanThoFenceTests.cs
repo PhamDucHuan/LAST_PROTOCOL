@@ -12,7 +12,7 @@ namespace LastProtocol.Tests
     public sealed class CanThoFenceTests
     {
         [Test]
-        public void VisiblePerimeterAndContinuousCollidersCoverAllSevenSpans()
+        public void VisiblePerimeterAndContinuousCollidersCoverEveryAuthoredSpan()
         {
             var model = AssetDatabase.LoadAssetAtPath<GameObject>(CanThoMapSetupTool.ModelPath);
             Assert.IsTrue(model.GetComponentsInChildren<MeshRenderer>().Any(x => x.name.Contains("35_CampusFence")));
@@ -20,19 +20,21 @@ namespace LastProtocol.Tests
             {
                 var fences = scene.GetRootGameObjects().SelectMany(x => x.GetComponentsInChildren<BoxCollider>())
                     .Where(x => x.name.StartsWith("Campus fence ")).ToArray();
-                Assert.AreEqual(7, fences.Length);
+                var layout = CanThoMapSetupTool.ReadLayout();
+                Assert.AreEqual(layout.artRevision >= 4 ? layout.fenceSpans.Length : 7, fences.Length);
                 // Sample the whole span, including each end, at player torso height.
                 foreach (var fence in fences)
                 {
                     var bounds = fence.bounds;
-                    bool alongX = bounds.size.x > bounds.size.z;
-                    var normal = alongX ? Vector3.forward : Vector3.right;
+                    bool alongX = fence.size.x > fence.size.z;
+                    var normal = fence.transform.TransformDirection(alongX ? Vector3.forward : Vector3.right);
                     for (int i = 0; i <= 20; i++)
                     {
-                        var point = bounds.center;
-                        point.y = 1.5f;
-                        if (alongX) point.x = Mathf.Lerp(bounds.min.x + 0.01f, bounds.max.x - 0.01f, i / 20f);
-                        else point.z = Mathf.Lerp(bounds.min.z + 0.01f, bounds.max.z - 0.01f, i / 20f);
+                        var local = fence.center;
+                        local.y = 1.5f - fence.transform.position.y;
+                        if (alongX) local.x = Mathf.Lerp(-fence.size.x / 2 + .02f, fence.size.x / 2 - .02f, i / 20f);
+                        else local.z = Mathf.Lerp(-fence.size.z / 2 + .02f, fence.size.z / 2 - .02f, i / 20f);
+                        var point = fence.transform.TransformPoint(local);
                         Assert.IsTrue(fence.Raycast(new Ray(point - normal * 3, normal), out _, 6), fence.name);
                     }
                     Assert.GreaterOrEqual(bounds.max.y, 3.5f, "Fence must be taller than the player jump");
@@ -71,10 +73,14 @@ namespace LastProtocol.Tests
                     Assert.IsTrue(path.corners.All(x => Mathf.Abs(x.x - gate) < 7), "Route must pass through this gate opening, not detour through another gate: " + route);
                     Debug.Log("Campus gate " + gate + " navigation route: " + route);
                 }
-                foreach (float x in new[] { -150f, -40f, 35f, 150f })
+                // The second span now has a cycle shelter at x=-40; sample the
+                // same solid frontage span outside that legitimate obstacle.
+                var probes = CanThoMapSetupTool.ReadLayout().artRevision >= 4
+                    ? new[] { -52f, 35f, 110f } : new[] { -150f, -52f, 35f, 150f };
+                foreach (float x in probes)
                 {
-                    Assert.IsTrue(NavMesh.SamplePosition(new Vector3(x, 0, -54), out var outside, 0.5f, NavMesh.AllAreas));
-                    Assert.IsTrue(NavMesh.SamplePosition(new Vector3(x, 0, -44), out var inside, 0.5f, NavMesh.AllAreas));
+                    Assert.IsTrue(NavMesh.SamplePosition(new Vector3(x, 0, -54), out var outside, 0.5f, NavMesh.AllAreas), "Outside frontage probe " + x);
+                    Assert.IsTrue(NavMesh.SamplePosition(new Vector3(x, 0, -44), out var inside, 0.5f, NavMesh.AllAreas), "Inside frontage probe " + x);
                     Assert.IsTrue(NavMesh.Raycast(outside.position, inside.position, out _, NavMesh.AllAreas), "AI must not walk through fence " + x);
                 }
             }

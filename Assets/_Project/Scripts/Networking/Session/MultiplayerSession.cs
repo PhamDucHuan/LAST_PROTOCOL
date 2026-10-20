@@ -64,6 +64,7 @@ namespace LastProtocol
             DontDestroyOnLoad(gameObject);
             manager = GetComponent<NetworkManager>();
             transport = GetComponent<UnityTransport>();
+            if (!TryGetComponent<ClientPerformance>(out _)) gameObject.AddComponent<ClientPerformance>();
             manager.ConnectionApprovalCallback = ApproveConnection;
             manager.OnClientConnectedCallback += OnConnected;
             manager.OnClientDisconnectCallback += OnDisconnected;
@@ -292,6 +293,9 @@ namespace LastProtocol
             // Do not begin loading while an approved client is still synchronizing its lobby.
             if (!CanStartGame) return;
             var level = LevelCatalog.Get(Room.SelectedLevel.Value);
+            if (level?.Id == LevelCatalog.CanTho && (Room.GetComponent<NetworkMissionState>()?.campusMission == null
+                || !Room.GetComponent<NetworkMissionState>().campusMission.Validate(out _)))
+            { LastError = "Campus mission configuration is missing. Run LastProtocol Missions Setup and rebuild."; ErrorRaised?.Invoke(LastError); return; }
             if (level == null || !Application.CanStreamedLevelBeLoaded(level.SceneName))
             { LastError = "Selected level is missing from the build. Run Menu Setup and rebuild all players."; ErrorRaised?.Invoke(LastError); NotifyChanged(); return; }
             acceptingPlayers = false;
@@ -330,6 +334,7 @@ namespace LastProtocol
             RobotEnemy.SpawnServer(playerPrefab.GetComponent<NetworkHitscanWeapon>()?.enemyPrefab);
             Room.Phase.Value = MatchPhase.Playing;
             SetState(SessionState.InGame);
+            Room.GetComponent<NetworkMissionState>()?.BeginServer(Room.SelectedLevel.Value);
         }
 
         private static async Task WithTimeout(Task task, float seconds, CancellationToken token)

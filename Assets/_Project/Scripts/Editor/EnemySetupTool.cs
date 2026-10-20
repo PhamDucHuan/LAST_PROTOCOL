@@ -98,6 +98,7 @@ namespace LastProtocol.Editor
                 var root = new GameObject("RobotEnemy");
                 root.AddComponent<NetworkObject>();
                 var sync = root.AddComponent<NetworkTransform>(); sync.Interpolate = true;
+                NetworkMotionSettings.Configure(sync);
                 sync.SyncScaleX = sync.SyncScaleY = sync.SyncScaleZ = false;
                 var collider = root.AddComponent<CapsuleCollider>(); collider.height = 2; collider.radius = 0.45f; collider.center = Vector3.up;
                 var agent = root.AddComponent<NavMeshAgent>(); agent.enabled = false;

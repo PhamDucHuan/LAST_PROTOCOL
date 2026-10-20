@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace LastProtocol
 {
@@ -70,6 +71,28 @@ namespace LastProtocol
             for (int i = 0; i < 15; i++) yield return null;
             var enemy = UnityEngine.Object.FindAnyObjectByType<RobotEnemy>();
             Check(report, enemy != null && enemy.Agent.enabled && enemy.Agent.isOnNavMesh, "Selected level Enemy uses baked navigation");
+            var performance = session.GetComponent<ClientPerformance>();
+            var originalPipeline = GraphicsSettings.currentRenderPipeline;
+            bool originalPost = Camera.main.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing;
+            performance.SetLightweight(true);
+            for (int i = 0; i < 8; i++) yield return null;
+            Check(report, performance.Lightweight && GraphicsSettings.currentRenderPipeline != originalPipeline,
+                "Light mode uses a runtime pipeline clone");
+            Check(report, ((UniversalRenderPipelineAsset)GraphicsSettings.currentRenderPipeline).renderScale <= 0.7f
+                && !Camera.main.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing,
+                "Light mode reduces rendering and disables local post processing");
+            performance.SetLightweight(false);
+            for (int i = 0; i < 8; i++) yield return null;
+            Check(report, !performance.Lightweight && GraphicsSettings.currentRenderPipeline == originalPipeline
+                && Camera.main.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing == originalPost,
+                "Normal mode restores pipeline and post processing");
+            Check(report, performance.FramesPerSecond > 0 && Application.targetFrameRate == 60,
+                "Performance metrics sample frames and standalone caps at 60 FPS");
+            if (previewLevel == LevelCatalog.CanTho && Array.IndexOf(Environment.GetCommandLineArgs(), "--lp-campus-route-preview") >= 0)
+                yield return CampusRoutePreview.Run(directory, (success, name) => Check(report, success, name));
+            if (previewLevel == LevelCatalog.CanTho && Array.IndexOf(Environment.GetCommandLineArgs(), "--lp-mission-preview") >= 0)
+                yield return MissionPreviewScenario.Run((success, name) => Check(report, success, name),
+                    name => CaptureMission(directory, name, report));
             SaveCameraImage(Camera.main, Path.Combine(directory, previewLevel == LevelCatalog.CanTho ? "06-cantho-gameplay.png" : "06-yard-gameplay.png"), report);
             for (int i = 0; i < 8; i++) yield return null;
             var leave = session.LeaveRoomAsync(); while (!leave.IsCompleted) yield return null;
@@ -78,6 +101,7 @@ namespace LastProtocol
             session.config.minimumPlayersToStart = 2;
             ui = UnityEngine.Object.FindAnyObjectByType<MenuFrontEnd>();
             Check(report, ui != null && UnityEngine.Object.FindObjectsByType<NetworkManager>().Length == 1, "Return from level to Menu without duplicate manager");
+            Check(report, UnityEngine.Object.FindObjectsByType<MissionHUD>().Length == 0, "Mission HUD is cleaned up on session leave");
             ui.openJoinButton.onClick.Invoke(); ui.joinInput.text = "ab";
             Check(report, !ui.joinButton.interactable && ui.joinInput.text == "AB", "Short code blocked and normalized");
             ui.joinInput.text = "abc123";
@@ -158,6 +182,42 @@ namespace LastProtocol
                 Application.Quit(report.failures.Count == 0 ? 0 : 2);
                 yield return new WaitForSecondsRealtime(5);
             }
+        }
+        private static IEnumerator CaptureMission(string directory, string name, Report report)
+        {
+            var hud = UnityEngine.Object.FindAnyObjectByType<MissionHUD>();
+            var source = hud.GetComponentInChildren<Canvas>();
+            var copy = UnityEngine.Object.Instantiate(source.gameObject);
+            var canvas = copy.GetComponent<Canvas>();
+            Vector2 canvasSize = ((RectTransform)source.transform).rect.size;
+            var cameraObject = new GameObject("Mission capture camera", typeof(Camera));
+            var camera = cameraObject.GetComponent<Camera>(); camera.enabled = false;
+            camera.transform.position = new Vector3(0, 0, -1000); camera.orthographic = true;
+            camera.orthographicSize = canvasSize.y * 0.5f; camera.farClipPlane = 2000;
+            camera.clearFlags = CameraClearFlags.SolidColor; camera.backgroundColor = new Color(0.025f, 0.043f, 0.065f);
+            camera.cullingMask = 1 << 30;
+            foreach (var child in copy.GetComponentsInChildren<Transform>(true)) child.gameObject.layer = 30;
+            canvas.renderMode = RenderMode.WorldSpace; canvas.worldCamera = camera;
+            var rect = (RectTransform)canvas.transform;
+            rect.position = Vector3.zero; rect.rotation = Quaternion.identity; rect.localScale = Vector3.one; rect.sizeDelta = canvasSize;
+            var destination = new RenderTexture(Screen.width, Screen.height, 24); destination.Create(); camera.targetTexture = destination;
+            for (int frame = 0; frame < 8; frame++) yield return null;
+            Canvas.ForceUpdateCanvases();
+            foreach (var text in copy.GetComponentsInChildren<TextMeshProUGUI>())
+            {
+                text.ForceMeshUpdate();
+                Check(report, !text.isTextOverflowing && text.textInfo.characterCount > 0, name + " readable text: " + text.text);
+                text.SetAllDirty();
+            }
+            for (int frame = 0; frame < 4; frame++)
+            {
+                Canvas.ForceUpdateCanvases();
+                RenderPipeline.SubmitRenderRequest(camera, new RenderPipeline.StandardRequest { destination = destination });
+                yield return null;
+            }
+            SaveCameraImage(camera, Path.Combine(directory, name + ".png"), report, destination);
+            camera.targetTexture = null; destination.Release(); UnityEngine.Object.Destroy(destination);
+            UnityEngine.Object.Destroy(copy); UnityEngine.Object.Destroy(cameraObject);
         }
         private static void SaveCameraImage(Camera camera, string path, Report report, RenderTexture destination = null, bool submitRequest = true)
         {

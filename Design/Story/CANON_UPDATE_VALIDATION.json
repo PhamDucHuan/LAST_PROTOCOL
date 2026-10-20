@@ -1,0 +1,345 @@
+{
+  "SchemaVersion": 1,
+  "CheckedAt": "2026-10-16T12:31:20.1957901+07:00",
+  "Scope": "Document update only; no gameplay or network tests performed",
+  "Result": "PASS",
+  "Source": {
+    "Path": "C:/Users/ADMIN/OneDrive/Máy tính/LAST_PROTOCOL.docx",
+    "SHA256": "5559FACAD4C7B1D13B04BD0170C838611AE792951B32A39CE7A5B73ECC460897",
+    "SnapshotSHA256": "5559FACAD4C7B1D13B04BD0170C838611AE792951B32A39CE7A5B73ECC460897",
+    "MatchesExpected": true,
+    "NonEmptyParagraphs": 1355,
+    "EmbeddedMedia": 0
+  },
+  "Links": [
+    {
+      "Document": "Assets/_Project/Documentation/STORY_CANON.md",
+      "Target": "../../../Design/Story/LAST_PROTOCOL.docx",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/STORY_CANON.md",
+      "Target": "../../../Design/Story/SOURCE.json",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/STORY_CANON.md",
+      "Target": "STORY_IMPLEMENTATION_ROADMAP.md",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/STORY_CANON.md",
+      "Target": "STORY_CANON_CHANGELOG.md",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/STORY_CANON_CHANGELOG.md",
+      "Target": "../../../Design/Story/SOURCE.json",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/STORY_CANON_CHANGELOG.md",
+      "Target": "STORY_CANON.md",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/STORY_CANON_CHANGELOG.md",
+      "Target": "../../../Design/Story/CANON_UPDATE_VALIDATION.json",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/STORY_IMPLEMENTATION_ROADMAP.md",
+      "Target": "STORY_CANON.md",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/STORY_IMPLEMENTATION_ROADMAP.md",
+      "Target": "../../../Design/Story/SOURCE.json",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/STORY_IMPLEMENTATION_ROADMAP.md",
+      "Target": "STORY_IMPLEMENTATION_BACKLOG.md",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/STORY_IMPLEMENTATION_ROADMAP.md",
+      "Target": "CANTHO_FIRST_MISSION_DESIGN.md",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/STORY_IMPLEMENTATION_ROADMAP.md",
+      "Target": "STORY_CANON_CHANGELOG.md",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/STORY_IMPLEMENTATION_BACKLOG.md",
+      "Target": "STORY_CANON.md",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/STORY_IMPLEMENTATION_BACKLOG.md",
+      "Target": "CAMPUS_RECON_SYSTEM.md",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/STORY_IMPLEMENTATION_BACKLOG.md",
+      "Target": "CAMPUS_RECON_TEST_RESULTS.md",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/STORY_IMPLEMENTATION_BACKLOG.md",
+      "Target": "STORY_IMPLEMENTATION_ROADMAP.md",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/STORY_IMPLEMENTATION_BACKLOG.md",
+      "Target": "CANTHO_FIRST_MISSION_DESIGN.md",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/CANTHO_FIRST_MISSION_DESIGN.md",
+      "Target": "STORY_CANON.md",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/CANTHO_FIRST_MISSION_DESIGN.md",
+      "Target": "CAMPUS_RECON_SYSTEM.md",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/CANTHO_FIRST_MISSION_DESIGN.md",
+      "Target": "STORY_IMPLEMENTATION_BACKLOG.md",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/CAMPUS_RECON_SYSTEM.md",
+      "Target": "STORY_CANON.md",
+      "Exists": true
+    },
+    {
+      "Document": "Assets/_Project/Documentation/CAMPUS_RECON_SYSTEM.md",
+      "Target": "CANTHO_FIRST_MISSION_DESIGN.md",
+      "Exists": true
+    },
+    {
+      "Document": "Design/Story/README.md",
+      "Target": "../../Assets/_Project/Documentation/STORY_CANON.md",
+      "Exists": true
+    },
+    {
+      "Document": "Design/Story/README.md",
+      "Target": "../../Assets/_Project/Documentation/STORY_CANON_CHANGELOG.md",
+      "Exists": true
+    }
+  ],
+  "PreservedRuntimeArtifacts": [
+    {
+      "Baseline": "Builds/ValidationResults/RegressionRuns/20261016-CampusRecon-Protocol13/ArtifactHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Assets\\_Project\\Scripts\\Core\\MultiplayerConfig.cs",
+      "Expected": "6401F2615F20F370046184E6AC78326D744CBEA739A645E3C1D4FE6B20C197F4",
+      "Actual": "6401F2615F20F370046184E6AC78326D744CBEA739A645E3C1D4FE6B20C197F4",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/ValidationResults/RegressionRuns/20261016-CampusRecon-Protocol13/ArtifactHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Assets\\_Project\\Scripts\\Networking\\Session\\MultiplayerSession.cs",
+      "Expected": "E8D812AF54C60343149E40D231578F2A78188FEA02130D2D311614AE833AE9AF",
+      "Actual": "E8D812AF54C60343149E40D231578F2A78188FEA02130D2D311614AE833AE9AF",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/ValidationResults/RegressionRuns/20261016-CampusRecon-Protocol13/ArtifactHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Assets\\_Project\\Scripts\\Gameplay\\Missions\\MissionDefinition.cs",
+      "Expected": "F4C1C478E664B7721CB66117FC34E1A7B7DAC77CE7AB0C0F3B6F82683740AD5C",
+      "Actual": "F4C1C478E664B7721CB66117FC34E1A7B7DAC77CE7AB0C0F3B6F82683740AD5C",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/ValidationResults/RegressionRuns/20261016-CampusRecon-Protocol13/ArtifactHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Assets\\_Project\\Scripts\\Gameplay\\Missions\\MissionRules.cs",
+      "Expected": "CD21A0F165A4FA9320A718A9276113FB7DEE68DCB4E9A0F0FC672D61205F5898",
+      "Actual": "CD21A0F165A4FA9320A718A9276113FB7DEE68DCB4E9A0F0FC672D61205F5898",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/ValidationResults/RegressionRuns/20261016-CampusRecon-Protocol13/ArtifactHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Assets\\_Project\\Scripts\\Gameplay\\Missions\\MissionSnapshot.cs",
+      "Expected": "B56BE1F916277F103D950DE89199D73DB1254E50215056B1CAEA06D4C749379E",
+      "Actual": "B56BE1F916277F103D950DE89199D73DB1254E50215056B1CAEA06D4C749379E",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/ValidationResults/RegressionRuns/20261016-CampusRecon-Protocol13/ArtifactHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Assets\\_Project\\Scripts\\Gameplay\\Missions\\NetworkMissionState.cs",
+      "Expected": "70089EE78109ECEA9DA719CD7CA01E7F524AADB16940B61D9976EBC3DE094607",
+      "Actual": "70089EE78109ECEA9DA719CD7CA01E7F524AADB16940B61D9976EBC3DE094607",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/ValidationResults/RegressionRuns/20261016-CampusRecon-Protocol13/ArtifactHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Assets\\_Project\\Scripts\\UI\\Missions\\MissionHUD.cs",
+      "Expected": "20DA8F15CB6E8842B3093FAB9A75642D1977A69FCF0B5BB635F386245855B47D",
+      "Actual": "20DA8F15CB6E8842B3093FAB9A75642D1977A69FCF0B5BB635F386245855B47D",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/ValidationResults/RegressionRuns/20261016-CampusRecon-Protocol13/ArtifactHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Assets\\_Project\\Prefabs\\Networking\\NetworkRoomState.prefab",
+      "Expected": "F7B580D8F6DF5A8F6953AD1BB97A7FB6D568FD4AEF49A6D67C78768F70197939",
+      "Actual": "F7B580D8F6DF5A8F6953AD1BB97A7FB6D568FD4AEF49A6D67C78768F70197939",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/ValidationResults/RegressionRuns/20261016-CampusRecon-Protocol13/ArtifactHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Assets\\_Project\\ScriptableObjects\\Missions\\CampusRecon.asset",
+      "Expected": "78F623C0A634EC664B3F8CEEA3AEA28B6B7BF195DB3695B2AAE40850C5E79089",
+      "Actual": "78F623C0A634EC664B3F8CEEA3AEA28B6B7BF195DB3695B2AAE40850C5E79089",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/ValidationResults/RegressionRuns/20261016-CampusRecon-Protocol13/ArtifactHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Builds\\ValidationProject\\Builds\\MissionPlayer\\LAST_PROTOCOL_Data\\Managed\\LastProtocol.Runtime.dll",
+      "Expected": "2DAACDD505B557A3DF9BC8D625E9DD498A89A9AA45B3198C37EF810D81C6A3A7",
+      "Actual": "2DAACDD505B557A3DF9BC8D625E9DD498A89A9AA45B3198C37EF810D81C6A3A7",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/MissionBackups/20261016-110710/PreserveHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Assets\\_Project\\Scenes\\MainMenu\\MainMenu.unity",
+      "Expected": "851BECAB4A71DA75FF966101FFD173033550F876E14245E7790C4B2816F01FD1",
+      "Actual": "851BECAB4A71DA75FF966101FFD173033550F876E14245E7790C4B2816F01FD1",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/MissionBackups/20261016-110710/PreserveHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Assets\\_Project\\Scenes\\MultiplayerTest\\MultiplayerTest.unity",
+      "Expected": "5B8D7D05EA2EECA1C9608A9A529A4451E90E16F6D5B7853B149CFF9C9BE052BA",
+      "Actual": "5B8D7D05EA2EECA1C9608A9A529A4451E90E16F6D5B7853B149CFF9C9BE052BA",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/MissionBackups/20261016-110710/PreserveHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Assets\\_Project\\Scenes\\ContainmentYard\\ContainmentYard.unity",
+      "Expected": "3D274D46892A7EA79BDDC48E7BD8EBA6257A55933B6B89F0EA27E14782DBF353",
+      "Actual": "3D274D46892A7EA79BDDC48E7BD8EBA6257A55933B6B89F0EA27E14782DBF353",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/MissionBackups/20261016-110710/PreserveHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Assets\\_Project\\Scenes\\CanThoCampus\\CanThoCampus.unity",
+      "Expected": "21A1DE6CBB2AB61CD538FF92EAA49969099F0D65C1DA3F2821B66AC219A452D0",
+      "Actual": "21A1DE6CBB2AB61CD538FF92EAA49969099F0D65C1DA3F2821B66AC219A452D0",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/MissionBackups/20261016-110710/PreserveHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Assets\\_Project\\Prefabs\\Player\\NetworkPlayer.prefab",
+      "Expected": "D59441A7A93D1063F06CE43577BF5577785B23C31442C34CE764F4CC569ED40E",
+      "Actual": "D59441A7A93D1063F06CE43577BF5577785B23C31442C34CE764F4CC569ED40E",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/MissionBackups/20261016-110710/PreserveHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Assets\\_Project\\Prefabs\\Networking\\RobotEnemy.prefab",
+      "Expected": "BE68F7BB65098A5ABC057185BD04207B80F37E85E692FB9B573B38443D16A3BB",
+      "Actual": "BE68F7BB65098A5ABC057185BD04207B80F37E85E692FB9B573B38443D16A3BB",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/MissionBackups/20261016-110710/PreserveHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Assets\\_Project\\Art\\Environments\\CanThoCampus\\CanThoCampus.fbx",
+      "Expected": "9F2BD83E4CD46D5D5A76FBB9575843DA0E0C05D1453DC298F657C00A231D21C8",
+      "Actual": "9F2BD83E4CD46D5D5A76FBB9575843DA0E0C05D1453DC298F657C00A231D21C8",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/MissionBackups/20261016-110710/PreserveHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Assets\\_Project\\Settings\\CanThoCampusNavigation.asset",
+      "Expected": "19219C1FA9CF537B5535FEF0B11DB2A3E2555B5F6CB0B5B9725F606A56A6C348",
+      "Actual": "19219C1FA9CF537B5535FEF0B11DB2A3E2555B5F6CB0B5B9725F606A56A6C348",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/MissionBackups/20261016-110710/PreserveHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\ProjectSettings\\ProjectSettings.asset",
+      "Expected": "68FAEA61B56DA9A84CE07DD64654B39D82B52D7319A9D422D2CD0C37C141C30E",
+      "Actual": "68FAEA61B56DA9A84CE07DD64654B39D82B52D7319A9D422D2CD0C37C141C30E",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/MissionBackups/20261016-110710/PreserveHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Packages\\manifest.json",
+      "Expected": "96DB93B9B30CD9EC9D7C2A46A9D78DDCC3D2F502F9AD1D921F4C85C0940DDD0C",
+      "Actual": "96DB93B9B30CD9EC9D7C2A46A9D78DDCC3D2F502F9AD1D921F4C85C0940DDD0C",
+      "Matches": true
+    },
+    {
+      "Baseline": "Builds/MissionBackups/20261016-110710/PreserveHashes.json",
+      "Path": "D:\\UNITY\\DATN\\LAST_PROTOCOL\\Packages\\packages-lock.json",
+      "Expected": "A2A7E14E149DD83390804F41930888902A82FD5048CD77DE301AFDD52F510E3B",
+      "Actual": "A2A7E14E149DD83390804F41930888902A82FD5048CD77DE301AFDD52F510E3B",
+      "Matches": true
+    }
+  ],
+  "ExistingMetadata": [
+    {
+      "Name": "STORY_IMPLEMENTATION_ROADMAP.md.meta",
+      "Matches": true
+    },
+    {
+      "Name": "STORY_IMPLEMENTATION_BACKLOG.md.meta",
+      "Matches": true
+    },
+    {
+      "Name": "CANTHO_FIRST_MISSION_DESIGN.md.meta",
+      "Matches": true
+    },
+    {
+      "Name": "CAMPUS_RECON_SYSTEM.md.meta",
+      "Matches": true
+    }
+  ],
+  "NewMetadata": [
+    {
+      "Name": "STORY_CANON.md.meta",
+      "Valid": true
+    },
+    {
+      "Name": "STORY_CANON_CHANGELOG.md.meta",
+      "Valid": true
+    }
+  ],
+  "Documents": [
+    {
+      "Path": "Assets/_Project/Documentation/STORY_CANON.md",
+      "SHA256": "A9B6E5302FC743735A66DAA4C39F8AEE094B135EFF1616F77C1B50F59274983F"
+    },
+    {
+      "Path": "Assets/_Project/Documentation/STORY_CANON_CHANGELOG.md",
+      "SHA256": "BA76F0A00DB62FA3A68304B78027DD2D010B24C8C48EE970606D2081FDA2870C"
+    },
+    {
+      "Path": "Assets/_Project/Documentation/STORY_IMPLEMENTATION_ROADMAP.md",
+      "SHA256": "6D6395B272DFA041D013D959808F2B5DD160A86B79BBD83E29DABBD24F30F892"
+    },
+    {
+      "Path": "Assets/_Project/Documentation/STORY_IMPLEMENTATION_BACKLOG.md",
+      "SHA256": "F4991360283106FBB2EE710149960E1F5031312349A5B540CFC75668564C0705"
+    },
+    {
+      "Path": "Assets/_Project/Documentation/CANTHO_FIRST_MISSION_DESIGN.md",
+      "SHA256": "F4337A5202C9E20A03A4FE1640D3DB6DDEA3BE8B40BCE8385D09D009E6242154"
+    },
+    {
+      "Path": "Assets/_Project/Documentation/CAMPUS_RECON_SYSTEM.md",
+      "SHA256": "630A47A84DFBD9046138EAB31FBB6EBABC9852F39C7401909D0D47F5A857D593"
+    },
+    {
+      "Path": "Design/Story/README.md",
+      "SHA256": "B3F63AEEE3A2B49B745EB1080F900B38F9A87728EBE261261E5CBDF404CEC101"
+    }
+  ],
+  "GameplayTests": "NOT RUN - runtime unchanged",
+  "NewCanonFeatures": "NOT IMPLEMENTED / NOT TESTED"
+}

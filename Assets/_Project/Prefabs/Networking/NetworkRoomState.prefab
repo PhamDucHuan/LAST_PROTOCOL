@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6803525670827738979}
   - component: {fileID: 6165592142788019881}
   - component: {fileID: 1542176300194758588}
+  - component: {fileID: 1231959343438589549}
   m_Layer: 0
   m_Name: NetworkRoomState
   m_TagString: Untagged
@@ -73,3 +74,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.NetworkRoomState
   ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &1231959343438589549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5341906141469284649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 080a2a95ef704bd691819ed194a9875f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.NetworkMissionState
+  ShowTopMostFoldoutHeaderGroup: 1
+  campusMission: {fileID: 11400000, guid: 1effea56a4c842242b4d2be686883115, type: 2}
+  markerMaterial: {fileID: 2100000, guid: 1d9ea1db0f6d108448138c39b71b662e, type: 2}

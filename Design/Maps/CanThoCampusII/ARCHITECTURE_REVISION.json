@@ -1,0 +1,17 @@
+{
+  "ArtRevision": 5,
+  "Protocol": 15,
+  "Date": "2026-10-16",
+  "BaseLayout": "Campus II schematic revision4",
+  "Source": "ArtSource/Blender/CanThoCampus/CanThoCampus.blend",
+  "Candidate": "Builds/CanThoMap/20261016-ArchitectureRealism/Candidate05",
+  "Backup": "Builds/CanThoBackups/20261016-ArchitectureRealism",
+  "PhotoReferences": "ArtSource/References/CanThoCampus/REFERENCES_REALISM.md",
+  "Documentation": "Assets/_Project/Documentation/CAN_THO_ARCHITECTURE_REALISM.md",
+  "KnownLimits": [
+    "Exterior approximation, not a surveyed 1:1 reconstruction",
+    "No full playable interiors",
+    "Multi-PC Relay/FPS must be retested"
+  ],
+  "Images": "21 original 512x512 PNGs, packed in source and native URP materials"
+}

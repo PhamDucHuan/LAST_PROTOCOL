@@ -35,7 +35,8 @@ namespace LastProtocol.Tests
                     Assert.AreEqual(NavMeshPathStatus.PathComplete, path.status, point.ToString());
                 }
                 Assert.IsFalse(NavMesh.SamplePosition(new Vector3(28, 0, -2), out _, 1, NavMesh.AllAreas), "Administration interior must be blocked");
-                Assert.IsFalse(NavMesh.SamplePosition(new Vector3(-80, 0, 205), out _, 1, NavMesh.AllAreas), "Research interior must be blocked");
+                var research = CanThoMapSetupTool.ReadLayout().landmarks.Single(x => x.id == "17_Research_RLC");
+                Assert.IsFalse(NavMesh.SamplePosition(research.position, out _, 1, NavMesh.AllAreas), "Research interior must be blocked");
             }
             finally { instance.Remove(); }
         }

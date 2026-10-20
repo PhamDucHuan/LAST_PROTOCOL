@@ -1,0 +1,19 @@
+{
+  "artRevision":7,
+  "protocol":17,
+  "completed":"2026-10-17",
+  "candidate":"Builds/CanThoMap/20261016-PeripheralLayout/Candidate02",
+  "source":"ArtSource/Blender/CanThoCampus/CanThoCampus.blend",
+  "plan":"Design/Maps/CanThoCampusII/PERIPHERAL_PLAN.json",
+  "referenceNotes":"ArtSource/References/CanThoCampus/REFERENCES_PERIPHERY.md",
+  "houseCount":167,
+  "sourceMeshObjects":39635,
+  "mergedRenderers":360,
+  "triangles":514781,
+  "collisionBoxes":895,
+  "campusLandmarks":40,
+  "groundSize":[940,840],
+  "roads":["3 Tháng2","Búng Xáng / Hẻm51","Mạc Thiên Tích","Trần Văn Hoài","Mậu Thân","Hướng Nguyễn Văn Cừ (simplified)"],
+  "fidelity":"Manual road topology from direct Google Maps road/satellite inspection, compressed into retained campus schematic. Not a measured or 1:1 reconstruction.",
+  "testReport":"Assets/_Project/Documentation/CAN_THO_PERIPHERAL_TEST_RESULTS.md"
+}

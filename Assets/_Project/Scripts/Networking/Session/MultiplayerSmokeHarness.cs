@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
+using Unity.Networking.Transport;
 using UnityEngine;
 
 namespace LastProtocol
@@ -32,10 +34,13 @@ namespace LastProtocol
             public bool downedFireRejected, invalidAimRejected, friendlyFireBlocked, shotSpamLimited;
             public EnemySmokeReport enemy;
             public ReviveSmokeReport revive;
+            public MissionSmokeReport mission;
             public int selectedLevel;
             public string activeScene;
             public bool levelSelectionSynced, readyResetObserved, clientLevelChangeRejected, loadedSelectedScene;
             public float elapsed;
+            public bool networkStressConfigured;
+            public ulong maximumRttMilliseconds;
         }
         private MultiplayerSession session;
         private Result result;
@@ -56,6 +61,7 @@ namespace LastProtocol
         private bool combatTest;
         private EnemySmokeScenario enemyScenario;
         private ReviveSmokeScenario reviveScenario;
+        private MissionSmokeScenario missionScenario;
         private bool levelTest, sawOtherLevel;
         private int requestedLevel, observedLevel = -1, levelSwitchStage;
         private int combatRequestStage;
@@ -83,6 +89,7 @@ namespace LastProtocol
             combatTest = Array.IndexOf(args, "--lp-combat-test") >= 0;
             if (Array.IndexOf(args, "--lp-enemy-test") >= 0) { enemyScenario = new EnemySmokeScenario(); combatTest = true; }
             if (Array.IndexOf(args, "--lp-revive-test") >= 0) { reviveScenario = new ReviveSmokeScenario(); combatTest = true; }
+            if (Array.IndexOf(args, "--lp-mission-test") >= 0) missionScenario = new MissionSmokeScenario();
             healthTest |= combatTest;
             levelTest = Array.IndexOf(args, "--lp-level-test") >= 0;
             requestedLevel = (int)Number(args, "--lp-level", 0);
@@ -94,9 +101,20 @@ namespace LastProtocol
             result = new Result { role = role };
             if (enemyScenario != null) result.enemy = enemyScenario.Report;
             if (reviveScenario != null) result.revive = reviveScenario.Report;
+            if (missionScenario != null) result.mission = missionScenario.Report;
             active = true;
             if (role == "host") session.TrySelectLevel(requestedLevel);
-            try { await session.StartLocalTestAsync(role == "host"); }
+            try
+            {
+                await session.StartLocalTestAsync(role == "host");
+                if (Array.IndexOf(args, "--lp-network-stress") >= 0 && NetworkManager.Singleton.IsListening)
+                {
+                    var transport = session.GetComponent<UnityTransport>();
+                    transport.GetNetworkDriver().ModifyNetworkSimulatorParameters(new NetworkSimulatorParameter
+                    { SendDelayMS = 60, SendJitterMS = 20, SendPacketLossPercent = 3 });
+                    result.networkStressConfigured = true;
+                }
+            }
             catch (Exception exception) { result.error = exception.Message; }
         }
         private static string Argument(string[] args, string flag)
@@ -109,6 +127,15 @@ namespace LastProtocol
             result.elapsed = Time.realtimeSinceStartup - startTime;
             result.state = session.State.ToString();
             result.error = session.LastError;
+            if (result.networkStressConfigured && NetworkManager.Singleton.IsListening)
+            {
+                var transport = session.GetComponent<UnityTransport>();
+                foreach (ulong id in NetworkManager.Singleton.ConnectedClientsIds)
+                    if (id != NetworkManager.Singleton.LocalClientId)
+                        result.maximumRttMilliseconds = Math.Max(result.maximumRttMilliseconds, transport.GetCurrentRtt(id));
+                if (!NetworkManager.Singleton.IsServer)
+                    result.maximumRttMilliseconds = Math.Max(result.maximumRttMilliseconds, transport.GetCurrentRtt(NetworkManager.ServerClientId));
+            }
             result.confirmedConnection |= NetworkManager.Singleton.IsConnectedClient;
             result.sawRoomFull |= result.error != null && result.error.Contains("Room Full");
             result.sawHostDisconnect |= result.role == "client" && result.confirmedConnection && session.State == SessionState.Error;
@@ -187,6 +214,7 @@ namespace LastProtocol
                 if (combatTest) CheckCombat(players);
                 enemyScenario?.Tick(session, players, gameTime);
                 reviveScenario?.Tick(session, players, gameTime);
+                missionScenario?.Tick(session, players, gameTime);
             }
             if (result.elapsed >= nextCapture) { nextCapture = result.elapsed + 1; WriteResult(); }
             if (result.elapsed >= duration) { wroteFinal = true; WriteResult(); Application.Quit(); }

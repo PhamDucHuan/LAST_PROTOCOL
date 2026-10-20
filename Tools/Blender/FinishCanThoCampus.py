@@ -20,23 +20,36 @@ def finish(output, render):
     # Build merged meshes directly. Shared primitive meshes remain editable in the source;
     # joining thousands of their object instances with the operator is unreliable in 5.2.
     for (collection_name,material_name),objects in groups.items():
-        vertices,faces,uvs=[],[],[]
+        vertices,faces,uvs,smooth=[],[],[],[]
         for obj in objects:
             offset=len(vertices)
             vertices.extend(tuple(obj.matrix_world @ v.co) for v in obj.data.vertices)
             faces.extend(tuple(offset+i for i in poly.vertices) for poly in obj.data.polygons)
+            smooth.extend(poly.use_smooth for poly in obj.data.polygons)
             layer=obj.data.uv_layers.active
-            uvs.extend(tuple(layer.data[i].uv) if layer else (0,0) for i in range(len(obj.data.loops)))
+            metres=obj.data.materials[0].get('lp_uv_metres',0) if obj.data.materials else 0
+            if metres:
+                normal_matrix=obj.matrix_world.to_3x3().inverted_safe().transposed()
+                for poly in obj.data.polygons:
+                    normal=normal_matrix @ poly.normal
+                    axis=max(range(3),key=lambda i: abs(normal[i]))
+                    for loop_index in poly.loop_indices:
+                        p=obj.matrix_world @ obj.data.vertices[obj.data.loops[loop_index].vertex_index].co
+                        uvs.append((-p.y/metres,p.z/metres) if axis==0 else
+                                   (-p.x/metres,p.z/metres) if axis==1 else (-p.x/metres,-p.y/metres))
+            else:
+                uvs.extend(tuple(layer.data[i].uv) if layer else (0,0) for i in range(len(obj.data.loops)))
         data=bpy.data.meshes.new(collection_name+'__'+material_name)
         data.from_pydata(vertices,[],faces); data.materials.append(bpy.data.materials[material_name])
+        for poly,flag in zip(data.polygons,smooth): poly.use_smooth=flag
         uv=data.uv_layers.new(name='UVMap')
         for i,value in enumerate(uvs): uv.data[i].uv=value
         data.update()
         obj=bpy.data.objects.new(data.name,data)
         bpy.data.collections[collection_name].objects.link(obj)
         exports.append(obj)
-    for objects in groups.values():
-        for obj in objects: bpy.data.objects.remove(obj,do_unlink=True)
+    # One dependency-graph update instead of quadratic per-instance deletions.
+    bpy.data.batch_remove(ids=tuple(obj for objects in groups.values() for obj in objects))
     bpy.ops.object.select_all(action='DESELECT')
     for obj in exports: obj.select_set(True)
     bpy.ops.export_scene.fbx(filepath=os.path.join(output,'CanThoCampus.fbx'),use_selection=True,object_types={'MESH'},

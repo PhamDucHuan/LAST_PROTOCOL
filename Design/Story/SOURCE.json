@@ -1,0 +1,16 @@
+{
+  "SchemaVersion": 1,
+  "Title": "LAST PROTOCOL",
+  "AdoptedOn": "2026-10-16",
+  "UserTimezone": "Asia/Saigon",
+  "AuthoritativeDocument": "C:/Users/ADMIN/OneDrive/Máy tính/LAST_PROTOCOL.docx",
+  "ProjectSnapshot": "Design/Story/LAST_PROTOCOL.docx",
+  "SHA256": "5559FACAD4C7B1D13B04BD0170C838611AE792951B32A39CE7A5B73ECC460897",
+  "ExtractedNonEmptyParagraphs": 1355,
+  "EmbeddedMedia": 0,
+  "Supersedes": "D:/CTU/DATN/Cốt truyện.docx",
+  "CanonSummary": "Assets/_Project/Documentation/STORY_CANON.md",
+  "RuntimeProtocolAtAdoption": 13,
+  "RuntimeChangesInThisUpdate": false,
+  "PlanBackup": "Builds/StoryBackups/20261016-121808-CanonUpdate"
+}
