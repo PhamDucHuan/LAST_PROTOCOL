@@ -373,6 +373,7 @@ namespace LastProtocol.Editor
                 RenderTexture.active = previous; UnityEngine.Object.DestroyImmediate(pixels); texture.Release(); UnityEngine.Object.DestroyImmediate(texture);
             }
             UnityEngine.Object.DestroyImmediate(go);
+            EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             Debug.Log("LAST_PROTOCOL Can Tho Unity captures saved: " + directory);
         }
     }

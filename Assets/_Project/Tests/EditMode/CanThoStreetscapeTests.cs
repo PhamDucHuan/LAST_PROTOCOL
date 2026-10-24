@@ -15,7 +15,7 @@ namespace LastProtocol.Tests
         public void ResidentialLanesConnectToRoadsAndEnemyNavigation()
         {
             var layout=CanThoMapSetupTool.ReadLayout();
-            Assert.That(layout.artRevision,Is.InRange(8, 11));
+            Assert.That(layout.artRevision,Is.InRange(8, 12));
             Assert.GreaterOrEqual(layout.neighborhoodHouses.Length,220);
             Assert.GreaterOrEqual(layout.localLanes.Length,5);
             var nav=NavMesh.AddNavMeshData(AssetDatabase.LoadAssetAtPath<NavMeshData>(CanThoMapSetupTool.NavigationPath));

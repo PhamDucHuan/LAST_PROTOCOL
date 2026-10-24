@@ -22,6 +22,7 @@ namespace LastProtocol
         private bool restoreCaptureOnUpdate;
         private bool discardMouseDelta;
         private bool wasWiped;
+        private bool MissionInterrupted => MultiplayerSession.Instance?.Room?.GetComponent<NetworkMissionState>()?.Snapshot.Phase == MissionPhase.Failed;
         public bool IsBoundTo(Transform target) => playerTarget == target;
         private void Awake()
         {
@@ -55,7 +56,7 @@ namespace LastProtocol
         private void Update()
         {
             if (playerTarget == null) return;
-            bool wiped = MultiplayerSession.Instance?.Room?.TeamWiped.Value == true;
+            bool wiped = MultiplayerSession.Instance?.Room?.TeamWiped.Value == true || MissionInterrupted;
             if (wiped != wasWiped) { wasWiped = wiped; ApplyCursorState(); }
             if (!Application.isFocused || paused) return;
             // Reapply after focus callbacks too: the OS/Editor can release capture later
@@ -114,7 +115,7 @@ namespace LastProtocol
         private void ApplyCursorState()
         {
             bool locked = playerTarget != null && captureRequested && hasFocus && !paused
-                && MultiplayerSession.Instance?.Room?.TeamWiped.Value != true;
+                && MultiplayerSession.Instance?.Room?.TeamWiped.Value != true && !MissionInterrupted;
             if (locked && Cursor.lockState != CursorLockMode.Locked) discardMouseDelta = true;
             SetCursorLocked(locked);
         }

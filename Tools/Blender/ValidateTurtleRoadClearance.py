@@ -2,7 +2,16 @@
 import bpy,hashlib,json,os,sys
 from array import array
 from mathutils import Matrix,Vector
-original,candidate,report=sys.argv[sys.argv.index('--')+1:][:3]
+args=sys.argv[sys.argv.index('--')+1:]
+original,candidate,report=args[:3]
+tree_transforms={}
+if len(args)>3:
+    with open(args[3])as f:repairs=json.load(f)['repairs']
+    for repair in repairs:
+        old,new=repair['old'],repair['new']
+        for name in repair['objects']:
+            assert name not in tree_transforms,name
+            tree_transforms[name]=Matrix.Translation(Vector((old['x']-new['x'],old['z']-new['z'],0)))
 def snapshot(path):
     bpy.ops.wm.open_mainfile(filepath=os.path.abspath(path),load_ui=False,use_scripts=False)
     geometry={};objects={}
@@ -27,6 +36,13 @@ def snapshot(path):
             groups=sorted(groups[obj.name]))
     return objects
 a=snapshot(original);b=snapshot(candidate)
+if tree_transforms:
+    for repair in repairs:
+        for name in repair['objects']:
+            if name.startswith('Peripheral shade tree trunk') or (name.startswith('Shade trunk / branch') and
+                (0 if name=='Shade trunk / branch' else int(name.rsplit('.',1)[1]))%5==0):
+                matrix=a[name]['matrix'];old=repair['old']
+                assert abs(matrix[0][3]+old['x'])<.15 and abs(matrix[1][3]+old['z'])<.15,('Tree part assignment',name)
 assert set(b)-set(a)=={'Turtle Hall plot fit'}
 assert not set(a)-set(b)
 transform=Matrix.Translation(Vector((45.5,-13.5,0))) @ Matrix.Diagonal((.9,.6,1,1)) @ Matrix.Translation(Vector((-45,16,0)))
@@ -34,10 +50,10 @@ changed=[]
 for name,x in a.items():
     y=b[name]
     assert all(x[k]==y[k] for k in ['type','geometry','groups']),name
-    expected=transform @ Matrix(x['matrix']) if '24_TurtleAuditorium' in x['groups'] else Matrix(x['matrix'])
+    expected=(transform if '24_TurtleAuditorium' in x['groups'] else tree_transforms.get(name,Matrix.Identity(4))) @ Matrix(x['matrix'])
     assert max(abs(expected[i][j]-y['matrix'][i][j]) for i in range(4) for j in range(4))<.00002,name
     if x['matrix']!=y['matrix']:changed.append(name)
-assert len(changed)==82,len(changed)
+assert len(changed)==82+len(tree_transforms),len(changed)
 result=dict(passed=True,totalSourceObjects=len(a),changedTransforms=len(changed),unchangedMeshGeometryAndUVs=True,changedObjects=changed)
 with open(report,'w') as f:json.dump(result,f,indent=2)
 print('TURTLE_SOURCE_PRESERVATION_PASS '+str(len(a))+' objects, '+str(len(changed))+' transforms')

@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e7530196aa44b69a5abbdba5db48900, type: 3}
+  m_Name: CampusRescue
+  m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.MissionDefinition
+  missionId: CTU_01_CAMPUS_RESCUE
+  title: CAN THO / RESCUE
+  schemaVersion: 1
+  briefing: Restore the grid, synchronize rescue signals and secure extraction. Target
+    15-20 minutes.
+  completionText: Rescue broadcast secured. The squad and control chip reached extraction.
+  levelId: 2
+  objectives:
+  - id: CTU01_RALLY
+    title: RALLY AT GATE B
+    kind: 0
+    stationIds: []
+    instruction: Everyone alive inside the cyan ring.
+    center: {x: 0, y: 0, z: -40}
+    secondaryCenter: {x: 0, y: 0, z: 0}
+    checkpointPosition: {x: 0, y: 0, z: -40}
+    radius: 6
+    heightTolerance: 2.5
+    holdSeconds: 2
+  - id: CTU01_DATA
+    title: SECURE THREE LOCAL RECORDS
+    kind: 1
+    stationIds:
+    - CTU_ADMIN_DATA_01
+    - CTU_ADMIN_DATA_02
+    - CTU_ADMIN_DATA_03
+    instruction: Administration forecourt | Each terminal counts once.
+    center: {x: 30, y: 0, z: -24}
+    secondaryCenter: {x: 0, y: 0, z: 0}
+    checkpointPosition: {x: 30, y: 0, z: -27}
+    radius: 2.5
+    heightTolerance: 2.5
+    holdSeconds: 3
+  - id: CTU01_POWER
+    title: START THE AUXILIARY GENERATOR
+    kind: 1
+    stationIds:
+    - CTU_AUX_GENERATOR
+    instruction: Power is required before the library uplink can start.
+    center: {x: 42, y: 0, z: -32}
+    secondaryCenter: {x: 0, y: 0, z: 0}
+    checkpointPosition: {x: 30, y: 0, z: -27}
+    radius: 2.5
+    heightTolerance: 2.5
+    holdSeconds: 3
+  - id: CTU01_COMMS
+    title: RESTORE THE LIBRARY UPLINK
+    kind: 1
+    stationIds:
+    - CTU_LIBRARY_UPLINK
+    instruction: Hold E to restore the local rescue channel.
+    center: {x: 57, y: 0, z: -42}
+    secondaryCenter: {x: 0, y: 0, z: 0}
+    checkpointPosition: {x: 40, y: 0, z: -35}
+    radius: 2.5
+    heightTolerance: 2.5
+    holdSeconds: 3
+  - id: CTU01_UPLOAD
+    title: PROTECT THE LIBRARY TRANSFER
+    kind: 2
+    stationIds: []
+    instruction: One living operator in the ring. Defenders can move and fire.
+    center: {x: 61, y: 0, z: -44}
+    secondaryCenter: {x: 0, y: 0, z: 0}
+    checkpointPosition: {x: 57, y: 0, z: -48}
+    radius: 8
+    heightTolerance: 2.5
+    holdSeconds: 180
+  - id: CTU01_GRID
+    title: RECONNECT TWO GRID SWITCHES
+    kind: 1
+    stationIds:
+    - CTU_GRID_EAST
+    - CTU_GRID_WEST
+    instruction: Hold E at both marked terminals. Each counts once.
+    center: {x: 65, y: 0, z: 28}
+    secondaryCenter: {x: 0, y: 0, z: 0}
+    checkpointPosition: {x: 65, y: 0, z: 28}
+    radius: 2.5
+    heightTolerance: 2.5
+    holdSeconds: 4
+  - id: CTU01_SYNC_POWER
+    title: STABILIZE THE CAMPUS GRID
+    kind: 2
+    stationIds: []
+    instruction: Keep one operator inside. Secure the chip if it drops.
+    center: {x: 14, y: 0, z: 57.72}
+    secondaryCenter: {x: 0, y: 0, z: 0}
+    checkpointPosition: {x: 8, y: 0, z: 49}
+    radius: 8
+    heightTolerance: 2.5
+    holdSeconds: 180
+  - id: CTU01_ARCHIVES
+    title: SECURE TWO EMERGENCY LOGS
+    kind: 1
+    stationIds:
+    - CTU_ARCHIVE_B1
+    - CTU_ARCHIVE_RLC
+    instruction: Hold E at both marked terminals. Each counts once.
+    center: {x: -9, y: 0, z: 102}
+    secondaryCenter: {x: 0, y: 0, z: 0}
+    checkpointPosition: {x: 0, y: 0, z: 100}
+    radius: 2.5
+    heightTolerance: 2.5
+    holdSeconds: 4
+  - id: CTU01_SIGNAL
+    title: SYNCHRONIZE TWO SIGNAL SITES
+    kind: 3
+    stationIds: []
+    instruction: One living player at A and another at B. Chip must be secure.
+    center: {x: -68, y: 0, z: 62.09}
+    secondaryCenter: {x: -87, y: 0, z: 26.4}
+    checkpointPosition: {x: -87, y: 0, z: 26.4}
+    radius: 8
+    heightTolerance: 2.5
+    holdSeconds: 210
+  - id: CTU01_ROUTE
+    title: RECONNECT THE RESCUE RADIO ROUTE
+    kind: 1
+    stationIds:
+    - CTU_ROUTE_EDU
+    - CTU_ROUTE_ATL
+    instruction: Hold E at both marked terminals. Each counts once.
+    center: {x: -108, y: 0, z: 17}
+    secondaryCenter: {x: 0, y: 0, z: 0}
+    checkpointPosition: {x: -112, y: 0, z: 16}
+    radius: 2.5
+    heightTolerance: 2.5
+    holdSeconds: 4
+  - id: CTU01_BROADCAST
+    title: DEFEND THE RESCUE BROADCAST
+    kind: 2
+    stationIds: []
+    instruction: Hold the ring under attack. Then regroup for extraction.
+    center: {x: -33, y: 0, z: -37.5}
+    secondaryCenter: {x: 0, y: 0, z: 0}
+    checkpointPosition: {x: -33, y: 0, z: -37.5}
+    radius: 8
+    heightTolerance: 2.5
+    holdSeconds: 240
+  - id: CTU01_EXTRACT
+    title: EXTRACT THE WHOLE SQUAD
+    kind: 0
+    stationIds: []
+    instruction: Everyone alive inside the ring. Recover the chip before leaving.
+    center: {x: 0, y: 0, z: -40}
+    secondaryCenter: {x: 0, y: 0, z: 0}
+    checkpointPosition: {x: 0, y: 0, z: -40}
+    radius: 8
+    heightTolerance: 2.5
+    holdSeconds: 10

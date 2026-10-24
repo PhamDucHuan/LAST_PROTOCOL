@@ -4,7 +4,7 @@
 
 SHA256: `5559FACAD4C7B1D13B04BD0170C838611AE792951B32A39CE7A5B73ECC460897`. Đã đọc toàn bộ 1.355 đoạn không rỗng, gồm bảng/mục lục; không có ảnh nhúng. File này thay thế `D:/CTU/DATN/Cốt truyện.docx` làm căn cứ thiết kế. Ngày áp dụng là ngày người dùng chọn tài liệu, không phải ngày tác giả sửa file Word.
 
-Đây là bản tổng hợp yêu cầu, không phải tuyên bố các tính năng đã được lập trình. Protocol 13 hiện mới có nền co-op, combat/revive, campus và CTU_00_RECON. Chuyển chip, class, quyết định Core, campaign/backend và reconnect trong truyện mới **chưa triển khai**. Các báo cáo test cũ vẫn là bằng chứng cho bản được ghi trong báo cáo, không được coi là test canon mới.
+Đây là bản tổng hợp yêu cầu, không phải tuyên bố toàn bộ các tính năng đã được lập trình. Mốc Protocol13 có nền co-op, combat/revive, campus và CTU_00_RECON. Protocol26 đã thêm [checkpoint trong phiên và tutorial chuyển chip](CHECKPOINT_CHIP.md) cho phân đoạn campus, cùng tương tác và encounter của Protocol24/25. Class, Trace/Integrity, Core decision, save campaign/backend và reconnect trong truyện mới **chưa triển khai**. Các báo cáo test chỉ là bằng chứng cho version/phạm vi ghi trong báo cáo, không phải test toàn bộ canon.
 
 ## Thế giới và tuyến chiến dịch
 

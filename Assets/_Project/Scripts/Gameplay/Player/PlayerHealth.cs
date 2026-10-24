@@ -36,7 +36,9 @@ namespace LastProtocol
         internal bool CompleteReviveServer(int amount) => CanChange && SetState(Snapshot.Revive(amount));
         internal bool ResetRoundServer()
         {
-            if (!IsSpawned || !IsServer || MultiplayerSession.Instance?.Room?.TeamWiped.Value != true) return false;
+            var room = MultiplayerSession.Instance?.Room;
+            if (!IsSpawned || !IsServer || room == null || (room.TeamWiped.Value != true
+                && room.GetComponent<NetworkMissionState>()?.Snapshot.Phase != MissionPhase.Failed)) return false;
             SetState(new HealthState(Snapshot.Maximum));
             return true;
         }

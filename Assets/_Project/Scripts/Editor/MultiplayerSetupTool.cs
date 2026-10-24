@@ -585,6 +585,16 @@ namespace LastProtocol.Editor
             BuildWindows("Builds/CanThoVietnamPlayer");
         }
 
+        public static void BatchBuildInteraction()
+        {
+            DataStationSetupTool.BatchInstall();
+            BuildWindows("Builds/InteractionPlayer");
+        }
+        public static void BatchBuildUplink() => BuildWindows("Builds/UplinkPlayer");
+        public static void BatchBuildUplinkDefense() => BuildWindows("Builds/UplinkDefensePlayer");
+        public static void BatchBuildCheckpointChip() => BuildWindows("Builds/CheckpointChipPlayer");
+        public static void BatchBuildEnemyAI() => BuildWindows("Builds/EnemyAIPlayer");
+        public static void BatchBuildChapter1() => BuildWindows("Builds/Chapter1Player");
         private static void BuildWindows(string outputDirectory)
         {
             BatchSetup();

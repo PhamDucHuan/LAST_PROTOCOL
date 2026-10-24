@@ -30,8 +30,8 @@ namespace LastProtocol
                 "Deploy to an enclosed industrial training yard.\n\nUse concrete barriers to break sightlines, approach the robot and protect a teammate during revival.",
                 new Color(1f, 0.65f, 0.28f)),
             new LevelInfo(CanTho, "CAN THO / CAMPUS II", "CanThoCampus", "CanThoCampus",
-                "Vietnam / campus exploration & squad combat",
-                "Enter Can Tho University's Campus II.\n\nExplore three gates, shaded campus roads, Turtle Hall, the learning resource centre and research blocks.\n\nMEKONG relay equipment marks the fictional AI occupation. Combat and teammate revival remain available.",
+                "Chapter 1 / 15-20 min / 2-4 player co-op",
+                "CHAPTER 1 / 15-20 MINUTES\n\nRecover data and relay the chip.\nRestore power and synchronize two sites.\nDefend the rescue broadcast.\n\nExtract together. Checkpoints save progress.",
                 new Color(0.4f, 0.85f, 0.55f))
         };
         public static bool IsValid(int id) => id >= 0 && id < Count;

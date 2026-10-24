@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e7530196aa44b69a5abbdba5db48900, type: 3}
+  m_Name: RestoreUplink
+  m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.MissionDefinition
+  missionId: CTU_01_RESTORE_UPLINK
+  title: RESTORE COMMUNICATIONS
+  schemaVersion: 1
+  briefing: Rally at Gate B, secure three local records, power the auxiliary generator
+    and restore the library uplink.
+  completionText: Local rescue channel restored. Await the next operation.
+  levelId: 2
+  objectives:
+  - id: CTU01_RALLY
+    title: RALLY AT GATE B
+    kind: 0
+    stationIds: []
+    instruction: Everyone alive inside the cyan ring.
+    center: {x: 0, y: 0, z: -40}
+    radius: 6
+    heightTolerance: 2.5
+    holdSeconds: 2
+  - id: CTU01_DATA
+    title: SECURE THREE LOCAL RECORDS
+    kind: 1
+    stationIds:
+    - CTU_ADMIN_DATA_01
+    - CTU_ADMIN_DATA_02
+    - CTU_ADMIN_DATA_03
+    instruction: Administration forecourt | Each terminal counts once.
+    center: {x: 30, y: 0, z: -24}
+    radius: 2.5
+    heightTolerance: 2.5
+    holdSeconds: 3
+  - id: CTU01_POWER
+    title: START THE AUXILIARY GENERATOR
+    kind: 1
+    stationIds:
+    - CTU_AUX_GENERATOR
+    instruction: Power is required before the library uplink can start.
+    center: {x: 42, y: 0, z: -32}
+    radius: 2.5
+    heightTolerance: 2.5
+    holdSeconds: 3
+  - id: CTU01_COMMS
+    title: RESTORE THE LIBRARY UPLINK
+    kind: 1
+    stationIds:
+    - CTU_LIBRARY_UPLINK
+    instruction: Hold E to restore the local rescue channel.
+    center: {x: 57, y: 0, z: -42}
+    radius: 2.5
+    heightTolerance: 2.5
+    holdSeconds: 3

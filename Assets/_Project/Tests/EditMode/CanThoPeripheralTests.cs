@@ -14,7 +14,7 @@ namespace LastProtocol.Tests
         [Test]
         public void ReferenceRoadsFormConnectedJunctionsAndHousingFacesDifferentStreets()
         {
-            var layout=CanThoMapSetupTool.ReadLayout();Assert.That(layout.artRevision,Is.InRange(7, 11));
+            var layout=CanThoMapSetupTool.ReadLayout();Assert.That(layout.artRevision,Is.InRange(7, 12));
             var roads=layout.peripheralRoads.ToDictionary(x=>x.id);
             CollectionAssert.AreEquivalent(new[]{"three_february","bung_xang","mac_thien_tich","tran_van_hoai","mau_than","nguyen_van_cu"},roads.Keys);
             float Distance(Vector3 point,CanThoMapSetupTool.PeripheralRoad road)

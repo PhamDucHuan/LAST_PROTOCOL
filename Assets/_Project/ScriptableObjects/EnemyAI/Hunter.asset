@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1130a28a3934e28beedb318b2888742, type: 3}
+  m_Name: Hunter
+  m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.EnemyAIProfile
+  profileId: ROBOT_HUNTER
+  role: 5
+  attack: 0
+  maximumHealth: 100
+  damage: 8
+  speed: 3
+  visionRange: 16
+  visionAngle: 110
+  hearingRange: 24
+  memorySeconds: 7
+  groupRadius: 18
+  leash: 32
+  attackRange: 1.8
+  windup: 0.8
+  cooldown: 1.8
+  repairRadius: 8
+  repairCooldown: 7
+  hazardRadius: 2.2
+  hazardSeconds: 3
+  captureSeconds: 3
+  retreatFraction: 0.2

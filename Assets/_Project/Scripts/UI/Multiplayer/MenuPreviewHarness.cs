@@ -53,6 +53,16 @@ namespace LastProtocol
             var host = session.StartLocalTestAsync(true);
             while (!host.IsCompleted) yield return null;
             Check(report, !host.IsFaulted && session.IsHost && session.SelectedLevelId == previewLevel, "Offline preference initializes Host room");
+            bool chipPreview = Array.IndexOf(Environment.GetCommandLineArgs(), "--lp-checkpoint-chip-preview") >= 0;
+            if (chipPreview)
+            {
+                File.WriteAllText(Path.Combine(directory, "ReadyForClient.txt"), "ready");
+                float connectDeadline = Time.realtimeSinceStartup + 25;
+                while (session.Room.Members.Count < 2 && Time.realtimeSinceStartup < connectDeadline) yield return null;
+                Check(report, session.Room.Members.Count == 2, "Relay preview has a real remote teammate");
+                // Runtime fixture: explicitly prove that the configured initial carrier may be a client.
+                session.Room.GetComponent<NetworkChip>().initialCarrierSlot = 1;
+            }
             ui.levelsBackButton.onClick.Invoke();
             yield return Capture(ui, directory, "04-lobby", report);
             ui.readyButton.onClick.Invoke();
@@ -64,13 +74,21 @@ namespace LastProtocol
             // Runtime-only solo fixture to render the selected scene, no Cloud account.
             session.config.minimumPlayersToStart = 1;
             ui.changeLevelButton.onClick.Invoke(); ui.levelButtons[previewLevel].onClick.Invoke(); ui.confirmLevelButton.onClick.Invoke();
+            if (chipPreview)
+            {
+                session.config.minimumPlayersToStart = 2;
+                float readyDeadline = Time.realtimeSinceStartup + 10;
+                while (!session.Room.IsReady(session.Room.Members[1].ClientId) && Time.realtimeSinceStartup < readyDeadline) yield return null;
+            }
             ui.readyButton.onClick.Invoke(); ui.startButton.onClick.Invoke();
             float deadline = Time.realtimeSinceStartup + 20;
             while (session.State != SessionState.InGame && Time.realtimeSinceStartup < deadline) yield return null;
             Check(report, session.State == SessionState.InGame && SceneManager.GetActiveScene().name == LevelCatalog.Get(previewLevel).SceneName, "Host deploys into selected level");
             for (int i = 0; i < 15; i++) yield return null;
             var enemy = UnityEngine.Object.FindAnyObjectByType<RobotEnemy>();
-            Check(report, enemy != null && enemy.Agent.enabled && enemy.Agent.isOnNavMesh, "Selected level Enemy uses baked navigation");
+            bool missionDefence = session.Room.GetComponent<UplinkEncounter>()?.EnabledForMission == true;
+            Check(report, missionDefence ? enemy == null : enemy != null && enemy.Agent.enabled && enemy.Agent.isOnNavMesh,
+                missionDefence ? "Campus has no demo robot before the generator activates defence" : "Selected level Enemy uses baked navigation");
             var performance = session.GetComponent<ClientPerformance>();
             var originalPipeline = GraphicsSettings.currentRenderPipeline;
             bool originalPost = Camera.main.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing;
@@ -93,6 +111,15 @@ namespace LastProtocol
             if (previewLevel == LevelCatalog.CanTho && Array.IndexOf(Environment.GetCommandLineArgs(), "--lp-mission-preview") >= 0)
                 yield return MissionPreviewScenario.Run((success, name) => Check(report, success, name),
                     name => CaptureMission(directory, name, report));
+            if (previewLevel == LevelCatalog.CanTho && Array.IndexOf(Environment.GetCommandLineArgs(), "--lp-interaction-preview") >= 0)
+                yield return InteractionPreviewScenario.Run((success, name) => Check(report, success, name),
+                    name => CaptureMission(directory, name, report, true));
+            if (previewLevel == LevelCatalog.CanTho && Array.IndexOf(Environment.GetCommandLineArgs(), "--lp-uplink-preview") >= 0)
+                yield return UplinkPreviewScenario.Run((success, name) => Check(report, success, name),
+                    (name, interaction) => CaptureMission(directory, name, report, interaction), () => CaptureDefenceWorld(directory,report));
+            if (previewLevel == LevelCatalog.CanTho && chipPreview)
+                yield return CheckpointChipPreviewScenario.Run((success, name) => Check(report, success, name),
+                    (name, interaction) => CaptureMission(directory, name, report, interaction));
             SaveCameraImage(Camera.main, Path.Combine(directory, previewLevel == LevelCatalog.CanTho ? "06-cantho-gameplay.png" : "06-yard-gameplay.png"), report);
             for (int i = 0; i < 8; i++) yield return null;
             var leave = session.LeaveRoomAsync(); while (!leave.IsCompleted) yield return null;
@@ -183,10 +210,25 @@ namespace LastProtocol
                 yield return new WaitForSecondsRealtime(5);
             }
         }
-        private static IEnumerator CaptureMission(string directory, string name, Report report)
+        private static void CaptureDefenceWorld(string directory,Report report)
+        {
+            var go = new GameObject("Defence capture camera",typeof(Camera));var camera=go.GetComponent<Camera>();camera.enabled=false;
+            camera.transform.position=new Vector3(58,8,-53);camera.transform.LookAt(new Vector3(58,1,-43));camera.fieldOfView=65;camera.farClipPlane=500;
+            var canvases=UnityEngine.Object.FindObjectsByType<Canvas>();var rotations=new System.Collections.Generic.Dictionary<Transform,Quaternion>();
+            foreach(var canvas in canvases)
+                if(canvas.renderMode==RenderMode.WorldSpace && canvas.GetComponentInParent<RobotEnemy>()!=null)
+                {rotations.Add(canvas.transform,canvas.transform.rotation);canvas.transform.rotation=camera.transform.rotation;}
+            SaveCameraImage(camera,Path.Combine(directory,"26-uplink-defence-scene.png"),report);
+            foreach(var pair in rotations)if(pair.Key!=null)pair.Key.rotation=pair.Value;
+            UnityEngine.Object.Destroy(go);
+        }
+        private static IEnumerator CaptureMission(string directory, string name, Report report, bool interaction = false)
         {
             var hud = UnityEngine.Object.FindAnyObjectByType<MissionHUD>();
-            var source = hud.GetComponentInChildren<Canvas>();
+            Canvas source = hud.GetComponentInChildren<Canvas>();
+            if (interaction)
+                foreach (var shared in UnityEngine.Object.FindObjectsByType<ReviveHUD>())
+                    if (shared.IsOwner && shared.LocalCanvas != null) { source = shared.LocalCanvas; break; }
             var copy = UnityEngine.Object.Instantiate(source.gameObject);
             var canvas = copy.GetComponent<Canvas>();
             Vector2 canvasSize = ((RectTransform)source.transform).rect.size;
@@ -228,13 +270,15 @@ namespace LastProtocol
             var pixels = new Texture2D(destination.width, destination.height, TextureFormat.RGB24, false);
             pixels.ReadPixels(new Rect(0, 0, destination.width, destination.height), 0, 0); pixels.Apply();
             RenderTexture.active = previous;
-            Color baseline = pixels.GetPixel(1, 1); bool content = false;
-            for (int y = 20; y < destination.height; y += 25)
-                for (int x = 20; x < destination.width; x += 25)
-                {
-                    Color color = pixels.GetPixel(x, y);
-                    content |= Mathf.Abs(color.r - baseline.r) + Mathf.Abs(color.g - baseline.g) + Mathf.Abs(color.b - baseline.b) > 0.2f;
-                }
+            // A coarse 25 px grid can miss an entire thin text line. Read the buffer
+            // once and sample every third pixel, requiring several visible pixels.
+            Color32 baseline = pixels.GetPixel(1, 1); var colors = pixels.GetPixels32(); int visible = 0;
+            for (int i = 0; i < colors.Length && visible < 12; i += 3)
+            {
+                var color = colors[i];
+                if (Mathf.Abs(color.r - baseline.r) + Mathf.Abs(color.g - baseline.g) + Mathf.Abs(color.b - baseline.b) > 60) visible++;
+            }
+            bool content = visible >= 12;
             Check(report, content, Path.GetFileName(path) + " contains rendered content");
             File.WriteAllBytes(path, pixels.EncodeToPNG()); UnityEngine.Object.Destroy(pixels);
             if (own) { destination.Release(); UnityEngine.Object.Destroy(destination); }

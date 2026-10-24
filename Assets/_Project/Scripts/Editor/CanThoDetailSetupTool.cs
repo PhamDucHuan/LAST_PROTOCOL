@@ -27,7 +27,7 @@ namespace LastProtocol.Editor
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("Exit Play Mode first.");
             var layout = CanThoMapSetupTool.ReadLayout();
-            if (layout.artRevision < 2 || layout.artRevision > 11) throw new InvalidOperationException("Expected supported detailed art revision 2 to 11.");
+            if (layout.artRevision < 2 || layout.artRevision > 12) throw new InvalidOperationException("Expected supported detailed art revision 2 to 12.");
             if (layout.artRevision >= 3 && (layout.playableRoute == null || layout.playableRoute.Length < 6))
                 throw new InvalidOperationException("Campus playable route is missing.");
             if (Application.isBatchMode && string.IsNullOrEmpty(SceneManager.GetActiveScene().path))

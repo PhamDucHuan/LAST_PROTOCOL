@@ -1,4 +1,4 @@
-param([string]$Player = '',[switch]$FreshCapture,[ValidateRange(0,2)][int]$Level = 1,[switch]$CampusRoute,[switch]$Mission)
+param([string]$Player = '',[switch]$FreshCapture,[ValidateRange(0,2)][int]$Level = 1,[switch]$CampusRoute,[switch]$Mission,[switch]$Interaction,[switch]$Uplink)
 $ErrorActionPreference = 'Stop'
 $workspace = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 if (-not $Player) { $Player = Join-Path $workspace 'Builds\ValidationProject\Builds\MenuPlayer\LAST_PROTOCOL.exe' }
@@ -21,6 +21,14 @@ if ($CampusRoute) {
 if ($Mission) {
     if ($Level -ne 2 -or $FreshCapture) { throw 'Mission requires Level 2 without FreshCapture.' }
     $arguments += '--lp-mission-preview'
+}
+if ($Interaction) {
+    if ($Level -ne 2 -or $FreshCapture) { throw 'Interaction requires Level 2 without FreshCapture.' }
+    $arguments += '--lp-interaction-preview'
+}
+if ($Uplink) {
+    if ($Level -ne 2 -or $FreshCapture -or $Mission -or $Interaction) { throw 'Uplink requires Level 2 and its own preview run.' }
+    $arguments += '--lp-uplink-preview'
 }
 $process = Start-Process -FilePath $Player -ArgumentList $arguments -PassThru -WindowStyle Hidden
 Write-Output ('Menu graphical preview PID=' + $process.Id)

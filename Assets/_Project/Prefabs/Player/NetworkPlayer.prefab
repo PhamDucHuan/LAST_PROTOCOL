@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 5974811048935576407}
   - component: {fileID: 7692954586251764955}
   - component: {fileID: 6570594900439996604}
+  - component: {fileID: 320127871087283885}
   m_Layer: 0
   m_Name: NetworkPlayer
   m_TagString: Player
@@ -324,7 +325,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1426d28395714ea5a0386ab8393ee5bb, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.PlayerRevive
   ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &6570594900439996604
@@ -337,10 +338,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39cd857db05a4fa99cd6d6d01d3cd889, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.ReviveHUD
   ShowTopMostFoldoutHeaderGroup: 1
   font: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+--- !u!114 &320127871087283885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056702543953329608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7d8083688f077a4fbc6e262c82dfec5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.PlayerInteraction
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &5231390282518668163
 GameObject:
   m_ObjectHideFlags: 0

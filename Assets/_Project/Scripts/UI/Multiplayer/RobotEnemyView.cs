@@ -10,6 +10,7 @@ namespace LastProtocol
     {
         public TMP_FontAsset font;
         public Transform visual;
+        public string displayName = "ROBOT";
         private RobotEnemy enemy;
         private GameObject root;
         private RectTransform fill;
@@ -18,6 +19,8 @@ namespace LastProtocol
         private Transform viewCamera;
         private float flashUntil;
         private bool flashing;
+        private LineRenderer warning;
+        private Material warningMaterial;
         public override void OnNetworkSpawn()
         {
             enemy = GetComponent<RobotEnemy>(); renderers = visual.GetComponentsInChildren<Renderer>();
@@ -38,6 +41,14 @@ namespace LastProtocol
             text.rectTransform.anchoredPosition = new Vector2(0, 32);
             text.font = font; text.fontSize = 23; text.alignment = TextAlignmentOptions.Center; text.raycastTarget = false;
             enemy.Changed += Refresh;
+            if (GetComponent<EnemyBrain>() != null && SystemInfo.graphicsDeviceType != UnityEngine.Rendering.GraphicsDeviceType.Null)
+            {
+                var line = new GameObject("Enemy attack telegraph"); line.transform.SetParent(transform, false);
+                warning = line.AddComponent<LineRenderer>(); warning.useWorldSpace = true; warning.startWidth = warning.endWidth = .08f;
+                warningMaterial = new Material(Shader.Find("Universal Render Pipeline/Unlit")); warningMaterial.SetColor("_BaseColor", new Color(1, .45f, .05f));
+                warning.sharedMaterial = warningMaterial; warning.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                warning.enabled = false;
+            }
             Refresh(enemy.Snapshot);
         }
         private int previousHealth;
@@ -45,7 +56,8 @@ namespace LastProtocol
         {
             if (state.Health.Current < previousHealth) { flashUntil = Time.unscaledTime + 0.12f; flashing = true; }
             previousHealth = state.Health.Current;
-            if (text != null) text.text = "ROBOT | " + state.Health.Current + "/" + state.Health.Maximum + " | " + state.Mode;
+            if (text != null) text.text = (GetComponent<EnemyBrain>() != null ? state.Role.ToString() : displayName) + " | " + state.Health.Current + "/" + state.Health.Maximum + " | " + state.Mode
+                + (state.Shield > 0 ? " +" + state.Shield : "");
             if (fill != null)
             {
                 fill.anchorMax = new Vector2(state.Health.Fraction, 1);
@@ -67,6 +79,19 @@ namespace LastProtocol
             if (root == null) return;
             if (viewCamera == null) viewCamera = Camera.main != null ? Camera.main.transform : null;
             if (viewCamera != null) root.transform.rotation = viewCamera.rotation;
+            if (warning != null)
+            {
+                var s = enemy.Snapshot;
+                bool show = !s.Health.IsDowned && s.ActionDuration > 0 && NetworkManager != null && NetworkManager.ServerTime.Time < s.ActionStartedAt + s.ActionDuration;
+                warning.enabled = show;
+                if (show)
+                {
+                    warning.loop = s.ActionRadius > 0; warning.positionCount = warning.loop ? 40 : 2;
+                    if (warning.loop) for (int i = 0; i < 40; i++)
+                    { float a = i * Mathf.PI * 2 / 40; warning.SetPosition(i, new Vector3(s.ActionPoint.x + Mathf.Cos(a) * s.ActionRadius, transform.position.y + .08f, s.ActionPoint.z + Mathf.Sin(a) * s.ActionRadius)); }
+                    else { warning.SetPosition(0, enemy.Eye); warning.SetPosition(1, s.ActionPoint); }
+                }
+            }
         }
         public override void OnNetworkDespawn() => Cleanup();
         public override void OnDestroy() { Cleanup(); base.OnDestroy(); }
@@ -74,6 +99,7 @@ namespace LastProtocol
         {
             if (enemy != null) enemy.Changed -= Refresh;
             if (root != null) Destroy(root);
+            if (warning != null) Destroy(warning.gameObject); if (warningMaterial != null) Destroy(warningMaterial);
         }
     }
 }

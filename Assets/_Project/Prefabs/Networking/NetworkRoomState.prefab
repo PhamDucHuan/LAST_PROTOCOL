@@ -12,6 +12,10 @@ GameObject:
   - component: {fileID: 6165592142788019881}
   - component: {fileID: 1542176300194758588}
   - component: {fileID: 1231959343438589549}
+  - component: {fileID: 7872339843758355153}
+  - component: {fileID: 8128840364765233330}
+  - component: {fileID: 923577411528309149}
+  - component: {fileID: 9215551880806055016}
   m_Layer: 0
   m_Name: NetworkRoomState
   m_TagString: Untagged
@@ -88,4 +92,69 @@ MonoBehaviour:
   m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.NetworkMissionState
   ShowTopMostFoldoutHeaderGroup: 1
   campusMission: {fileID: 11400000, guid: 1effea56a4c842242b4d2be686883115, type: 2}
+  uplinkMission: {fileID: 11400000, guid: 1f628b23a6a5f1f488a5141d9504bacd, type: 2}
+  chapterMission: {fileID: 11400000, guid: bcc23713508298f49b9c1eadd4ec2f4d, type: 2}
   markerMaterial: {fileID: 2100000, guid: 1d9ea1db0f6d108448138c39b71b662e, type: 2}
+--- !u!114 &7872339843758355153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5341906141469284649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ce2e4b913de7341b181a737cec5485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.UplinkEncounter
+  ShowTopMostFoldoutHeaderGroup: 1
+  definition: {fileID: 11400000, guid: 0c8aab73d58260349b0fb81a7f357cc1, type: 2}
+  tacticalProfile: {fileID: 11400000, guid: 368c79c8d479edf47b1200488c4472b3, type: 2}
+--- !u!114 &8128840364765233330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5341906141469284649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5bcce47716a4730ad4569b7dfdbc110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.NetworkChip
+  ShowTopMostFoldoutHeaderGroup: 1
+  initialCarrierSlot: 0
+  recoverySeconds: 2
+  drillSeconds: 1.5
+  range: 2.5
+  drillPosition: {x: 30, y: 1.1, z: -26}
+--- !u!114 &923577411528309149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5341906141469284649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c238a19c409649efa07cf48d74cd23aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.EnemyDirector
+  ShowTopMostFoldoutHeaderGroup: 1
+  profile: {fileID: 11400000, guid: 368c79c8d479edf47b1200488c4472b3, type: 2}
+--- !u!114 &9215551880806055016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5341906141469284649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 075816a2c1b04f35a584145d8b845601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.ChapterOperation
+  ShowTopMostFoldoutHeaderGroup: 1
+  navigation: {fileID: 23800000, guid: 312b77e3e3b66fd41be0d83719506db2, type: 2}
+  terminalPrefab: {fileID: 3214655783562327386, guid: 335a3bc1925a75b4c9c8b116cd3cebbe, type: 3}
+  reinforcementInterval: 18

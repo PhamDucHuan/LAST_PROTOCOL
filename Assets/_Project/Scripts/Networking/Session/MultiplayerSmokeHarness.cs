@@ -35,6 +35,12 @@ namespace LastProtocol
             public EnemySmokeReport enemy;
             public ReviveSmokeReport revive;
             public MissionSmokeReport mission;
+            public InteractionSmokeReport interaction;
+            public UplinkSmokeReport uplink;
+            public UplinkDefenseSmokeReport defense;
+            public CheckpointChipSmokeReport checkpointChip;
+            public EnemyAISmokeReport enemyAI;
+            public ChapterSmokeReport chapter;
             public int selectedLevel;
             public string activeScene;
             public bool levelSelectionSynced, readyResetObserved, clientLevelChangeRejected, loadedSelectedScene;
@@ -62,6 +68,15 @@ namespace LastProtocol
         private EnemySmokeScenario enemyScenario;
         private ReviveSmokeScenario reviveScenario;
         private MissionSmokeScenario missionScenario;
+        private InteractionSmokeScenario interactionScenario;
+        private UplinkSmokeScenario uplinkScenario;
+        private UplinkDefenseSmokeScenario defenseScenario;
+        private CheckpointChipSmokeScenario checkpointChipScenario;
+        private EnemyAISmokeScenario enemyAIScenario;
+        private ChapterSmokeScenario chapterScenario;
+        private bool chipPreviewClient;
+        private int chipPreviewStage = -1;
+        private float chipPreviewNext;
         private bool levelTest, sawOtherLevel;
         private int requestedLevel, observedLevel = -1, levelSwitchStage;
         private int combatRequestStage;
@@ -90,6 +105,13 @@ namespace LastProtocol
             if (Array.IndexOf(args, "--lp-enemy-test") >= 0) { enemyScenario = new EnemySmokeScenario(); combatTest = true; }
             if (Array.IndexOf(args, "--lp-revive-test") >= 0) { reviveScenario = new ReviveSmokeScenario(); combatTest = true; }
             if (Array.IndexOf(args, "--lp-mission-test") >= 0) missionScenario = new MissionSmokeScenario();
+            if (Array.IndexOf(args, "--lp-interaction-test") >= 0) interactionScenario = new InteractionSmokeScenario();
+            if (Array.IndexOf(args, "--lp-uplink-test") >= 0) uplinkScenario = new UplinkSmokeScenario();
+            if (Array.IndexOf(args, "--lp-uplink-defense-test") >= 0) defenseScenario = new UplinkDefenseSmokeScenario();
+            if (Array.IndexOf(args, "--lp-checkpoint-chip-test") >= 0) checkpointChipScenario = new CheckpointChipSmokeScenario();
+            if (Array.IndexOf(args, "--lp-ai-test") >= 0) enemyAIScenario = new EnemyAISmokeScenario();
+            if(Array.IndexOf(args,"--lp-chapter-test")>=0)chapterScenario=new ChapterSmokeScenario();
+            chipPreviewClient = Array.IndexOf(args, "--lp-chip-preview-client") >= 0;
             healthTest |= combatTest;
             levelTest = Array.IndexOf(args, "--lp-level-test") >= 0;
             requestedLevel = (int)Number(args, "--lp-level", 0);
@@ -102,6 +124,12 @@ namespace LastProtocol
             if (enemyScenario != null) result.enemy = enemyScenario.Report;
             if (reviveScenario != null) result.revive = reviveScenario.Report;
             if (missionScenario != null) result.mission = missionScenario.Report;
+            if (interactionScenario != null) result.interaction = interactionScenario.Report;
+            if (uplinkScenario != null) result.uplink = uplinkScenario.Report;
+            if (defenseScenario != null) result.defense = defenseScenario.Report;
+            if (checkpointChipScenario != null) result.checkpointChip = checkpointChipScenario.Report;
+            if (enemyAIScenario != null) result.enemyAI = enemyAIScenario.Report;
+            if(chapterScenario!=null)result.chapter=chapterScenario.Report;
             active = true;
             if (role == "host") session.TrySelectLevel(requestedLevel);
             try
@@ -141,6 +169,7 @@ namespace LastProtocol
             result.sawHostDisconnect |= result.role == "client" && result.confirmedConnection && session.State == SessionState.Error;
             if (session.Room != null)
             {
+                if (chipPreviewClient && !session.Room.IsReady(NetworkManager.Singleton.LocalClientId)) readySent = false;
                 if (levelTest) CheckLevelSelection();
                 result.currentMembers = session.Room.Members.Count;
                 if (result.currentMembers < previousMembers) result.departuresObserved++;
@@ -192,15 +221,15 @@ namespace LastProtocol
                     {
                         result.localOwnedPlayer = true;
                         int slot = session.Room.GetSlot(player.OwnerClientId);
-                        player.TestInput = gameTime < 3.5f
+                        player.TestInput = !chipPreviewClient && gameTime < 3.5f
                             ? new Vector2(slot % 2 == 0 ? -0.8f : 0.8f, slot / 2 == 0 ? -0.4f : 0.4f) : Vector2.zero;
                         player.TestSprint = gameTime >= 0.75f && gameTime < 1.75f;
                         if (healthTest && ((gameTime >= 8.3f && gameTime < 9.5f) || (gameTime >= 12 && gameTime < 13)))
                             player.TestInput = Vector2.right;
-                        if (!testJumpSent && gameTime >= 1.25f)
+                        if (!chipPreviewClient && !testJumpSent && gameTime >= 1.25f)
                         { testJumpSent = true; player.RequestTestJump(); }
                         // Deliberately request another jump in mid-air; server must ignore it.
-                        if (!testAirJumpSent && gameTime >= 1.45f)
+                        if (!chipPreviewClient && !testAirJumpSent && gameTime >= 1.45f)
                         { testAirJumpSent = true; player.RequestTestJump(); }
                         result.serverAuthority = player.GetComponent<CharacterController>().enabled == session.IsHost;
                         result.cameraBound = FindAnyObjectByType<LocalPlayerCamera>()?.IsBoundTo(player.cameraTarget) == true;
@@ -215,9 +244,31 @@ namespace LastProtocol
                 enemyScenario?.Tick(session, players, gameTime);
                 reviveScenario?.Tick(session, players, gameTime);
                 missionScenario?.Tick(session, players, gameTime);
+                interactionScenario?.Tick(session, players, gameTime);
+                uplinkScenario?.Tick(session, players, gameTime);
+                defenseScenario?.Tick(session, players, gameTime);
+                checkpointChipScenario?.Tick(session, players, gameTime);
+                enemyAIScenario?.Tick(session, players, gameTime);
+                chapterScenario?.Tick(session,players,gameTime);
+                if (chipPreviewClient) TickChipPreviewClient(players);
             }
             if (result.elapsed >= nextCapture) { nextCapture = result.elapsed + 1; WriteResult(); }
             if (result.elapsed >= duration) { wroteFinal = true; WriteResult(); Application.Quit(); }
+        }
+        private void TickChipPreviewClient(NetworkPlayerController[] players)
+        {
+            if (session?.Room == null) return;
+            var chip = session.Room.GetComponent<NetworkChip>(); if (chip == null) return;
+            foreach (var p in players)
+            {
+                if (!p.IsOwner) continue;
+                var input = p.GetComponent<PlayerInteraction>();
+                if (chipPreviewStage != chip.TestStage.Value)
+                { chipPreviewStage = chip.TestStage.Value; input.TestRelease(); chipPreviewNext = gameTime + .3f; }
+                if (gameTime < chipPreviewNext) continue;
+                chipPreviewNext = gameTime + .1f;
+                if (chipPreviewStage == 1) input.TestHold(InteractionKind.RelayDrill, chip.NetworkObjectId);
+            }
         }
         private void CheckLevelSelection()
         {

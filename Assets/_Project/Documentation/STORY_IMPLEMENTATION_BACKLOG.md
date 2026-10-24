@@ -2,30 +2,34 @@
 
 Cập nhật 16/10/2026 theo [STORY_CANON.md](STORY_CANON.md) và LAST_PROTOCOL.docx mới. P0: nền nhiệm vụ/campus; P1: chương Cần Thơ và nền campaign; P2: các chương đầy đủ và final. P2 là thứ tự làm sau, không có nghĩa tùy chọn. Chỉ OPT là ngoài phạm vi bắt buộc.
 
-**DONE prototype** chỉ áp dụng phần Rendezvous của MIS-01/02/03 ở Protocol13, không phải objective graph hoặc campaign hoàn chỉnh. Mọi mục TODO bên dưới chưa được tuyên bố triển khai. Duy trì ID cũ để truy vết; nghiệm thu thay đổi khi canon mới thay thế giả định cũ. Bằng chứng bản hiện tại: [CAMPUS_RECON_SYSTEM.md](CAMPUS_RECON_SYSTEM.md), [CAMPUS_RECON_TEST_RESULTS.md](CAMPUS_RECON_TEST_RESULTS.md).
+Protocol24 bổ sung tập hợp → ba bản ghi → máy phát → liên lạc. **DONE prototype** không có nghĩa campaign/graph phân nhánh đã hoàn chỉnh. Phạm vi và bằng chứng: [RESTORE_UPLINK_SYSTEM.md](RESTORE_UPLINK_SYSTEM.md); Recon cũ vẫn phục vụ hồi quy.
+
+Protocol25 bổ sung [một đợt ba robot bảo vệ uplink](UPLINK_DEFENSE.md), kích hoạt sau máy phát, không respawn khi hủy tương tác.
+
+Protocol26 bổ sung [checkpoint trong phiên và tutorial chuyển chip](CHECKPOINT_CHIP.md): giữ từng ID dữ liệu, drill trước máy phát, eject/nhặt bằng E, revive không lấy lại chip; carrier hiện tại mới channel uplink. Chưa có save đĩa, class, Trace/Integrity hay reconnect campaign.
 
 | ID | Mức | Trạng thái | Đầu ra và nghiệm thu |
 |---|---|---|---|
 | NET-01 | P0 | TODO đo lại | FPS/RTT Host/Client với cùng build hiện hành trên 2/3/4 máy thật; đi/xoay/bắn/wave và log, không dùng kết quả localhost thay thế |
-| MIS-01 | P0 | DONE prototype | MissionDefinition có ID và ba Rendezvous; chưa có các loại objective/nhánh mới |
-| MIS-02 | P0 | DONE prototype | Host ghi MissionSnapshot/phase/tiến độ Recon; không đồng nghĩa graph node state |
-| MIS-03 | P0 | DONE prototype | HUD/marker Recon theo sự kiện; chưa có chip/class/reward UI |
+| MIS-01 | P0 | DONE prototype | Schema0 Recon được giữ; schema1 có Rendezvous/Stations, ID duy nhất và validator; chưa có nhánh |
+| MIS-02 | P0 | DONE prototype | Host ghi snapshot/phase, tập ID và dependency tuyến tính của Restore Uplink |
+| MIS-03 | P0 | DONE prototype | HUD/marker theo bước, bản ghi, checkpoint, carrier và tutorial E; chưa có class/reward UI |
 | MIS-04 | P0 | TODO | Lobby phân biệt sân tập/campaign/mission; Host đổi mission reset Ready, giữ level ID hiện tại |
-| MIS-06 | P0 | TODO | Objective graph 6 trạng thái, dependency/nhánh, version/migration và validator Start→Complete; Recon vẫn chạy |
-| INT-01 | P0 | TODO | Action lock và điều phối Interact/Revive; một lần giữ không kích hoạt hai hành động |
-| INT-02 | P0 | TODO | Host xác thực ID/khoảng cách/trạng thái/phase/spam; Can/Begin/Update/Cancel/Complete; completion idempotent |
-| INT-03 | P0 | TODO | Ba data node và máy phát/cấp điện campus; hai người tương tác không cộng đôi, không cấp Lore Key ending sớm |
+| MIS-06 | P0 | PARTIAL prototype | Dependency tuyến tính, schema0/1 và trạng thái suy ra đã có; nhánh/Skipped và validator graph tổng quát còn thiếu |
+| INT-01 | P0 | DONE prototype | E dùng chung hồi sinh, terminal, máy phát, uplink, relay drill và nhặt chip; khóa một hành động/mục tiêu đến khi thả |
+| INT-02 | P0 | DONE prototype | Host xác thực ID/ownership/khoảng cách/LOS/trạng thái/phase/spam, đặt chỗ và hoàn tất một lần cho năm thiết bị |
+| INT-03 | P0 | DONE prototype | Ba ID dữ liệu riêng, máy phát và uplink theo thứ tự; không cấp Lore Key hoặc thưởng campaign |
 | CLS-01 | P0 | TODO | Bốn operator/class không trùng mặc định; mọi class làm objective và mang chip; đội 2 người vẫn hợp lệ; slot chưa chọn hỗ trợ radio từ NOMAD |
-| CHP-01 | P0 | TODO | Một Capsule, Khoa mang đầu tiên; Harness cho mọi class; carrier độc lập Host, ownership xác thực |
+| CHP-01 | P0 | PARTIAL prototype | Một chip trên Room, carrier do Host xác nhận; slot 0 đại diện Khoa khi chưa có chọn class, mọi slot nhận được; identity campaign còn thiếu |
 | CHP-02 | P0 | TODO | Control Node/Core Sync cơ bản Tier1; Sync/Trace/NeuralLoad tách riêng; Host tính channel/cancel |
-| CHP-03 | P0 | TODO | Emergency Eject, hold pickup và chuyển carrier nguyên tử; revive không giành lại chip; enemy CaptureChip |
+| CHP-03 | P0 | PARTIAL prototype | Gục → eject, hold E recovery nguyên tử, revive không giành lại; tutorial an toàn trước máy phát; tự thả và enemy CaptureChip còn thiếu |
 | CHP-04 | P0 | TODO | Integrity campaign, Stabilizer/sửa, Safe Mode0→repair25; Trace100 không cộng thêm phạt Integrity cùng sự kiện |
 | REC-01 | P0 | TODO | Reconnect: AI giữ active operator, ownership trả đúng stable profile, hết hạn chuyển chip; không auto fail ngay vì carrier disconnect |
 | REC-02 | P1 | TODO | Chốt và test host migration hoặc recovery strategy; phân biệt Host crash với Client reconnect |
-| ENC-01 | P0 | TODO | Enemy nhiệm vụ tách robot/target demo; demo sân tập vẫn hoạt động |
-| ENC-02 | P0 | TODO | Spawn/wave ID, NavMesh và cap enemy; không spawn đôi, enemy tới được combat zone |
-| ENC-03 | P0 | TODO | Defend/channel/capture chip; ngắt channel không reset wave hoặc nhân thưởng |
-| MIS-05 | P0 | TODO | Result/fail/checkpoint/return lobby; retry giữ state theo canon, không chỉ restart toàn lượt |
+| ENC-01 | P0 | PARTIAL prototype | Prefab/spawner robot nhiệm vụ riêng; robot demo không xuất hiện đầu nhiệm vụ uplink, sân tập/Recon giữ hành vi cũ; target demo chưa tách |
+| ENC-02 | P0 | DONE prototype | Wave ID + Attempt, cap ba robot, NavMesh chung và đường tới uplink; framework nhiều wave/Director còn thiếu |
+| ENC-03 | P0 | PARTIAL prototype | Defend trong khi giữ E; damage hủy channel, hủy không tạo lại wave/địch chết; CaptureChip và reward ledger chưa có |
+| MIS-05 | P0 | PARTIAL prototype | Retry checkpoint trong phiên giữ ID dữ liệu/tutorial/carrier đã xác nhận; wave đang thử reset; chưa có save/recovery campaign/result tổng |
 | SAV-01 | P1 | TODO | Save schema/version, snapshot nguyên tử và phục hồi lỗi; world/decision campaign thuộc Host, guest profile riêng |
 | SAV-02 | P1 | TODO | Reward ledger/idempotency xuyên retry/reconnect/crash, unlock city/tier một lần; tích hợp transaction backend khi có |
 | MAP-00 | P1 | TODO | Prologue/NOMAD và placement campus hư cấu có briefing phù hợp; không tự biến CTU thành Core MEKONG |

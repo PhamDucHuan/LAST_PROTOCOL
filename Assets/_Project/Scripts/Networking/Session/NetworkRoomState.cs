@@ -77,13 +77,18 @@ namespace LastProtocol
                 if (player == null || !player.IsSpawned || player.GetComponent<PlayerHealth>()?.Snapshot.IsDowned != true) return;
             }
             TeamWiped.Value = true;
-            foreach (var revive in FindObjectsByType<PlayerRevive>()) revive.CancelServer(true);
+            foreach (var interaction in FindObjectsByType<PlayerInteraction>()) interaction.CancelServer(true);
         }
 
         // Called only by the Host's local UI; no client RPC exposes round resets.
         public bool RestartRoundServer()
         {
-            if (!IsSpawned || !IsServer || !TeamWiped.Value || Phase.Value != MatchPhase.Playing) return false;
+            var mission = GetComponent<NetworkMissionState>();
+            bool failed = mission?.Snapshot.Phase == MissionPhase.Failed;
+            if (!IsSpawned || !IsServer || (!TeamWiped.Value && !failed) || Phase.Value != MatchPhase.Playing) return false;
+            if (NetworkManager.ConnectedClients.Count < MultiplayerSession.Instance.config.minimumPlayersToStart) return false;
+            bool restore = mission?.UsesCheckpoints == true;
+            if (restore && !CheckpointRules.Valid(mission.Definition, mission.Checkpoint)) return false;
             var points = FindAnyObjectByType<PlayerSpawnPoints>();
             if (points == null) return false;
             foreach (var client in NetworkManager.ConnectedClients.Values)
@@ -91,16 +96,20 @@ namespace LastProtocol
             foreach (var client in NetworkManager.ConnectedClients.Values)
             {
                 var player = client.PlayerObject;
-                player.GetComponent<PlayerRevive>()?.ResetRoundServer();
+                player.GetComponent<PlayerInteraction>()?.ResetRoundServer();
                 var point = points.GetPoint(GetSlot(client.ClientId));
                 var controller = player.GetComponent<CharacterController>();
                 controller.enabled = false;
-                player.GetComponent<NetworkTransform>().Teleport(point.position, point.rotation, player.transform.localScale);
+                Vector3 position = restore && mission.Checkpoint.ObjectiveIndex > 0
+                    ? CheckpointRules.Position(mission.Definition, mission.Checkpoint, GetSlot(client.ClientId)) : point.position;
+                player.GetComponent<NetworkTransform>().Teleport(position, point.rotation, player.transform.localScale);
                 controller.enabled = true;
                 player.GetComponent<PlayerMovement>().ResetMotion();
                 player.GetComponent<PlayerHealth>().ResetRoundServer();
             }
-            foreach (var enemy in FindObjectsByType<RobotEnemy>()) enemy.ResetRoundServer();
+            foreach (var enemy in FindObjectsByType<RobotEnemy>()) if (!enemy.IsMissionEnemy) enemy.ResetRoundServer();
+            foreach (var station in FindObjectsByType<DataStation>())
+                if (restore) station.RestoreCheckpointServer(mission.Definition, mission.Checkpoint); else station.ResetRoundServer();
             RoundRestarts.Value++;
             TeamWiped.Value = false;
             return true;

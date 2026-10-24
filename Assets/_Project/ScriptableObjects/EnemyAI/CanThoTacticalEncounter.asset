@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dbcd5a69c9946bdaf3b2703cc23a171, type: 3}
+  m_Name: CanThoTacticalEncounter
+  m_EditorClassIdentifier: LastProtocol.Runtime::LastProtocol.EnemyEncounterProfile
+  roster:
+  - {fileID: 3327949216004738683, guid: ce4f644b2dd6ec34aa58fca4c6224223, type: 3}
+  - {fileID: 8255997131172583047, guid: 18970c329ef358b45a352c67d076fb23, type: 3}
+  - {fileID: 8512471826611346432, guid: 8426c72c4b094944dbe87749433f8ccb, type: 3}
+  - {fileID: 5438532219300665741, guid: 8ce78b73cf1999f43bfc277ec3766291, type: 3}
+  - {fileID: 2028935605321894998, guid: e90a0b838255e1c46b7f209a2d458581, type: 3}
+  - {fileID: 4014627310571320813, guid: 7501300c619358f40828bfc94b2e9acf, type: 3}
+  opening: 000205
+  whitelist: 0103040506
+  protectedNode: {x: 61, y: 0, z: -42}
+  maximumAlive: 3
+  adaptationDelay: 10
+  adaptationWarning: 2
+  checkpointRetention: 0.5

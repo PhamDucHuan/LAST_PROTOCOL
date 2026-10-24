@@ -16,7 +16,7 @@ namespace LastProtocol.Tests
         public void RouteConnectsTheGateAdministrationAndLibraryWithReasonablePaths()
         {
             var layout = CanThoMapSetupTool.ReadLayout();
-            Assert.That(layout.artRevision, Is.InRange(3, 11));
+            Assert.That(layout.artRevision, Is.InRange(3, 12));
             Assert.That(layout.playableRoute.Length, Is.GreaterThanOrEqualTo(6));
             var nav = NavMesh.AddNavMeshData(AssetDatabase.LoadAssetAtPath<NavMeshData>(CanThoMapSetupTool.NavigationPath));
             try

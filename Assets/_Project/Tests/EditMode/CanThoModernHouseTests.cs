@@ -13,7 +13,7 @@ namespace LastProtocol.Tests
         public void ReplacementArtUsesAllTwentyOneVariantsAndSharedUrpSurfaces()
         {
             var layout = CanThoMapSetupTool.ReadLayout();
-            Assert.AreEqual(11, layout.artRevision);
+            Assert.AreEqual(12, layout.artRevision);
             Assert.GreaterOrEqual(layout.importedModernHouses.Length, 247);
             CollectionAssert.AreEquivalent(Enumerable.Range(1, 20).Select(i => "ModernHouse" + i.ToString("00")).Concat(new[] { "TownHouse" }), layout.importedModernHouses.Select(h => h.family).Distinct());
             Assert.AreEqual(1351, layout.neighborhoodHouses.Length);

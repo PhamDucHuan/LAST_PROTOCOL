@@ -43,7 +43,7 @@ namespace LastProtocol
             if (!IsSpawned || !IsOwner) return;
             var session = MultiplayerSession.Instance;
             bool active = session != null && session.CanMove && health.CanAct && Application.isFocused
-                && GetComponent<PlayerRevive>()?.IsChanneling != true
+                && GetComponent<PlayerInteraction>()?.IsChanneling != true
                 && Cursor.lockState == CursorLockMode.Locked;
             if (!active) { fireArmed = false; return; }
             bool pressed = attack?.IsPressed() == true;
@@ -61,7 +61,7 @@ namespace LastProtocol
         {
             var session = MultiplayerSession.Instance;
             if (!IsServer || !IsSpawned || session == null || !session.CanMove || !health.CanAct
-                || GetComponent<PlayerRevive>()?.IsChanneling == true
+                || GetComponent<PlayerInteraction>()?.IsChanneling == true
                 || rpc.Receive.SenderClientId != OwnerClientId) return;
             var config = session.config;
             if (!CombatRules.ValidAim(Eye, cameraOrigin, aimDirection, config.cameraDistance + 2)) return;
@@ -92,6 +92,7 @@ namespace LastProtocol
                 else if (player != null && player != health && config.friendlyFire)
                     damaged = player.TryApplyDamageServer(config.weaponDamage);
             }
+            session.Room?.GetComponent<EnemyDirector>()?.RecordShot(health, damaged, Vector3.Distance(Eye, endpoint));
             ShotFeedbackRpc(Eye, endpoint, damaged);
         }
         [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Server)]

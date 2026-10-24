@@ -1,6 +1,12 @@
 # Phân đoạn mở đầu tại campus Cần Thơ
 
-Cập nhật 16/10/2026 theo [STORY_CANON.md](STORY_CANON.md) / LAST_PROTOCOL.docx mới. Đây là **thiết kế kỹ thuật đề xuất, chưa được triển khai**. Nó thay thiết kế campus dựa trên nguồn cũ; không thay nội dung chính thức của Word bằng ý tưởng mới.
+Protocol26 bổ sung [checkpoint trong phiên, một chip và relay drill](CHECKPOINT_CHIP.md). Drill sau ba bản ghi, trước máy phát; carrier gục → đồng đội thu hồi E → nhả E để revive; chỉ carrier hiện tại channel uplink. Vị trí hồi, giữ ID dữ liệu và carrier khi retry được chốt trong tài liệu đó. Class/Trace/Integrity, save bền vững và cứu dân còn thiếu.
+
+Protocol25 đã thêm [encounter robot bảo vệ uplink](UPLINK_DEFENSE.md) vào đoạn bốn bước.
+
+Triển khai 21/10/2026, Protocol24: theo yêu cầu người dùng, đã ghép đoạn bốn bước tập hợp → ba bản ghi → máy phát → liên lạc. [Hướng dẫn](RESTORE_UPLINK_SYSTEM.md) mô tả phạm vi build đó; Protocol26 bổ sung như trên. Sáu mục tiêu và cứu dân bên dưới vẫn là thiết kế đích.
+
+Cập nhật thiết kế 16/10/2026 theo [STORY_CANON.md](STORY_CANON.md) / LAST_PROTOCOL.docx mới. Phần sáu mục tiêu dưới đây là **thiết kế đích, chưa triển khai đầy đủ**; phân đoạn bốn bước Protocol24 được ghi riêng ở trên. Không thay nội dung chính thức của Word bằng ý tưởng mới.
 
 ## Vị trí trong chương Cần Thơ
 
@@ -51,7 +57,7 @@ Nên làm INT-01/02 và một data node trước; sau khi authority/duplicate re
 - Client mất kết nối: active operator tạm do AI điều khiển trong reconnect window; trả ownership đúng stable profile nếu trở lại; quá hạn thì auto transfer chip theo quy tắc. Không dùng “carrier disconnect → fail ngay” làm thiết kế campaign.
 - Slot class không chọn từ đầu ở NOMAD hỗ trợ radio; không nhầm với AI tiếp quản active operator bị mất mạng.
 
-Timer, khoảng cách tương tác, lượng Trace, mức damage ngắt channel và tiến độ giữ lại cần cấu hình và playtest; Word chưa chốt số. Tutorial phải giải thích transfer và Trace bằng UI, tạo cơ hội có thể kiểm soát để học; cách dựng tình huống huấn luyện là thiết kế tiếp theo, chưa có trong build.
+Word chưa chốt timer/khoảng cách/Trace. Protocol26 dùng các giá trị prototype được ghi trong CHECKPOINT_CHIP.md: recovery 2 s, drill 1.5 s, range 2.5 m, buddy 5 m, damage hủy hold. Drill tạo cơ hội an toàn học transfer; Trace chưa có nên không hiển thị timer giả.
 
 Protocol13 chưa có transfer/reconnect/checkpoint. Hành vi Host thoát kết thúc phiên và Recon restart toàn lượt vẫn được mô tả đúng trong hướng dẫn hiện hành; không coi việc sửa thiết kế là đã sửa runtime.
 
@@ -73,11 +79,11 @@ Alliance nhận Signed MEKONG Key/WaterControl/DroneSupply. Destroy nhận Raw H
 
 | Nhóm | Kiểm tra phải thực hiện | Hiện trạng |
 |---|---|---|
-| Objective/authority | Request sai ID, xa, gục, sai phase, duplicate; hai Client cùng tương tác; graph/reset | CHƯA KIỂM THỬ cho CTU_01 |
-| Chip | Eject/pickup đồng thời, chuyển, revive người cũ, Trace100, Safe Mode | CHƯA KIỂM THỬ / chưa triển khai |
+| Objective/authority | Request sai ID, xa, gục, sai phase, duplicate; hai Client cùng tương tác; graph/reset | Protocol26 kiểm tra chuỗi tuyến tính và retry trên localhost 2/4 người; graph nhánh chưa có |
+| Chip | Eject/pickup đồng thời, chuyển, revive người cũ, Trace100, Safe Mode | Protocol26 kiểm tra eject/pickup/revive/retry và carrier độc lập Host; Trace100/Safe Mode chưa có |
 | Mạng | 2/3/4 máy qua Relay, disconnect/reconnect, carrier timeout, Host recovery | CHƯA KIỂM THỬ cho CTU_01 |
-| Encounter | Wave không lặp, cap, đường đi/camera, frame time Client/Host | CHƯA KIỂM THỬ cho CTU_01 |
-| Save | Wipe/checkpoint, crash/retry, không nhân reward, guest canon không bị đổi | CHƯA KIỂM THỬ / chưa triển khai |
+| Encounter | Wave không lặp, cap, đường đi/camera, frame time Client/Host | Wave ba robot có kiểm tra Protocol25/26; đo tải nhiều máy thật còn thiếu |
+| Save | Wipe/checkpoint, crash/retry, không nhân reward, guest canon không bị đổi | Checkpoint trong phiên và không cộng trùng dữ liệu có kiểm tra Protocol26; disk/crash/reward/guest profile chưa có |
 | Canon | Đúng vị trí mission cha, đủ cứu dân/máy phát/tutorial; không cấp Core Key sớm | Cần kiểm tra nội dung khi xây level |
 
-Không cần sửa scene/prefab hay tăng protocol cho lần cập nhật thiết kế này. Công việc và ưu tiên ở [backlog](STORY_IMPLEMENTATION_BACKLOG.md).
+Protocol26 thêm một NetworkChip vào Room và nhãn build menu; scene/layout/NavMesh giữ nguyên. Công việc còn lại và ưu tiên ở [backlog](STORY_IMPLEMENTATION_BACKLOG.md).

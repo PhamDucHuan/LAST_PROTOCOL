@@ -15,7 +15,7 @@ namespace LastProtocol.Tests
         public void TiledSurfacesHaveImportedColorAndLinearNormalMapsWithMetricUVs()
         {
             var layout = CanThoMapSetupTool.ReadLayout();
-            Assert.That(layout.artRevision, Is.InRange(5, 11));
+            Assert.That(layout.artRevision, Is.InRange(5, 12));
             var textured = layout.materials.Where(x => !string.IsNullOrEmpty(x.normalMap)).ToArray();
             Assert.That(textured.Length, Is.GreaterThanOrEqualTo(8));
             foreach (var entry in textured)
@@ -96,7 +96,7 @@ namespace LastProtocol.Tests
                 foreach (var renderer in renderers) footprint.Encapsulate(renderer.bounds);
                 var colliders = scene.GetRootGameObjects().SelectMany(x => x.GetComponentsInChildren<BoxCollider>())
                     .Where(x => x.name == "Turtle auditorium body" || x.name.StartsWith("Turtle Hall ")).ToArray();
-                Assert.That(colliders.Length, Is.EqualTo(7));
+                Assert.That(colliders.Length, Is.EqualTo(2), "Imported hall body and roof proxies replace the old porch columns");
                 foreach (var road in CanThoMapSetupTool.ReadLayout().roads)
                 {
                     int steps = Mathf.CeilToInt(Vector3.Distance(road.a, road.b) * 4);
@@ -142,6 +142,33 @@ namespace LastProtocol.Tests
                 }
             }
             finally { nav.Remove(); }
+        }
+
+        [Test]
+        public void TreeTrunksStayOutsideAllRoadLanesExceptPlantedRoundaboutIslands()
+        {
+            var layout = CanThoMapSetupTool.ReadLayout();
+            var segments = layout.roads.Select(x => (x.a, x.b, x.width)).ToList();
+            foreach (var road in layout.peripheralRoads.Concat(layout.localLanes))
+                for (int i = 1; i < road.points.Length; i++) segments.Add((road.points[i - 1], road.points[i], road.width));
+            WithCampus(scene =>
+            {
+                foreach (var trunk in scene.GetRootGameObjects().SelectMany(x => x.GetComponentsInChildren<BoxCollider>())
+                    .Where(x => x.name.Contains("trunk")))
+                {
+                    var point = trunk.bounds.center; point.y = 0;
+                    if (Vector3.Distance(point, new Vector3(-22, 0, 22)) < 3.6f ||
+                        Vector3.Distance(point, new Vector3(64.32f, 0, 27.16f)) < 2.1f) continue;
+                    foreach (var (a, b, width) in segments)
+                    {
+                        var line = b - a;
+                        var t = Mathf.Clamp01(Vector3.Dot(point - a, line) / line.sqrMagnitude);
+                        float clearance = Vector3.Distance(point, a + line * t) - width * .5f
+                            - Mathf.Max(trunk.bounds.size.x, trunk.bounds.size.z) * .5f;
+                        Assert.That(clearance, Is.GreaterThanOrEqualTo(.99f), trunk.name + " obstructs road near " + point);
+                    }
+                }
+            });
         }
 
         private static float FlatDistance(Bounds bounds, Vector3 point)

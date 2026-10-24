@@ -1,0 +1,553 @@
+{
+  "passed": true,
+  "repairs": [
+    {
+      "collisionIndex": 50,
+      "name": "Campus route tree trunk",
+      "old": {
+        "x": -20,
+        "z": 40
+      },
+      "new": {
+        "x": -24.26133,
+        "z": 34.44653
+      },
+      "objects": [
+        "Shade trunk / branch.030",
+        "Shade trunk / branch.031",
+        "Shade trunk / branch.032",
+        "Shade trunk / branch.033",
+        "Shade trunk / branch.034",
+        "Leaf cluster card.384",
+        "Leaf cluster card.385",
+        "Leaf cluster card.386",
+        "Leaf cluster card.388",
+        "Leaf cluster card.389",
+        "Leaf cluster card.390",
+        "Leaf cluster card.392",
+        "Leaf cluster card.393",
+        "Leaf cluster card.394",
+        "Leaf cluster card.396",
+        "Leaf cluster card.397",
+        "Leaf cluster card.398",
+        "Leaf cluster card.400",
+        "Leaf cluster card.401",
+        "Leaf cluster card.402",
+        "Leaf cluster card.404",
+        "Leaf cluster card.405",
+        "Leaf cluster card.406",
+        "Leaf cluster card.408",
+        "Leaf cluster card.409",
+        "Leaf cluster card.410",
+        "Leaf cluster card.412",
+        "Leaf cluster card.413",
+        "Leaf cluster card.414",
+        "Leaf cluster card.416",
+        "Leaf cluster card.417",
+        "Leaf cluster card.418",
+        "Leaf cluster card.420",
+        "Leaf cluster card.421",
+        "Leaf cluster card.422",
+        "Leaf cluster card.424",
+        "Leaf cluster card.425",
+        "Leaf cluster card.426",
+        "Leaf cluster card.428",
+        "Leaf cluster card.429",
+        "Leaf cluster card.430",
+        "Leaf cluster card.432",
+        "Leaf cluster card.433",
+        "Leaf cluster card.434",
+        "Leaf cluster card.436",
+        "Leaf cluster card.437",
+        "Leaf cluster card.438",
+        "Leaf cluster card.440",
+        "Leaf cluster card.441",
+        "Leaf cluster card.442",
+        "Leaf cluster card.444",
+        "Leaf cluster card.445",
+        "Leaf cluster card.446",
+        "Flush tree grate.010"
+      ]
+    },
+    {
+      "collisionIndex": 51,
+      "name": "Campus route tree trunk",
+      "old": {
+        "x": 43,
+        "z": 28
+      },
+      "new": {
+        "x": 46.61121,
+        "z": 33.40455
+      },
+      "objects": [
+        "Shade trunk / branch.035",
+        "Shade trunk / branch.036",
+        "Shade trunk / branch.037",
+        "Shade trunk / branch.038",
+        "Shade trunk / branch.039",
+        "Leaf cluster card.448",
+        "Leaf cluster card.449",
+        "Leaf cluster card.450",
+        "Leaf cluster card.452",
+        "Leaf cluster card.453",
+        "Leaf cluster card.454",
+        "Leaf cluster card.456",
+        "Leaf cluster card.457",
+        "Leaf cluster card.458",
+        "Leaf cluster card.460",
+        "Leaf cluster card.461",
+        "Leaf cluster card.462",
+        "Leaf cluster card.464",
+        "Leaf cluster card.465",
+        "Leaf cluster card.466",
+        "Leaf cluster card.468",
+        "Leaf cluster card.469",
+        "Leaf cluster card.470",
+        "Leaf cluster card.472",
+        "Leaf cluster card.473",
+        "Leaf cluster card.474",
+        "Leaf cluster card.476",
+        "Leaf cluster card.477",
+        "Leaf cluster card.478",
+        "Leaf cluster card.480",
+        "Leaf cluster card.481",
+        "Leaf cluster card.482",
+        "Leaf cluster card.484",
+        "Leaf cluster card.485",
+        "Leaf cluster card.486",
+        "Leaf cluster card.488",
+        "Leaf cluster card.489",
+        "Leaf cluster card.490",
+        "Leaf cluster card.492",
+        "Leaf cluster card.493",
+        "Leaf cluster card.494",
+        "Leaf cluster card.496",
+        "Leaf cluster card.497",
+        "Leaf cluster card.498",
+        "Leaf cluster card.500",
+        "Leaf cluster card.501",
+        "Leaf cluster card.502",
+        "Leaf cluster card.504",
+        "Leaf cluster card.505",
+        "Leaf cluster card.506",
+        "Leaf cluster card.508",
+        "Leaf cluster card.509",
+        "Leaf cluster card.510",
+        "Flush tree grate.011"
+      ]
+    },
+    {
+      "collisionIndex": 52,
+      "name": "Campus route tree trunk",
+      "old": {
+        "x": 62,
+        "z": 31
+      },
+      "new": {
+        "x": 67.82967,
+        "z": 33.87488
+      },
+      "objects": [
+        "Shade trunk / branch.040",
+        "Shade trunk / branch.041",
+        "Shade trunk / branch.042",
+        "Shade trunk / branch.043",
+        "Shade trunk / branch.044",
+        "Leaf cluster card.512",
+        "Leaf cluster card.513",
+        "Leaf cluster card.514",
+        "Leaf cluster card.516",
+        "Leaf cluster card.517",
+        "Leaf cluster card.518",
+        "Leaf cluster card.520",
+        "Leaf cluster card.521",
+        "Leaf cluster card.522",
+        "Leaf cluster card.524",
+        "Leaf cluster card.525",
+        "Leaf cluster card.526",
+        "Leaf cluster card.528",
+        "Leaf cluster card.529",
+        "Leaf cluster card.530",
+        "Leaf cluster card.532",
+        "Leaf cluster card.533",
+        "Leaf cluster card.534",
+        "Leaf cluster card.536",
+        "Leaf cluster card.537",
+        "Leaf cluster card.538",
+        "Leaf cluster card.540",
+        "Leaf cluster card.541",
+        "Leaf cluster card.542",
+        "Leaf cluster card.544",
+        "Leaf cluster card.545",
+        "Leaf cluster card.546",
+        "Leaf cluster card.548",
+        "Leaf cluster card.549",
+        "Leaf cluster card.550",
+        "Leaf cluster card.552",
+        "Leaf cluster card.553",
+        "Leaf cluster card.554",
+        "Leaf cluster card.556",
+        "Leaf cluster card.557",
+        "Leaf cluster card.558",
+        "Leaf cluster card.560",
+        "Leaf cluster card.561",
+        "Leaf cluster card.562",
+        "Leaf cluster card.564",
+        "Leaf cluster card.565",
+        "Leaf cluster card.566",
+        "Leaf cluster card.568",
+        "Leaf cluster card.569",
+        "Leaf cluster card.570",
+        "Leaf cluster card.572",
+        "Leaf cluster card.573",
+        "Leaf cluster card.574",
+        "Flush tree grate.012"
+      ]
+    },
+    {
+      "collisionIndex": 661,
+      "name": "Peripheral shade tree trunk",
+      "old": {
+        "x": -68.0,
+        "z": -75.8
+      },
+      "new": {
+        "x": -62.5,
+        "z": -75.8
+      },
+      "objects": [
+        "Peripheral shade tree trunk.016",
+        "Peripheral leaf cluster.512",
+        "Peripheral leaf cluster.513",
+        "Peripheral leaf cluster.514",
+        "Peripheral leaf cluster.516",
+        "Peripheral leaf cluster.517",
+        "Peripheral leaf cluster.518",
+        "Peripheral leaf cluster.520",
+        "Peripheral leaf cluster.521",
+        "Peripheral leaf cluster.522",
+        "Peripheral leaf cluster.524",
+        "Peripheral leaf cluster.525",
+        "Peripheral leaf cluster.526",
+        "Peripheral leaf cluster.528",
+        "Peripheral leaf cluster.529",
+        "Peripheral leaf cluster.530",
+        "Peripheral leaf cluster.532",
+        "Peripheral leaf cluster.533",
+        "Peripheral leaf cluster.534",
+        "Peripheral leaf cluster.536",
+        "Peripheral leaf cluster.537",
+        "Peripheral leaf cluster.538",
+        "Peripheral leaf cluster.540",
+        "Peripheral leaf cluster.541",
+        "Peripheral leaf cluster.542"
+      ]
+    },
+    {
+      "collisionIndex": 666,
+      "name": "Peripheral shade tree trunk",
+      "old": {
+        "x": 4.0,
+        "z": -75.8
+      },
+      "new": {
+        "x": 1.30938,
+        "z": -77.12687
+      },
+      "objects": [
+        "Peripheral shade tree trunk.021",
+        "Peripheral leaf cluster.672",
+        "Peripheral leaf cluster.673",
+        "Peripheral leaf cluster.674",
+        "Peripheral leaf cluster.676",
+        "Peripheral leaf cluster.677",
+        "Peripheral leaf cluster.678",
+        "Peripheral leaf cluster.680",
+        "Peripheral leaf cluster.681",
+        "Peripheral leaf cluster.682",
+        "Peripheral leaf cluster.684",
+        "Peripheral leaf cluster.685",
+        "Peripheral leaf cluster.686",
+        "Peripheral leaf cluster.688",
+        "Peripheral leaf cluster.689",
+        "Peripheral leaf cluster.690",
+        "Peripheral leaf cluster.692",
+        "Peripheral leaf cluster.693",
+        "Peripheral leaf cluster.694",
+        "Peripheral leaf cluster.696",
+        "Peripheral leaf cluster.697",
+        "Peripheral leaf cluster.698",
+        "Peripheral leaf cluster.700",
+        "Peripheral leaf cluster.701",
+        "Peripheral leaf cluster.702"
+      ]
+    },
+    {
+      "collisionIndex": 667,
+      "name": "Peripheral shade tree trunk",
+      "old": {
+        "x": 4.0,
+        "z": -52.2
+      },
+      "new": {
+        "x": 6.0,
+        "z": -52.2
+      },
+      "objects": [
+        "Peripheral shade tree trunk.022",
+        "Peripheral leaf cluster.704",
+        "Peripheral leaf cluster.705",
+        "Peripheral leaf cluster.706",
+        "Peripheral leaf cluster.708",
+        "Peripheral leaf cluster.709",
+        "Peripheral leaf cluster.710",
+        "Peripheral leaf cluster.712",
+        "Peripheral leaf cluster.713",
+        "Peripheral leaf cluster.714",
+        "Peripheral leaf cluster.716",
+        "Peripheral leaf cluster.717",
+        "Peripheral leaf cluster.718",
+        "Peripheral leaf cluster.720",
+        "Peripheral leaf cluster.721",
+        "Peripheral leaf cluster.722",
+        "Peripheral leaf cluster.724",
+        "Peripheral leaf cluster.725",
+        "Peripheral leaf cluster.726",
+        "Peripheral leaf cluster.728",
+        "Peripheral leaf cluster.729",
+        "Peripheral leaf cluster.730",
+        "Peripheral leaf cluster.732",
+        "Peripheral leaf cluster.733",
+        "Peripheral leaf cluster.734"
+      ]
+    },
+    {
+      "collisionIndex": 671,
+      "name": "Peripheral shade tree trunk",
+      "old": {
+        "x": 76.0,
+        "z": -52.2
+      },
+      "new": {
+        "x": 71.50963,
+        "z": -51.90569
+      },
+      "objects": [
+        "Peripheral shade tree trunk.026",
+        "Peripheral leaf cluster.832",
+        "Peripheral leaf cluster.833",
+        "Peripheral leaf cluster.834",
+        "Peripheral leaf cluster.836",
+        "Peripheral leaf cluster.837",
+        "Peripheral leaf cluster.838",
+        "Peripheral leaf cluster.840",
+        "Peripheral leaf cluster.841",
+        "Peripheral leaf cluster.842",
+        "Peripheral leaf cluster.844",
+        "Peripheral leaf cluster.845",
+        "Peripheral leaf cluster.846",
+        "Peripheral leaf cluster.848",
+        "Peripheral leaf cluster.849",
+        "Peripheral leaf cluster.850",
+        "Peripheral leaf cluster.852",
+        "Peripheral leaf cluster.853",
+        "Peripheral leaf cluster.854",
+        "Peripheral leaf cluster.856",
+        "Peripheral leaf cluster.857",
+        "Peripheral leaf cluster.858",
+        "Peripheral leaf cluster.860",
+        "Peripheral leaf cluster.861",
+        "Peripheral leaf cluster.862"
+      ]
+    },
+    {
+      "collisionIndex": 722,
+      "name": "Peripheral shade tree trunk",
+      "old": {
+        "x": 12.09205,
+        "z": -71.91608
+      },
+      "new": {
+        "x": 16.60309,
+        "z": -75.87215
+      },
+      "objects": [
+        "Peripheral shade tree trunk.056",
+        "Peripheral leaf cluster.1792",
+        "Peripheral leaf cluster.1793",
+        "Peripheral leaf cluster.1794",
+        "Peripheral leaf cluster.1796",
+        "Peripheral leaf cluster.1797",
+        "Peripheral leaf cluster.1798",
+        "Peripheral leaf cluster.1800",
+        "Peripheral leaf cluster.1801",
+        "Peripheral leaf cluster.1802",
+        "Peripheral leaf cluster.1804",
+        "Peripheral leaf cluster.1805",
+        "Peripheral leaf cluster.1806",
+        "Peripheral leaf cluster.1808",
+        "Peripheral leaf cluster.1809",
+        "Peripheral leaf cluster.1810",
+        "Peripheral leaf cluster.1812",
+        "Peripheral leaf cluster.1813",
+        "Peripheral leaf cluster.1814",
+        "Peripheral leaf cluster.1816",
+        "Peripheral leaf cluster.1817",
+        "Peripheral leaf cluster.1818",
+        "Peripheral leaf cluster.1820",
+        "Peripheral leaf cluster.1821",
+        "Peripheral leaf cluster.1822"
+      ]
+    },
+    {
+      "collisionIndex": 766,
+      "name": "Peripheral shade tree trunk",
+      "old": {
+        "x": 197.54404,
+        "z": -72.6798
+      },
+      "new": {
+        "x": 191.48186,
+        "z": -76.1798
+      },
+      "objects": [
+        "Peripheral shade tree trunk.095",
+        "Peripheral leaf cluster.3040",
+        "Peripheral leaf cluster.3041",
+        "Peripheral leaf cluster.3042",
+        "Peripheral leaf cluster.3044",
+        "Peripheral leaf cluster.3045",
+        "Peripheral leaf cluster.3046",
+        "Peripheral leaf cluster.3048",
+        "Peripheral leaf cluster.3049",
+        "Peripheral leaf cluster.3050",
+        "Peripheral leaf cluster.3052",
+        "Peripheral leaf cluster.3053",
+        "Peripheral leaf cluster.3054",
+        "Peripheral leaf cluster.3056",
+        "Peripheral leaf cluster.3057",
+        "Peripheral leaf cluster.3058",
+        "Peripheral leaf cluster.3060",
+        "Peripheral leaf cluster.3061",
+        "Peripheral leaf cluster.3062",
+        "Peripheral leaf cluster.3064",
+        "Peripheral leaf cluster.3065",
+        "Peripheral leaf cluster.3066",
+        "Peripheral leaf cluster.3068",
+        "Peripheral leaf cluster.3069",
+        "Peripheral leaf cluster.3070"
+      ]
+    },
+    {
+      "collisionIndex": 770,
+      "name": "Peripheral shade tree trunk",
+      "old": {
+        "x": 176.06824,
+        "z": -141.40236
+      },
+      "new": {
+        "x": 172.77151,
+        "z": -145.16156
+      },
+      "objects": [
+        "Peripheral shade tree trunk.099",
+        "Peripheral leaf cluster.3168",
+        "Peripheral leaf cluster.3169",
+        "Peripheral leaf cluster.3170",
+        "Peripheral leaf cluster.3172",
+        "Peripheral leaf cluster.3173",
+        "Peripheral leaf cluster.3174",
+        "Peripheral leaf cluster.3176",
+        "Peripheral leaf cluster.3177",
+        "Peripheral leaf cluster.3178",
+        "Peripheral leaf cluster.3180",
+        "Peripheral leaf cluster.3181",
+        "Peripheral leaf cluster.3182",
+        "Peripheral leaf cluster.3184",
+        "Peripheral leaf cluster.3185",
+        "Peripheral leaf cluster.3186",
+        "Peripheral leaf cluster.3188",
+        "Peripheral leaf cluster.3189",
+        "Peripheral leaf cluster.3190",
+        "Peripheral leaf cluster.3192",
+        "Peripheral leaf cluster.3193",
+        "Peripheral leaf cluster.3194",
+        "Peripheral leaf cluster.3196",
+        "Peripheral leaf cluster.3197",
+        "Peripheral leaf cluster.3198"
+      ]
+    },
+    {
+      "collisionIndex": 777,
+      "name": "Peripheral shade tree trunk",
+      "old": {
+        "x": 116.40109,
+        "z": -313.55924
+      },
+      "new": {
+        "x": 116.88325,
+        "z": -312.13884
+      },
+      "objects": [
+        "Peripheral shade tree trunk.106",
+        "Peripheral leaf cluster.3392",
+        "Peripheral leaf cluster.3393",
+        "Peripheral leaf cluster.3394",
+        "Peripheral leaf cluster.3396",
+        "Peripheral leaf cluster.3397",
+        "Peripheral leaf cluster.3398",
+        "Peripheral leaf cluster.3400",
+        "Peripheral leaf cluster.3401",
+        "Peripheral leaf cluster.3402",
+        "Peripheral leaf cluster.3404",
+        "Peripheral leaf cluster.3405",
+        "Peripheral leaf cluster.3406",
+        "Peripheral leaf cluster.3408",
+        "Peripheral leaf cluster.3409",
+        "Peripheral leaf cluster.3410",
+        "Peripheral leaf cluster.3412",
+        "Peripheral leaf cluster.3413",
+        "Peripheral leaf cluster.3414",
+        "Peripheral leaf cluster.3416",
+        "Peripheral leaf cluster.3417",
+        "Peripheral leaf cluster.3418",
+        "Peripheral leaf cluster.3420",
+        "Peripheral leaf cluster.3421",
+        "Peripheral leaf cluster.3422"
+      ]
+    },
+    {
+      "collisionIndex": 2011,
+      "name": "Vietnam Polygon trunk 0",
+      "old": {
+        "x": -246,
+        "z": -42
+      },
+      "new": {
+        "x": -244.5,
+        "z": -42.0
+      },
+      "objects": [
+        "Vietnam Polygon tree 0__0"
+      ]
+    },
+    {
+      "collisionIndex": 2012,
+      "name": "Vietnam Polygon trunk 1",
+      "old": {
+        "x": -278,
+        "z": -43
+      },
+      "new": {
+        "x": -278.65935,
+        "z": -43.75184
+      },
+      "objects": [
+        "Vietnam Polygon tree 1__0"
+      ]
+    }
+  ],
+  "checkedTrees": 306,
+  "checkedRoadSegments": 83
+}

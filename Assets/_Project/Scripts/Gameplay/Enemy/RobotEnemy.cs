@@ -9,6 +9,10 @@ namespace LastProtocol
     public sealed class RobotEnemy : NetworkBehaviour
     {
         public NavMeshData navigation;
+        public bool respawnOnDeath = true;
+        public bool externallyManagedNavigation;
+        public string encounterId = "";
+        public bool IsMissionEnemy => !string.IsNullOrEmpty(encounterId);
         private readonly NetworkVariable<EnemyState> state = new NetworkVariable<EnemyState>(default,
             NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
         public EnemyState Snapshot => state.Value;
@@ -17,6 +21,9 @@ namespace LastProtocol
         private CapsuleCollider bodyCollider;
         private NavMeshDataInstance meshInstance;
         private PlayerHealth target;
+        public EnemyBrain Brain { get; private set; }
+        public uint DamageRevision { get; private set; }
+        public bool HasTacticalAI => Brain != null && Brain.IsConfigured;
         private Vector3 home;
         private int patrolSide = 1;
         private double nextThink, lastSeen, actionEnds, respawnAt;
@@ -27,13 +34,14 @@ namespace LastProtocol
         public override void OnNetworkSpawn()
         {
             Agent = GetComponent<NavMeshAgent>(); bodyCollider = GetComponent<CapsuleCollider>();
+            Brain = GetComponent<EnemyBrain>();
             Agent.enabled = false;
             home = transform.position;
             state.OnValueChanged += OnChanged;
             if (IsServer)
             {
                 if (navigation == null) { Debug.LogError("RobotEnemy requires baked Enemy navigation data."); return; }
-                meshInstance = NavMesh.AddNavMeshData(navigation);
+                if (!externallyManagedNavigation) meshInstance = NavMesh.AddNavMeshData(navigation);
                 if (!NavMesh.SamplePosition(home, out var hit, 2, NavMesh.AllAreas))
                 { Debug.LogError("RobotEnemy spawn is not on the baked NavMesh."); return; }
                 home = hit.position;
@@ -41,7 +49,8 @@ namespace LastProtocol
                 Agent.stoppingDistance = 0.1f; Agent.updateRotation = false;
                 Agent.enabled = true; Agent.Warp(home);
                 navigationReady = true;
-                state.Value = new EnemyState(Config.enemyMaxHealth);
+                state.Value = new EnemyState(HasTacticalAI ? Brain.profile.maximumHealth : Config.enemyMaxHealth);
+                if (HasTacticalAI) Brain.BeginServer(this, home);
             }
             OnChanged(default, Snapshot);
         }
@@ -54,8 +63,13 @@ namespace LastProtocol
         {
             if (!IsSpawned || !IsServer || !navigationReady || MultiplayerSession.Instance == null
                 || !MultiplayerSession.Instance.CanMove) return false;
-            var next = Snapshot; next.Health = next.Health.Damage(amount);
-            if (next.Health.Equals(Snapshot.Health)) return false;
+            var next = Snapshot;
+            int beforeHealth = next.Health.Current;
+            int applied = HasTacticalAI ? Brain.IncomingDamage(amount) : amount;
+            int absorbed = Mathf.Min(Mathf.Max(0, applied), next.Shield); next.Shield -= absorbed;
+            next.Health = next.Health.Damage(applied - absorbed);
+            if (next.Health.Equals(Snapshot.Health) && next.Shield == Snapshot.Shield) return false;
+            DamageRevision++;
             if (next.Health.IsDowned)
             {
                 next.Mode = EnemyMode.Dead; next.TargetClientId = EnemyState.NoTarget; target = null;
@@ -70,6 +84,12 @@ namespace LastProtocol
                 next.TargetClientId = attacker.OwnerClientId;
             }
             state.Value = next;
+            if (HasTacticalAI)
+            {
+                MultiplayerSession.Instance?.Room?.GetComponent<EnemyDirector>()?.RecordDamage(attacker,
+                    beforeHealth - next.Health.Current + absorbed, transform.position);
+                Brain.DamagedServer(attacker, Snapshot.Health.IsDowned);
+            }
             return true;
         }
         private void Update()
@@ -83,10 +103,11 @@ namespace LastProtocol
             double now = Time.realtimeSinceStartupAsDouble;
             if (Snapshot.Health.IsDowned)
             {
-                if (now >= respawnAt) Respawn();
+                if (respawnOnDeath && now >= respawnAt) Respawn();
                 return;
             }
             if (!Agent.enabled || !Agent.isOnNavMesh) return;
+            if (HasTacticalAI) { Brain.TickServer(now); return; }
             if (Snapshot.Mode == EnemyMode.Windup)
             {
                 FaceTarget();
@@ -175,6 +196,14 @@ namespace LastProtocol
         {
             if (IsSpawned && IsServer && navigationReady) Respawn();
         }
+        internal void SetTacticalStateServer(EnemyState value)
+        { if (IsSpawned && IsServer && HasTacticalAI) state.Value = value; }
+        internal bool RepairServer(int amount, int shield)
+        {
+            if (!IsServer || !IsSpawned || Snapshot.Health.IsDowned || amount < 0 || amount > 15 || shield < 0 || shield > 20) return false;
+            var next = Snapshot; next.Health = next.Health.Heal(amount); next.Shield = Math.Max(next.Shield, shield);
+            bool changed = !next.Equals(Snapshot); if (changed) state.Value = next; return changed;
+        }
         private void Respawn()
         {
             target = null; nextThink = nextPath = 0;
@@ -198,11 +227,13 @@ namespace LastProtocol
             state.OnValueChanged -= OnChanged;
             if (Agent != null) Agent.enabled = false;
             if (meshInstance.valid) meshInstance.Remove();
+            if (Brain != null) Brain.EndServer();
             navigationReady = false;
         }
         public static void SpawnServer(RobotEnemy prefab)
         {
             if (prefab == null || NetworkManager.Singleton == null || !NetworkManager.Singleton.IsServer) return;
+            if (MultiplayerSession.Instance?.Room?.GetComponent<UplinkEncounter>()?.EnabledForMission == true) return;
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             // Existing isolated movement/health/combat suites must not take incidental AI damage.
             var args = Environment.GetCommandLineArgs();

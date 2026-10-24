@@ -331,10 +331,10 @@ namespace LastProtocol
                 player.NetworkObject.SpawnAsPlayerObject(id, true);
             }
             TrainingTarget.SpawnArenaServer(playerPrefab.GetComponent<NetworkHitscanWeapon>()?.trainingTargetPrefab);
-            RobotEnemy.SpawnServer(playerPrefab.GetComponent<NetworkHitscanWeapon>()?.enemyPrefab);
             Room.Phase.Value = MatchPhase.Playing;
             SetState(SessionState.InGame);
             Room.GetComponent<NetworkMissionState>()?.BeginServer(Room.SelectedLevel.Value);
+            RobotEnemy.SpawnServer(playerPrefab.GetComponent<NetworkHitscanWeapon>()?.enemyPrefab);
         }
 
         private static async Task WithTimeout(Task task, float seconds, CancellationToken token)

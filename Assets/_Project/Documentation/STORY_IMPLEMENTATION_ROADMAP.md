@@ -4,11 +4,17 @@ Cập nhật 16/10/2026. Canon hiện hành: [STORY_CANON.md](STORY_CANON.md), d
 
 ## Điểm xuất phát thực tế
 
+Protocol26 có [checkpoint trong phiên và tutorial chuyển chip](CHECKPOINT_CHIP.md): checkpoint giữ bản ghi, carrier đã nhận chip và tutorial; drill ở ADMIN 01 trước máy phát, chip rơi khi gục, nhặt E và revive bằng hai gesture riêng. Đây là phần đầu của D/E; class, Trace/Integrity, save đĩa và reconnect vẫn chưa có.
+
+Protocol25 thêm [encounter bảo vệ uplink](UPLINK_DEFENSE.md): một đợt robot sau máy phát, giữ ledger qua hủy channel và dọn/reset theo lượt. Đây là lát nhỏ của F, chưa có CaptureChip, Meter hoặc Director.
+
+Cập nhật triển khai 21/10/2026: Protocol24 ghép tập hợp → ba bản ghi → máy phát → liên lạc, với E dùng chung hồi sinh và Host xác nhận mọi credit. Xem [RESTORE_UPLINK_SYSTEM.md](RESTORE_UPLINK_SYSTEM.md). Đây là phân đoạn tuyến tính mở đầu, chưa phải toàn bộ nhiệm vụ cha.
+
 Protocol 13 đã có nền NGO/Relay Host–Client, combat cơ bản, gục/hồi sinh và map campus. CTU_00_RECON có dữ liệu ba điểm tập hợp, trạng thái chung do Host quản lý và HUD. Đây là prototype nhiệm vụ, chưa phải một chương Cần Thơ hoàn chỉnh. Kết nối ba máy đã được người dùng xác nhận; nhiệm vụ mới và tải enemy vẫn cần đo trên máy thật.
 
-MissionDefinition hiện chỉ mô tả chuỗi Rendezvous. MissionPhase hiện tại không phải objective graph. Chưa có bốn class, chuyển chip, checkpoint campaign, reconnect, Core vote, NOMAD hoặc backend tài khoản. Không chuyển các mục này sang DONE chỉ vì tài liệu đã mô tả.
+MissionDefinition schema1 có Rendezvous/Stations và dependency tuyến tính; schema0 Recon vẫn hoạt động. Nhánh/Skipped, bốn class, checkpoint campaign bền vững, reconnect, Core vote, NOMAD và backend tài khoản chưa triển khai.
 
-CTU_00_RECON tiếp tục phục vụ kiểm tra hồi quy. CTU_01_RESTORE_UPLINK là đề xuất phân đoạn kỹ thuật trong nhiệm vụ chính **Dòng nước bị khóa**, không thêm một nhiệm vụ chính thứ sáu, không thay Central Server và không cấp MEKONG Core Data sớm. Cách gắn campus vào truyện là lựa chọn thiết kế hư cấu cần duyệt khi làm level, không phải địa điểm được Word xác nhận.
+CTU_00_RECON tiếp tục phục vụ hồi quy. CTU_01_RESTORE_UPLINK hiện có bốn bước mở đầu trong **Dòng nước bị khóa**, không thêm nhiệm vụ chính thứ sáu, không thay Central Server và không cấp MEKONG Core Data sớm. Campus cứu hộ là bối cảnh hư cấu của prototype, không phải địa điểm được Word xác nhận.
 
 ## Các chặng triển khai
 
@@ -29,7 +35,7 @@ CTU_00_RECON tiếp tục phục vụ kiểm tra hồi quy. CTU_01_RESTORE_UPLIN
 | M. Revisit, Replay, Global | Revisit thế giới thật; Replay mô phỏng ECHO-7; Guardian Proxy; final 4 phase và 3 ending | Không đổi canon khi Replay; không farm key; Sync token số tách Capsule vật lý; điều kiện ending có cấu hình |
 | N. Khóa nội dung và nghiệm thu | Tối ưu, accessibility, save migration, crash/recovery, tài liệu và build | Có bằng chứng test cho bản cụ thể, không đánh dấu PASS bằng suy luận |
 
-Bước lập trình kế tiếp vẫn là **A → B**, áp dụng lên phân đoạn campus đã có; sau đó xây C/D/E trước khi tuyên bố vòng nhiệm vụ chính hoàn chỉnh. Không tăng số enemy hoặc dựng thêm city để che vấn đề FPS/RTT chưa đo. Việc cập nhật canon lần này chỉ đổi tài liệu, không tự triển khai tất cả chặng.
+Phân đoạn tương tác A và dependency tuyến tính của B đã có ở Protocol24. Phần graph phân nhánh, C/D/E và encounter/checkpoint vẫn cần hoàn thiện trước khi tuyên bố vòng nhiệm vụ chính hoàn chỉnh. Đo FPS/RTT trên máy thật trước khi tăng tải enemy hoặc mở thêm city.
 
 ## Phạm vi chiến dịch không được cắt nhầm
 
