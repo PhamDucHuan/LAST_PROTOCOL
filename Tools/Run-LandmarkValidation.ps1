@@ -26,4 +26,13 @@ switch($Stage){
 $p=Start-Process 'C:/Program Files/Unity/Hub/Editor/6000.5.4f1/Editor/Unity.exe' -ArgumentList $arguments -PassThru -WindowStyle Hidden
 'LANDMARK '+$Stage+' PID='+$p.Id
 $p.WaitForExit();$p.Refresh();$p.ExitCode | Set-Content -LiteralPath (Join-Path $task ($Stage+'.exit'))
+if($Stage -eq 'Build' -and $p.ExitCode -eq 0){
+ $log=Get-Content -Raw -LiteralPath (Join-Path $task 'Build.log')
+ if($log -notmatch 'SKETCHFAB_LANDMARK_CAPTURE_PASS' -or $log -notmatch 'SKETCHFAB_LANDMARK_BUILD_PASS'){throw 'Combined build/capture did not complete'}
+ $images=foreach($name in @('HoiTruongRua','NhaHocA3','NhaThiDauTDTT','HoiTruongRua-Plot','NhaHocA3-Plot','NhaThiDauTDTT-Plot')){
+  $file=Get-Item -LiteralPath (Join-Path $task ($name+'.png'));if($file.Length -lt 20000){throw ('Empty capture '+$name)}
+  [pscustomobject]@{Name=$file.Name;SHA256=(Get-FileHash $file.FullName).Hash;Bytes=$file.Length}
+ }
+ [pscustomobject]@{passed=$true;sourceStage='Build';exitCode=$p.ExitCode;log='Build.log';images=$images}|ConvertTo-Json -Depth 5|Set-Content -LiteralPath (Join-Path $task 'FinalCapture.json') -Encoding utf8
+}
 exit $p.ExitCode

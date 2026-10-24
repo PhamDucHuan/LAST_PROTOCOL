@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "sourceRevision": 12,
+  "artRevision": 13,
+  "style": "Existing CT5 campus surfaces; new editable architectural geometry",
+  "referenceAuthor": "AnLe",
+  "referenceLicense": "CC BY 4.0",
+  "groundExpanded": false,
+  "collisionsChanged": false,
+  "placements": [
+    {
+      "collection": "24_TurtleAuditorium",
+      "unityMin": [
+        -51.37309646606445,
+        0.0,
+        2.0653207302093506
+      ],
+      "unityMax": [
+        -39.62690353393555,
+        8.045001029968262,
+        22.93467903137207
+      ],
+      "objects": 187,
+      "triangles": 2521,
+      "materials": [
+        "CT5_BluePaint",
+        "CT5_Concrete",
+        "CT5_Glass",
+        "CT5_LetterBlue",
+        "CT5_Metal",
+        "CT5_Plaster",
+        "CT5_RedPaver",
+        "CT5_SilverCladding",
+        "CT5_Terracotta"
+      ]
+    },
+    {
+      "collection": "05_Classrooms_A3",
+      "unityMin": [
+        85.7546615600586,
+        0.05000007152557373,
+        -25.554994583129883
+      ],
+      "unityMax": [
+        106.24534606933594,
+        4.175000190734863,
+        -11.050004959106445
+      ],
+      "objects": 547,
+      "triangles": 6638,
+      "materials": [
+        "CT5_BluePaint",
+        "CT5_Concrete",
+        "CT5_Glass",
+        "CT5_LetterBlue",
+        "CT5_Metal",
+        "CT5_Plaster",
+        "CT5_Terracotta"
+      ]
+    }
+  ]
+}

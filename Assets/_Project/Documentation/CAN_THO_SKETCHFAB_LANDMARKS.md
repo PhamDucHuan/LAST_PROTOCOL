@@ -23,3 +23,7 @@ Changes: extracted the requested buildings from surrounding source geometry, rem
 ## Kiểm chứng
 
 Báo cáo, ảnh Unity và kết quả kiểm tra được lưu tại `Builds/CanThoMap/20261024-SketchfabLandmarks`. Chỉ quảng bá bản ứng viên sau khi kiểm tra hình học, bảo toàn nguồn, lối đi và EditMode đạt. Bản build Windows của đợt này chứa bản sao thông tin ghi công trong `CANTHO_MODEL_CREDITS.txt`.
+
+## Bản dựng lại đồng bộ map (art revision 13)
+
+Hội trường Rùa và A3 được dựng lại bằng hình học kiến trúc mới, dựa trên hình dáng và bố cục model tham chiếu của AnLe. Sử dụng chung vật liệu CT5 với campus: tường trát, mái ngói, khung cửa, kính, sơn xanh và kim loại. Bổ sung cửa, cột, mái hiên, diềm mái, thông gió và biển tên tiếng Việt. Hội trường giữ mái nhiều tầng; A3 giữ các dãy nhà và sân trống giữa dãy. Giữ nguyên toàn bộ collider, NavMesh, ranh đất, đường, cây và nhà thi đấu TDTT. Nguồn GLB và nghĩa vụ ghi công CC BY 4.0 tiếp tục được giữ lại. Báo cáo và ảnh: `Builds/CanThoMap/20261024-LandmarkRedraw`.

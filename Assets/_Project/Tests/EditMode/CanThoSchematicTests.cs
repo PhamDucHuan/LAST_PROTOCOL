@@ -13,7 +13,7 @@ namespace LastProtocol.Tests
         public void ReferenceDistrictsHaveTheCorrectSpatialRelationships()
         {
             var layout = CanThoMapSetupTool.ReadLayout();
-            Assert.That(layout.artRevision, Is.InRange(4, 12));
+            Assert.That(layout.artRevision, Is.InRange(4, 13));
             Vector3 At(string id) => layout.landmarks.First(x => x.id == id || x.id.StartsWith(id + "_")).position;
             Assert.Less(At("22_Dorm_B").x, At("19_Fisheries").x);
             Assert.Less(At("19_Fisheries").x, At("16_Engineering").x);

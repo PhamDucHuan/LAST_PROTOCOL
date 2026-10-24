@@ -127,6 +127,91 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: CT12_HoiTruongRua_Roofing_Metal_Standing_Seam_Red
+    second: {fileID: 2100000, guid: 8c8109e09ea932b4699a6a0140c451df, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT12_HoiTruongRua_Roofing_Metal_Standing_Seam_Red_0
+    second: {fileID: 2100000, guid: ec423e20264701244b48c858786d65b8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT12_HoiTruongRua_material
+    second: {fileID: 2100000, guid: d59916a52cbbc30419b95d121057dae3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT12_NhaHocA3_Color_G01
+    second: {fileID: 2100000, guid: f484e55084acff249a2a8c6127cb3d7a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT12_NhaHocA3_Color_G02
+    second: {fileID: 2100000, guid: 7c7846554aeece647a42d21f79993b0b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT12_NhaHocA3_Color_I06
+    second: {fileID: 2100000, guid: ec5bdea4e34a3604d9cc5b91883d17bf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT12_NhaHocA3_Color_M02
+    second: {fileID: 2100000, guid: bd84bb42b5a76d04c8ecd2e7c3f542b2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT12_NhaHocA3_Roofing_Metal_Standing_Seam_Red_1
+    second: {fileID: 2100000, guid: f85f4b6913a34cb4b83da69eae7fc16b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT12_NhaHocA3_Translucent_Glass_Blue_001
+    second: {fileID: 2100000, guid: 686ea53e589e5b74e9f9f6cb64467836, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT12_NhaHocA3_material_001
+    second: {fileID: 2100000, guid: 96a62cf14f4bc914180f0176062c0196, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT12_NhaHocA3_material_18
+    second: {fileID: 2100000, guid: ab26aaa38c552614f88d5a43491903a6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT12_NhaThiDauTDTT_Brick_Rough_Dark_3
+    second: {fileID: 2100000, guid: 3ae9135285bfdeb42a416efbf6b3f5cb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT12_NhaThiDauTDTT_Color_I04
+    second: {fileID: 2100000, guid: c29dd9aac74ef364c8d8b509f8d628f7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT12_NhaThiDauTDTT_Roofing_Metal_Standing_Seam_Red_2
+    second: {fileID: 2100000, guid: e4f73feb161b0584693d2efa08642239, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT12_NhaThiDauTDTT_Translucent_Glass_Blue_0
+    second: {fileID: 2100000, guid: 6d83eb3495f5aaa4d810ce3527dd747b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT12_NhaThiDauTDTT_Translucent_Glass_Blue_002
+    second: {fileID: 2100000, guid: 5076dd0d259eb9a4cadb0a2cbc6fe6c9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CT12_NhaThiDauTDTT_material_002
+    second: {fileID: 2100000, guid: e899189f77e8e2f40bb2c74f959ce6ab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: CT2_Asphalt
     second: {fileID: 2100000, guid: 24808765fa751f845bef949737a04115, type: 2}
   - first:

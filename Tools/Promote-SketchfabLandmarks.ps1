@@ -4,10 +4,15 @@ $task=Join-Path $root 'Builds/CanThoMap/20261024-SketchfabLandmarks'
 $clone=Join-Path $root 'Builds/ValidationProject'
 $candidate=Join-Path $task 'Candidate04'
 $backup=Join-Path $root 'Builds/CanThoBackups/20261024-SketchfabLandmarks'
-foreach($report in @('SourcePreservation.json','SceneImport.json')){if(-not(Get-Content -Raw (Join-Path $task $report)|ConvertFrom-Json).passed){throw ('Failed '+$report)}}
+foreach($report in @('SourcePreservation.json','SceneImport.json','FinalCapture.json','VisualQA.json','DownloadValidation.json','ProtectedAssetsVerification.json')){if(-not(Get-Content -Raw (Join-Path $task $report)|ConvertFrom-Json).passed){throw ('Failed '+$report)}}
 [xml]$tests=Get-Content -Raw (Join-Path $task 'EditMode.xml')
 if($tests.'test-run'.result -ne 'Passed' -or [int]$tests.'test-run'.total -lt 187){throw 'Unity checks have not passed'}
-foreach($stage in @('Import','EditMode','Capture','Build')){if([int](Get-Content (Join-Path $task ($stage+'.exit'))) -ne 0){throw ('Failed '+$stage)}}
+foreach($stage in @('Import','EditMode','Build')){if([int](Get-Content (Join-Path $task ($stage+'.exit'))) -ne 0){throw ('Failed '+$stage)}}
+$network=Get-Content -Raw (Join-Path $task 'Multiplayer2-Final/Summary.json')|ConvertFrom-Json
+if(@($network).Count -ne 2 -or @($network|Where-Object {-not $_.Passed}).Count){throw 'Two-player validation failed'}
+foreach($tested in (Get-Content -Raw (Join-Path $task 'TestedAssetHashes.json')|ConvertFrom-Json)){
+ if((Get-FileHash -LiteralPath (Join-Path $clone $tested.Path)).Hash -ne $tested.SHA256){throw ('Tested asset changed: '+$tested.Path)}
+}
 foreach($name in @('HoiTruongRua','NhaHocA3','NhaThiDauTDTT')){if((Get-Item (Join-Path $task ($name+'.png'))).Length -lt 20000){throw ('Missing preview '+$name)}}
 foreach($old in (Get-Content -Raw (Join-Path $backup 'OwnedHashes.json')|ConvertFrom-Json)){
  if((Get-FileHash -LiteralPath (Join-Path $root $old.Path)).Hash -ne $old.SHA256){throw ('Current user asset changed: '+$old.Path)}

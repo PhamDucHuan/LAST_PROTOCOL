@@ -32,7 +32,7 @@ namespace LastProtocol.Tests
         public void ImportedBuildingsRestOnExistingLandAndHaveReachableFrontages()
         {
             var layout = CanThoMapSetupTool.ReadLayout();
-            Assert.AreEqual(12, layout.artRevision);
+            Assert.AreEqual(13, layout.artRevision);
             Assert.AreEqual(new Vector3(940, 40, 840), layout.bounds.size);
             var houses = layout.importedVietnamAssets.Where(x => !string.IsNullOrEmpty(x.replaces)).ToArray();
             Assert.AreEqual(4, houses.Length);

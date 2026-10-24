@@ -15,7 +15,7 @@ namespace LastProtocol.Tests
         public void AddedBuildingsStayOnOriginalGroundAndHaveDistinctColliders()
         {
             var layout = CanThoMapSetupTool.ReadLayout();
-            Assert.AreEqual(12, layout.artRevision);
+            Assert.AreEqual(13, layout.artRevision);
             Assert.AreEqual(1100, layout.infillBuildings.Length);
             Assert.AreEqual(1351, layout.neighborhoodHouses.Length);
             Assert.AreEqual(new Vector3(-90, 10, 30), layout.bounds.center);

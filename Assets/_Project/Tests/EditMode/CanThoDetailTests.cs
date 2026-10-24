@@ -15,7 +15,7 @@ namespace LastProtocol.Tests
         [Test]
         public void DetailedArtHasNativeMaterialsAndNewObstacleIsExcludedFromNavigation()
         {
-            Assert.That(CanThoMapSetupTool.ReadLayout().artRevision, Is.InRange(2, 12));
+            Assert.That(CanThoMapSetupTool.ReadLayout().artRevision, Is.InRange(2, 13));
             Assert.NotNull(AssetDatabase.LoadMainAssetAtPath(CanThoDetailSetupTool.ProfilePath));
             var model = AssetDatabase.LoadAssetAtPath<GameObject>(CanThoMapSetupTool.ModelPath);
             var renderers = model.GetComponentsInChildren<MeshRenderer>();

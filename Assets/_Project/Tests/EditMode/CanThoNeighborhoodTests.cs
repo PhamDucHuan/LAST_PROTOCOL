@@ -15,7 +15,7 @@ namespace LastProtocol.Tests
         public void ServiceAlleysAndFoodCourtConnectToCampusWithoutLongDetours()
         {
             var layout = CanThoMapSetupTool.ReadLayout();
-            Assert.That(layout.artRevision, Is.InRange(6, 12));
+            Assert.That(layout.artRevision, Is.InRange(6, 13));
             Assert.That(layout.neighborhoodHouses.Length, Is.GreaterThan(100));
             Assert.That(layout.neighborhoodChecks.Length, Is.GreaterThan(20));
             var nav = NavMesh.AddNavMeshData(AssetDatabase.LoadAssetAtPath<NavMeshData>(CanThoMapSetupTool.NavigationPath));

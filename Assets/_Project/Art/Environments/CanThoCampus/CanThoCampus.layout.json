@@ -1,7 +1,7 @@
 {
   "version": 1,
   "title": "Cần Thơ • Đại học Cần Thơ Khu II",
-  "note": "Revision11: imported Modern Houses and Town House replace existing street housing and selected infill, within the original parcels. Land, roads, water, campus buildings and previous Vietnamese assets retained.",
+  "note": "Revision13: Turtle Hall and A3 redrawn from AnLe references using the existing campus material library. Existing footprints, collision proxies, roads, trees, sports hall and gameplay retained.",
   "bounds": {
     "center": {
       "x": -90,
@@ -1177,6 +1177,233 @@
       "normalScale": 0.6,
       "baseMap": "Textures/CT11_TownHouse_Base.png",
       "normalMap": "Textures/CT11_TownHouse_Normal.png"
+    },
+    {
+      "name": "CT12_HoiTruongRua_Roofing_Metal_Standing_Seam_Red_0",
+      "color": {
+        "r": 0.800000011920929,
+        "g": 0.800000011920929,
+        "b": 0.800000011920929,
+        "a": 1.0
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "doubleSided": true,
+      "baseMap": "Textures/CT12_HoiTruongRua_Image_3.png"
+    },
+    {
+      "name": "CT12_HoiTruongRua_Roofing_Metal_Standing_Seam_Red",
+      "color": {
+        "r": 0.800000011920929,
+        "g": 0.800000011920929,
+        "b": 0.800000011920929,
+        "a": 1.0
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "doubleSided": true,
+      "baseMap": "Textures/CT12_HoiTruongRua_Image_2.png"
+    },
+    {
+      "name": "CT12_HoiTruongRua_material",
+      "color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "doubleSided": true
+    },
+    {
+      "name": "CT12_NhaHocA3_material_18",
+      "color": {
+        "r": 0.800000011920929,
+        "g": 0.800000011920929,
+        "b": 0.800000011920929,
+        "a": 1.0
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "doubleSided": true,
+      "baseMap": "Textures/CT12_NhaHocA3_Image_1_001.png"
+    },
+    {
+      "name": "CT12_NhaHocA3_Translucent_Glass_Blue_001",
+      "color": {
+        "r": 0.3921569883823395,
+        "g": 0.5843139886856079,
+        "b": 0.9294120073318481,
+        "a": 1.0
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "doubleSided": true
+    },
+    {
+      "name": "CT12_NhaHocA3_material_001",
+      "color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "doubleSided": true
+    },
+    {
+      "name": "CT12_NhaHocA3_Color_G02",
+      "color": {
+        "r": 0.6000000238418579,
+        "g": 1.0,
+        "b": 0.6000000238418579,
+        "a": 1.0
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "doubleSided": true
+    },
+    {
+      "name": "CT12_NhaHocA3_Color_G01",
+      "color": {
+        "r": 0.800000011920929,
+        "g": 1.0,
+        "b": 0.800000011920929,
+        "a": 1.0
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "doubleSided": true
+    },
+    {
+      "name": "CT12_NhaHocA3_Roofing_Metal_Standing_Seam_Red_1",
+      "color": {
+        "r": 0.800000011920929,
+        "g": 0.800000011920929,
+        "b": 0.800000011920929,
+        "a": 1.0
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "doubleSided": true,
+      "baseMap": "Textures/CT12_NhaHocA3_Image_0_001.png"
+    },
+    {
+      "name": "CT12_NhaHocA3_Color_I06",
+      "color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.800000011920929,
+        "a": 1.0
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "doubleSided": true
+    },
+    {
+      "name": "CT12_NhaHocA3_Color_M02",
+      "color": {
+        "r": 0.7764710187911987,
+        "g": 0.7764710187911987,
+        "b": 0.7764710187911987,
+        "a": 1.0
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "doubleSided": true
+    },
+    {
+      "name": "CT12_NhaThiDauTDTT_material_002",
+      "color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "doubleSided": true
+    },
+    {
+      "name": "CT12_NhaThiDauTDTT_Roofing_Metal_Standing_Seam_Red_2",
+      "color": {
+        "r": 0.800000011920929,
+        "g": 0.800000011920929,
+        "b": 0.800000011920929,
+        "a": 1.0
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "doubleSided": true,
+      "baseMap": "Textures/CT12_NhaThiDauTDTT_Image_4.png"
+    },
+    {
+      "name": "CT12_NhaThiDauTDTT_Brick_Rough_Dark_3",
+      "color": {
+        "r": 0.800000011920929,
+        "g": 0.800000011920929,
+        "b": 0.800000011920929,
+        "a": 1.0
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "doubleSided": true,
+      "baseMap": "Textures/CT12_NhaThiDauTDTT_Image_5.png"
+    },
+    {
+      "name": "CT12_NhaThiDauTDTT_Color_I04",
+      "color": {
+        "r": 0.19607800245285034,
+        "g": 0.19607800245285034,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "doubleSided": true
+    },
+    {
+      "name": "CT12_NhaThiDauTDTT_Translucent_Glass_Blue_002",
+      "color": {
+        "r": 0.3921569883823395,
+        "g": 0.5843139886856079,
+        "b": 0.9294120073318481,
+        "a": 1.0
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "doubleSided": true
+    },
+    {
+      "name": "CT12_NhaThiDauTDTT_Translucent_Glass_Blue_0",
+      "color": {
+        "r": 0.3921569883823395,
+        "g": 0.5843139886856079,
+        "b": 0.9294120073318481,
+        "a": 1.0
+      },
+      "roughness": 0.82,
+      "metallic": 0,
+      "emission": 0,
+      "doubleSided": true
     }
   ],
   "collisions": [
@@ -1230,32 +1457,6 @@
         "x": 38,
         "y": 24,
         "z": 21
-      }
-    },
-    {
-      "name": "NHÀ HỌC A3",
-      "position": {
-        "x": 96,
-        "y": 4.8,
-        "z": -27.0
-      },
-      "size": {
-        "x": 32,
-        "y": 9.6,
-        "z": 7.92
-      }
-    },
-    {
-      "name": "NHÀ HỌC A3",
-      "position": {
-        "x": 96,
-        "y": 4.8,
-        "z": -14.0
-      },
-      "size": {
-        "x": 32,
-        "y": 9.6,
-        "z": 7.92
       }
     },
     {
@@ -2192,19 +2393,6 @@
         "x": 6.5,
         "y": 3,
         "z": 31
-      }
-    },
-    {
-      "name": "Gym",
-      "position": {
-        "x": 70,
-        "y": 6,
-        "z": 130
-      },
-      "size": {
-        "x": 46,
-        "y": 12,
-        "z": 24
       }
     },
     {
@@ -4405,97 +4593,6 @@
         "x": 5,
         "y": 3.6,
         "z": 4.4
-      }
-    },
-    {
-      "name": "Turtle auditorium body",
-      "position": {
-        "x": -45.5,
-        "y": 3.5,
-        "z": 13.5
-      },
-      "size": {
-        "x": 24.3,
-        "y": 7,
-        "z": 18.0
-      }
-    },
-    {
-      "name": "Turtle Hall porch roof",
-      "position": {
-        "x": -45.5,
-        "y": 3.65,
-        "z": 3.3000000000000007
-      },
-      "size": {
-        "x": 19.8,
-        "y": 0.35,
-        "z": 3.0
-      }
-    },
-    {
-      "name": "Turtle Hall porch column",
-      "position": {
-        "x": -53.6,
-        "y": 1.75,
-        "z": 2.4000000000000004
-      },
-      "size": {
-        "x": 0.45,
-        "y": 3.5,
-        "z": 0.3
-      }
-    },
-    {
-      "name": "Turtle Hall porch column",
-      "position": {
-        "x": -48.2,
-        "y": 1.75,
-        "z": 2.4000000000000004
-      },
-      "size": {
-        "x": 0.45,
-        "y": 3.5,
-        "z": 0.3
-      }
-    },
-    {
-      "name": "Turtle Hall porch column",
-      "position": {
-        "x": -42.8,
-        "y": 1.75,
-        "z": 2.4000000000000004
-      },
-      "size": {
-        "x": 0.45,
-        "y": 3.5,
-        "z": 0.3
-      }
-    },
-    {
-      "name": "Turtle Hall porch column",
-      "position": {
-        "x": -37.4,
-        "y": 1.75,
-        "z": 2.4000000000000004
-      },
-      "size": {
-        "x": 0.45,
-        "y": 3.5,
-        "z": 0.3
-      }
-    },
-    {
-      "name": "Turtle Hall roof proxy",
-      "position": {
-        "x": -45.5,
-        "y": 10.5,
-        "z": 13.5
-      },
-      "size": {
-        "x": 24.3,
-        "y": 7,
-        "z": 18.0
       }
     },
     {
@@ -34896,6 +34993,149 @@
         "y": 4,
         "z": 0.5
       }
+    },
+    {
+      "name": "Turtle auditorium body",
+      "position": {
+        "x": -45.62757,
+        "y": 1.92188,
+        "z": 13.49581
+      },
+      "size": {
+        "x": 10.51052,
+        "y": 3.84376,
+        "z": 16.50068
+      }
+    },
+    {
+      "name": "Turtle Hall roof proxy",
+      "position": {
+        "x": -45.5,
+        "y": 4.67192,
+        "z": 12.5
+      },
+      "size": {
+        "x": 11.80618,
+        "y": 6.65615,
+        "z": 21.0
+      }
+    },
+    {
+      "name": "Sketchfab A3 wing 1",
+      "position": {
+        "x": 88.82296,
+        "y": 2.16564,
+        "z": -24.35332
+      },
+      "size": {
+        "x": 4.89886,
+        "y": 4.06871,
+        "z": 2.39335
+      }
+    },
+    {
+      "name": "Sketchfab A3 wing 2",
+      "position": {
+        "x": 88.49067,
+        "y": 2.16564,
+        "z": -18.34474
+      },
+      "size": {
+        "x": 4.89886,
+        "y": 4.06871,
+        "z": 2.39335
+      }
+    },
+    {
+      "name": "Sketchfab A3 wing 3",
+      "position": {
+        "x": 103.34706,
+        "y": 1.93693,
+        "z": -12.18816
+      },
+      "size": {
+        "x": 5.79657,
+        "y": 3.87386,
+        "z": 2.23733
+      }
+    },
+    {
+      "name": "Sketchfab A3 wing 4",
+      "position": {
+        "x": 88.20409,
+        "y": 2.16564,
+        "z": -12.57793
+      },
+      "size": {
+        "x": 4.89886,
+        "y": 4.06871,
+        "z": 2.39335
+      }
+    },
+    {
+      "name": "Sketchfab A3 wing 5",
+      "position": {
+        "x": 95.74849,
+        "y": 1.93693,
+        "z": -12.18816
+      },
+      "size": {
+        "x": 5.79658,
+        "y": 3.87386,
+        "z": 2.23733
+      }
+    },
+    {
+      "name": "Sketchfab A3 wing 6",
+      "position": {
+        "x": 99.14418,
+        "y": 1.9796,
+        "z": -18.15291
+      },
+      "size": {
+        "x": 13.33631,
+        "y": 3.69663,
+        "z": 2.74808
+      }
+    },
+    {
+      "name": "Sketchfab A3 wing 7",
+      "position": {
+        "x": 99.35688,
+        "y": 1.9796,
+        "z": -23.81798
+      },
+      "size": {
+        "x": 13.33631,
+        "y": 3.69663,
+        "z": 2.74808
+      }
+    },
+    {
+      "name": "Sketchfab A3 wing 9",
+      "position": {
+        "x": 99.48445,
+        "y": 1.61722,
+        "z": -12.2925
+      },
+      "size": {
+        "x": 1.71054,
+        "y": 2.97188,
+        "z": 2.48499
+      }
+    },
+    {
+      "name": "Sketchfab Sports hall",
+      "position": {
+        "x": 70.0,
+        "y": 6.44771,
+        "z": 130.0
+      },
+      "size": {
+        "x": 28.76809,
+        "y": 12.89541,
+        "z": 25.5
+      }
     }
   ],
   "landmarks": [
@@ -35722,7 +35962,7 @@
       "z": 28
     }
   ],
-  "artRevision": 11,
+  "artRevision": 13,
   "detailStats": {
     "heroLandmarksRebuilt": 4,
     "referencePhotos": 7,
@@ -121564,5 +121804,334 @@
       }
     ],
     "groundExpanded": false
+  },
+  "sketchfabLandmarks": [
+    {
+      "family": "HoiTruongRua",
+      "collection": "24_TurtleAuditorium",
+      "position": {
+        "x": -45.5,
+        "y": 0,
+        "z": 12.5
+      },
+      "size": {
+        "x": 11.80618,
+        "y": 8.0,
+        "z": 21.0
+      },
+      "horizontalScale": 0.007519115762616019,
+      "verticalScale": 0.012780588233516028,
+      "footprint": [
+        {
+          "x": -51.40309143066406,
+          "z": 2.0
+        },
+        {
+          "x": -39.5969123840332,
+          "z": 2.0
+        },
+        {
+          "x": -39.5969123840332,
+          "z": 23.0
+        },
+        {
+          "x": -51.40309143066406,
+          "z": 23.0
+        }
+      ],
+      "triangles": 419,
+      "parts": 9,
+      "colliders": [
+        {
+          "name": "Turtle auditorium body",
+          "position": {
+            "x": -45.62757,
+            "y": 1.92188,
+            "z": 13.49581
+          },
+          "size": {
+            "x": 10.51052,
+            "y": 3.84376,
+            "z": 16.50068
+          }
+        },
+        {
+          "name": "Turtle Hall roof proxy",
+          "position": {
+            "x": -45.5,
+            "y": 4.67192,
+            "z": 12.5
+          },
+          "size": {
+            "x": 11.80618,
+            "y": 6.65615,
+            "z": 21.0
+          }
+        }
+      ],
+      "representation": "Redrawn architecture from AnLe reference; shared campus CT5 materials"
+    },
+    {
+      "family": "NhaHocA3",
+      "collection": "05_Classrooms_A3",
+      "position": {
+        "x": 96,
+        "y": 0,
+        "z": -18.3
+      },
+      "size": {
+        "x": 20.49068,
+        "y": 4.2,
+        "z": 14.5
+      },
+      "horizontalScale": 0.006001366960065931,
+      "verticalScale": 0.01667274212077809,
+      "footprint": [
+        {
+          "x": 85.7546615600586,
+          "z": -25.549999237060547
+        },
+        {
+          "x": 106.24534606933594,
+          "z": -25.549999237060547
+        },
+        {
+          "x": 106.24534606933594,
+          "z": -11.049999237060547
+        },
+        {
+          "x": 85.7546615600586,
+          "z": -11.049999237060547
+        }
+      ],
+      "triangles": 2197,
+      "parts": 217,
+      "colliders": [
+        {
+          "name": "Sketchfab A3 wing 1",
+          "position": {
+            "x": 88.82296,
+            "y": 2.16564,
+            "z": -24.35332
+          },
+          "size": {
+            "x": 4.89886,
+            "y": 4.06871,
+            "z": 2.39335
+          }
+        },
+        {
+          "name": "Sketchfab A3 wing 2",
+          "position": {
+            "x": 88.49067,
+            "y": 2.16564,
+            "z": -18.34474
+          },
+          "size": {
+            "x": 4.89886,
+            "y": 4.06871,
+            "z": 2.39335
+          }
+        },
+        {
+          "name": "Sketchfab A3 wing 3",
+          "position": {
+            "x": 103.34706,
+            "y": 1.93693,
+            "z": -12.18816
+          },
+          "size": {
+            "x": 5.79657,
+            "y": 3.87386,
+            "z": 2.23733
+          }
+        },
+        {
+          "name": "Sketchfab A3 wing 4",
+          "position": {
+            "x": 88.20409,
+            "y": 2.16564,
+            "z": -12.57793
+          },
+          "size": {
+            "x": 4.89886,
+            "y": 4.06871,
+            "z": 2.39335
+          }
+        },
+        {
+          "name": "Sketchfab A3 wing 5",
+          "position": {
+            "x": 95.74849,
+            "y": 1.93693,
+            "z": -12.18816
+          },
+          "size": {
+            "x": 5.79658,
+            "y": 3.87386,
+            "z": 2.23733
+          }
+        },
+        {
+          "name": "Sketchfab A3 wing 6",
+          "position": {
+            "x": 99.14418,
+            "y": 1.9796,
+            "z": -18.15291
+          },
+          "size": {
+            "x": 13.33631,
+            "y": 3.69663,
+            "z": 2.74808
+          }
+        },
+        {
+          "name": "Sketchfab A3 wing 7",
+          "position": {
+            "x": 99.35688,
+            "y": 1.9796,
+            "z": -23.81798
+          },
+          "size": {
+            "x": 13.33631,
+            "y": 3.69663,
+            "z": 2.74808
+          }
+        },
+        {
+          "name": "Sketchfab A3 wing 9",
+          "position": {
+            "x": 99.48445,
+            "y": 1.61722,
+            "z": -12.2925
+          },
+          "size": {
+            "x": 1.71054,
+            "y": 2.97188,
+            "z": 2.48499
+          }
+        }
+      ],
+      "representation": "Redrawn architecture from AnLe reference; shared campus CT5 materials"
+    },
+    {
+      "family": "NhaThiDauTDTT",
+      "collection": "25_Sports",
+      "position": {
+        "x": 70,
+        "y": 0,
+        "z": 130
+      },
+      "size": {
+        "x": 28.76809,
+        "y": 12.89541,
+        "z": 25.5
+      },
+      "horizontalScale": 0.010691213220549878,
+      "verticalScale": 0.010691213220549878,
+      "footprint": [
+        {
+          "x": 55.6159553527832,
+          "z": 117.25
+        },
+        {
+          "x": 84.38404846191406,
+          "z": 117.25
+        },
+        {
+          "x": 84.38404846191406,
+          "z": 142.75
+        },
+        {
+          "x": 55.6159553527832,
+          "z": 142.75
+        }
+      ],
+      "triangles": 5340,
+      "parts": 247,
+      "colliders": [
+        {
+          "name": "Sketchfab Sports hall",
+          "position": {
+            "x": 70.0,
+            "y": 6.44771,
+            "z": 130.0
+          },
+          "size": {
+            "x": 28.76809,
+            "y": 12.89541,
+            "z": 25.5
+          }
+        }
+      ]
+    }
+  ],
+  "landmarkImportRevision": {
+    "revision": 1,
+    "author": "AnLe",
+    "license": "CC BY 4.0",
+    "groundExpanded": false
+  },
+  "landmarkRedraw": {
+    "passed": true,
+    "sourceRevision": 12,
+    "artRevision": 13,
+    "style": "Existing CT5 campus surfaces; new editable architectural geometry",
+    "referenceAuthor": "AnLe",
+    "referenceLicense": "CC BY 4.0",
+    "groundExpanded": false,
+    "collisionsChanged": false,
+    "placements": [
+      {
+        "collection": "24_TurtleAuditorium",
+        "unityMin": [
+          -51.37309646606445,
+          0.0,
+          2.0653207302093506
+        ],
+        "unityMax": [
+          -39.62690353393555,
+          8.045001029968262,
+          22.93467903137207
+        ],
+        "objects": 187,
+        "triangles": 2521,
+        "materials": [
+          "CT5_BluePaint",
+          "CT5_Concrete",
+          "CT5_Glass",
+          "CT5_LetterBlue",
+          "CT5_Metal",
+          "CT5_Plaster",
+          "CT5_RedPaver",
+          "CT5_SilverCladding",
+          "CT5_Terracotta"
+        ]
+      },
+      {
+        "collection": "05_Classrooms_A3",
+        "unityMin": [
+          85.7546615600586,
+          0.05000007152557373,
+          -25.554994583129883
+        ],
+        "unityMax": [
+          106.24534606933594,
+          4.175000190734863,
+          -11.050004959106445
+        ],
+        "objects": 547,
+        "triangles": 6638,
+        "materials": [
+          "CT5_BluePaint",
+          "CT5_Concrete",
+          "CT5_Glass",
+          "CT5_LetterBlue",
+          "CT5_Metal",
+          "CT5_Plaster",
+          "CT5_Terracotta"
+        ]
+      }
+    ]
   }
 }

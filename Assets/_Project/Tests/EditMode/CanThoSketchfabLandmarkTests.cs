@@ -12,7 +12,7 @@ namespace LastProtocol.Tests
     public sealed class CanThoSketchfabLandmarkTests
     {
         [Test]
-        public void ImportedLandmarksUseTheirOwnUrpSurfacesWithinExistingParcels()
+        public void RedrawnLandmarksUseCampusSurfacesWithinExistingParcels()
         {
             var scene=EditorSceneManager.OpenScene(CanThoMapSetupTool.ScenePath,OpenSceneMode.Additive);
             try
@@ -22,8 +22,14 @@ namespace LastProtocol.Tests
                 var parcels=new[]{new Bounds(new Vector3(-45.5f,15,12.5f),new Vector3(27.3f,30,21.8f)),new Bounds(new Vector3(96,15,-21.36f),new Vector3(35,30,24.3f)),new Bounds(new Vector3(70,15,130),new Vector3(48,30,26))};
                 for(int i=0;i<groups.Length;i++)
                 {
-                    var imported=renderers.Where(r=>r.name.StartsWith(groups[i]+"__CT12_")).ToArray();Assert.Greater(imported.Length,0,groups[i]);
-                    Assert.IsTrue(imported.All(r=>r.sharedMaterials.All(m=>m!=null && m.name.StartsWith("CT12_") && m.shader.name=="Universal Render Pipeline/Lit")));
+                    var imported=renderers.Where(r=>r.name.StartsWith(groups[i]+"__")).ToArray();Assert.Greater(imported.Length,0,groups[i]);
+                    Assert.IsTrue(imported.All(r=>r.sharedMaterials.All(m=>m!=null && m.name.StartsWith(i==2?"CT12_":"CT5_") && m.shader.name=="Universal Render Pipeline/Lit")));
+                    if(i<2)
+                    {
+                        Assert.IsTrue(imported.Any(r=>r.sharedMaterials.Any(m=>m.name=="CT5_Plaster")),groups[i]);
+                        Assert.IsTrue(imported.Any(r=>r.sharedMaterials.Any(m=>m.name=="CT5_Terracotta")),groups[i]);
+                        Assert.IsTrue(imported.Any(r=>r.sharedMaterials.Any(m=>m.name=="CT5_Glass")),groups[i]);
+                    }
                     var parcel=parcels[i];parcel.Expand(.02f);
                     foreach(var r in imported){Assert.IsTrue(parcel.Contains(r.bounds.min),r.name);Assert.IsTrue(parcel.Contains(r.bounds.max),r.name);}
                 }

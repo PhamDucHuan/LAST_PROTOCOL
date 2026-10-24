@@ -29,6 +29,30 @@ namespace LastProtocol.Editor
         static Dictionary<Component,string> Snapshot(Scene scene, Transform excluded) => scene.GetRootGameObjects()
             .SelectMany(x=>x.GetComponentsInChildren<Component>(true)).Where(x=>x!=null && !x.transform.IsChildOf(excluded))
             .ToDictionary(x=>x,x=>EditorJsonUtility.ToJson(x));
+        public static void BatchApplyRedraw()
+        {
+            if(!Application.isBatchMode || !Application.dataPath.Replace('\\','/').Contains("/Builds/ValidationProject/"))
+                throw new InvalidOperationException("Redraw import requires the validation project.");
+            var layout=CanThoMapSetupTool.ReadLayout();
+            if(layout.artRevision!=13)throw new InvalidOperationException("Expected redrawn landmark revision 13.");
+            CanThoMapSetupTool.ConfigureModel(layout);
+            var scene=EditorSceneManager.OpenScene(CanThoMapSetupTool.ScenePath,OpenSceneMode.Single);
+            var root=scene.GetRootGameObjects().SelectMany(x=>x.GetComponentsInChildren<Transform>()).Single(x=>x.name=="Simple Environment Colliders");
+            var existing=root.Cast<Transform>().ToArray();
+            if(existing.Length!=layout.collisions.Length || existing.Where((x,i)=>!Matches(x,layout.collisions[i])).Any())
+                throw new InvalidOperationException("Redrawn geometry must retain every existing collider.");
+            var before=Snapshot(scene,root);
+            var environment=root.GetComponentInParent<LevelEnvironment>();
+            if(environment.artRevision!=12)throw new InvalidOperationException("Expected the imported reference scene.");
+            environment.artRevision=13;
+            var after=Snapshot(scene,root);after[environment]=before[environment];
+            if(before.Count!=after.Count || before.Any(x=>!after.TryGetValue(x.Key,out var value)||value!=x.Value))
+                throw new InvalidOperationException("Unrelated scene changes detected.");
+            EditorUtility.SetDirty(environment);EditorSceneManager.SaveScene(scene);AssetDatabase.SaveAssets();CanThoMapSetupTool.Validate();
+            File.WriteAllText(Path.Combine(Output(),"SceneImport.json"),JsonUtility.ToJson(new ImportReport{passed=true,unchangedSceneComponents=before.Count-1,createdColliders=0,removedColliders=0,totalColliders=existing.Length},true));
+            EditorSceneManager.NewScene(NewSceneSetup.EmptyScene,NewSceneMode.Single);
+            Debug.Log("LANDMARK_REDRAW_UNITY_IMPORT_PASS");
+        }
         public static void BatchApply()
         {
             if(!Application.isBatchMode || !Application.dataPath.Replace('\\','/').Contains("/Builds/ValidationProject/"))
@@ -77,7 +101,8 @@ namespace LastProtocol.Editor
         public static void BatchBuild()
         {
             if(!Application.isBatchMode)throw new InvalidOperationException("Batch build only.");
-            var directory=Path.GetFullPath("Builds/LandmarkPlayer");Directory.CreateDirectory(directory);
+            var args=Environment.GetCommandLineArgs();int outputIndex=Array.IndexOf(args,"--lp-landmark-player");
+            var directory=Path.GetFullPath(outputIndex>=0 && outputIndex+1<args.Length?args[outputIndex+1]:"Builds/LandmarkPlayer");Directory.CreateDirectory(directory);
             var scenes=new[]{MultiplayerSetupTool.MenuPath,MultiplayerSetupTool.GamePath,MenuSetupTool.YardPath,CanThoMapSetupTool.ScenePath};
             var result=BuildPipeline.BuildPlayer(new BuildPlayerOptions{scenes=scenes,locationPathName=Path.Combine(directory,"LAST_PROTOCOL.exe"),target=BuildTarget.StandaloneWindows64,options=BuildOptions.Development});
             if(result.summary.result!=BuildResult.Succeeded)throw new InvalidOperationException("Landmark player build failed.");
@@ -92,6 +117,11 @@ namespace LastProtocol.Editor
             RenderSettings.fog=false;
             var eyes=new[]{new Vector3(-23,20,-20),new Vector3(123,18,-53),new Vector3(109,27,93),new Vector3(-45.5f,75,13.5f),new Vector3(98,75,-21.5f),new Vector3(70,100,130)};
             var targets=new[]{new Vector3(-45.5f,3,12.5f),new Vector3(96,2,-18.5f),new Vector3(70,5,130),new Vector3(-45.5f,0,13.51f),new Vector3(98,0,-21.49f),new Vector3(70,0,130.01f)};
+            if(CanThoMapSetupTool.ReadLayout().artRevision>=13)
+            {
+                eyes[0]=new Vector3(-29,12,-12);eyes[1]=new Vector3(118,12,-40);
+                targets[1]=new Vector3(96,1.8f,-18.3f);
+            }
             var names=new[]{"HoiTruongRua","NhaHocA3","NhaThiDauTDTT","HoiTruongRua-Plot","NhaHocA3-Plot","NhaThiDauTDTT-Plot"};
             for(int i=0;i<eyes.Length;i++)
             {
